@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>CavemanToolsMvc</id> 
+	<title>CavemanTools Mvc</title>
+    <version></version> 
+    <authors>Mihai Mogosanu</authors>
+    <description>Asp.Net Mvc 3 toolkit for faster development with less code. Features theming support for both Razor and WebForm engines and easy to use helpers. </description> 
+    <language>en-US</language>
+	<tags>toolkit utility mvc asp.net viewengine themes</tags>
+    <licenseUrl>http://cavemantoolsmvc.codeplex.com/license</licenseUrl>
+    <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/Home</projectUrl>
+	<dependencies>
+		<dependency id="CavemanTools" version="" />
+	</dependencies>
+  </metadata> 
+<files>
+    <file src="lib\net40\CavemanTools.Mvc.dll" target="lib\net40\CavemanTools.Mvc.dll" />
+    <file src="lib\net40\CavemanTools.Mvc.XML" target="lib\net40\CavemanTools.Mvc.XML" />
+  </files>
+
+</package>

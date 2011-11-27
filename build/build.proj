@@ -1,0 +1,77 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="default">
+	<PropertyGroup>
+		<BaseDir>$(MSBuildProjectDirectory)\..</BaseDir>
+		<SolutionFile>$(BaseDir)\src\Caveman.sln</SolutionFile>
+		<Configuration Condition="'$(Configuration)'==''" >Release</Configuration>
+		
+		<BuildDir>$(BaseDir)\temp</BuildDir>
+		<OutputDir>$(BuildDir)\$(Configuration)</OutputDir>
+		<PackageDir>$(BuildDir)\Packages</PackageDir>
+		
+		
+		<MSBuildExtensions>$(BaseDir)\lib\msbuild\msbuild.community.tasks.dll</MSBuildExtensions>
+	</PropertyGroup>
+	
+	<UsingTask AssemblyFile="$(MSBuildExtensions)" TaskName="MSBuild.Community.Tasks.XmlUpdate" />
+
+	<Target Name="default" DependsOnTargets="Compile;Deploy;Package" />
+		
+		
+	<Target Name="Compile">
+		<MSBuild Projects="$(SolutionFile)" Properties="Configuration=$(Configuration);WarningLevel=0"  />
+	</Target> 
+		
+		<Target Name="Deploy">			
+			<RemoveDir Directories="$(BuildDir)" />	
+			<ItemGroup>
+				<MainBinaries Include="$(BaseDir)\src\CavemanTools\bin\$(Configuration)\*.*"  />
+				<MvcBinaries Include="$(BaseDir)\src\CavemanTools.Mvc\bin\$(Configuration)\*.*"  />
+			</ItemGroup>
+
+		<!-- Copy to the output directory -->
+			<Copy SourceFiles="@(MainBinaries)" DestinationFolder="$(OutputDir)\CavemanTools\%(RecursiveDir)"  />		
+			<Copy SourceFiles="@(MvcBinaries)" DestinationFolder="$(OutputDir)\CavemanTools.Mvc\%(RecursiveDir)"  />		
+		</Target>
+		
+		<Target Name="Package" DependsOnTargets="Deploy">
+				<!-- First copy the nuspec template files to the package dir -->
+		<Copy SourceFiles="$(MSBuildProjectDirectory)\CavemanTools.nuspec" DestinationFolder="$(PackageDir)\temp\CavemanTools" />
+		<Copy SourceFiles="$(MSBuildProjectDirectory)\CavemanToolsMvc.nuspec" DestinationFolder="$(PackageDir)\temp\CavemanTools.Mvc" />
+		
+		<!-- Copy the source files to the package dir -->
+		<Copy SourceFiles="@(MainBinaries)" DestinationFolder="$(PackageDir)\temp\CavemanTools\lib\Net40\%(RecursiveDir)" />
+		<Copy SourceFiles="@(MvcBinaries)" DestinationFolder="$(PackageDir)\temp\CavemanTools.Mvc\lib\Net40\%(RecursiveDir)" />
+		
+		<!-- Get the version number of the main CT assembly to insert into the nuspec files -->
+		<GetAssemblyIdentity AssemblyFiles="$(OutputDir)\CavemanTools\CavemanTools.dll">
+			<Output TaskParameter="Assemblies" ItemName="AsmInfo" />
+		</GetAssemblyIdentity>
+		
+		<!-- insert the version number into the nuspec files -->
+		<XmlUpdate
+		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+		  Prefix="n"
+			XmlFileName="$(PackageDir)\temp\CavemanTools\CavemanTools.nuspec"
+			XPath="/n:package/n:metadata/n:version"
+			Value="%(AsmInfo.Version)" />
+			
+					<XmlUpdate
+		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+		  		XmlFileName="$(PackageDir)\temp\CavemanTools.Mvc\CavemanToolsMvc.nuspec"
+			XPath="/package/metadata/version"
+			Value="%(AsmInfo.Version)" />
+			
+			<XmlUpdate
+		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+		  	XmlFileName="$(PackageDir)\temp\CavemanTools.Mvc\CavemanToolsMvc.nuspec"
+			XPath="/package/metadata/dependencies/dependency[@id='CavemanTools']/@version"
+			Value="%(AsmInfo.Version)" />
+			
+			<Exec WorkingDirectory="$(BuildDir)\Packages" 
+					Command="$(BaseDir)\lib\nuget\nuget.exe pack $(PackageDir)\temp\CavemanTools\CavemanTools.nuspec -o $(BaseDir)\packages" />
+
+					<Exec WorkingDirectory="$(BuildDir)\Packages" 
+					Command="$(BaseDir)\lib\nuget\nuget.exe pack $(PackageDir)\temp\CavemanTools.Mvc\CavemanToolsMvc.nuspec -o $(BaseDir)\packages" />
+				
+		</Target>
+	</Project>

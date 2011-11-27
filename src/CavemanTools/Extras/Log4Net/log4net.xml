@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+http://www.beefycode.com/post/Log4Net-Tutorial-pt-3-Appenders.aspx
+-->
+
+<log4net>
+	<appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
+		<file value="App_Data\ApplicationLog.log" />
+		<appendToFile value="true" />
+		<rollingStyle value="Date" />
+		<maxSizeRollBackups value="10" />
+		<maximumFileSize value="1MB" />
+		<staticLogFileName value="true" />
+		<datePattern value="yyyyMMdd" />
+		<layout type="log4net.Layout.PatternLayout">
+			<conversionPattern value="%utcdate %-5level - %message%newline%exception%newline" />
+		</layout>
+	</appender>
+	<appender name="EventLogAppender" type="log4net.Appender.EventLogAppender">
+		<param name="LogName" value="Application" />
+		<param name="ApplicationName" value="Application" />
+		<filter type="log4net.Filter.LevelRangeFilter">
+			<acceptOnMatch value="true" />
+			<levelMin value="ERROR" />
+			<levelMax value="FATAL" />
+		</filter>
+		<layout type="log4net.Layout.PatternLayout">
+			<conversionPattern value="%utcdate %-5level - %message%newline%exception%newline" />
+		</layout>
+	</appender>
+
+	<!--<appender name="SmtpAppender" type="log4net.Appender.SmtpAppender" >
+		<to value="to@email.com" />
+		<from value="from@email.com" />
+		<smtpHost value="127.0.0.1" />
+		<subject value="An exception occurred in App." />
+		<filter type="log4net.Filter.LevelRangeFilter">
+			<acceptOnMatch value="true" />
+			<levelMin value="ERROR" />
+			<levelMax value="FATAL" />
+		</filter>
+		<layout type="log4net.Layout.PatternLayout">
+			<conversionPattern value="%utcdate %-5level - %message%newline%exception%newline" />
+		</layout>
+		<priority value="High" />
+	</appender>-->
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="RollingFileAppender" />
+		<appender-ref ref="EventLogAppender" />
+		<!--<appender-ref ref="SmtpAppender" />-->
+	</root>
+
+</log4net>
