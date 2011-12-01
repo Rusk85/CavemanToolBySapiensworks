@@ -9,10 +9,15 @@ namespace CavemanTools.Web.Helpers
 	/// </summary>
 	public class PaginationLinks
 	{
-		private string _linkFormat;
+	    public PaginationLinks()
+	    {
+	        CurrentFormat = @"<span class=""selected"">{0}</span>";            
+	    }
+        private string _linkFormat;
 
 		/// <summary>
 		/// &lt;a href="/bla/{0}"&gt;{1}&lt;/a&gt;
+		/// First argument is number of page used for url, second is number of page used for text
 		/// </summary>
 		public string LinkFormat
 		{
@@ -21,7 +26,8 @@ namespace CavemanTools.Web.Helpers
 		}
 
 		/// <summary>
-		/// Active page html element format
+		/// Active page html element format. Something like
+		/// &lt;span class="selected"&gt;{0}&lt;span&gt;
 		/// </summary>
 		public string CurrentFormat { get; set;}
 		/// <summary>
@@ -50,25 +56,25 @@ namespace CavemanTools.Web.Helpers
 			if (i == 0) i = 1;
 			if (i>1)
 			{
-				l.Add(FormatLink(1));
+				l.Add(FormatPageLink(1));
 				l.Add(string.Format(LinkFormat,(i-1)*10,"[...]"));
 			}
 			var ist = (i - 1)*10 + 1;
 			var ei = i*10;
 			if (ei>total) ei = total;
-			for(int k=ist;k<=ei;k++) l.Add(FormatLink(k));
+			for(int k=ist;k<=ei;k++) l.Add(FormatPageLink(k));
 
 			var ti = (int)Math.Ceiling((double)total / 10);
 			if (ti>i)
 			{
 				l.Add(string.Format(LinkFormat, i * 10+1, "[...]"));
-				l.Add(FormatLink(total));
+				l.Add(FormatPageLink(total));
 			}
 
 			return l.ToArray();
 		}
 
-		string FormatLink(int i)
+		string FormatPageLink(int i)
 		{
 			if (i==Current)
 			{
@@ -89,5 +95,6 @@ namespace CavemanTools.Web.Helpers
 			if (itemsOnPage == 0) return 0;
 			return (int) Math.Ceiling((double) total/itemsOnPage);
 		}
+        
 	}
 }
