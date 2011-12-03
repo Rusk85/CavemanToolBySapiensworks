@@ -2,10 +2,13 @@
 using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
-using CavemanTools.Security;
+using CavemanTools.Web.Security;
 
 namespace CavemanTools.Mvc.Security
 {
+    /// <summary>
+    /// Use this with the HttpModuleMagic.Mvc3 nuget package for dependecy injection
+    /// </summary>
     public class UserRightModule:IHttpModule
     {
         private IUserRightsRepository _repo;
@@ -34,7 +37,7 @@ namespace CavemanTools.Mvc.Security
             if (authData == null) return GetAnonymousContext();
             
             //get group
-            var grp = _repo.GetGroupBytId(authData.GroupId);
+            var grp = _repo.GetGroupById(authData.GroupId);
             var usr = new UserRightsContext(authData.Id,grp);
             usr.Name = fi.Name;
             return usr;

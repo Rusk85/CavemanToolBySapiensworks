@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Security;
-using CavemanTools.Security;
+using CavemanTools.Web.Security;
 
 namespace CavemanTools.Mvc.Security
 {

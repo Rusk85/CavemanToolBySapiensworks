@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using CavemanTools.Web.Security;
 
 namespace CavemanTools.Mvc.Security
 {
@@ -7,11 +8,11 @@ namespace CavemanTools.Mvc.Security
     public class DemandRightAttribute:AuthorizeAttribute
     {
        
-        public string Right { get; set; }
+        public byte Right { get; set; }
 
       public override void OnAuthorization(AuthorizationContext filterContext)
         {
-           if (!AuthorizeCore(filterContext.HttpContext) || Right==null) return;
+           if (!AuthorizeCore(filterContext.HttpContext) || Right==UserBasicRights.None) return;
            var dt = filterContext.HttpContext.GetUserContext();
            if (dt == null)
            {
@@ -19,9 +20,9 @@ namespace CavemanTools.Mvc.Security
            }
            else
            {
-               if (!dt.HasRight(Right))
+               if (!dt.HasRightTo(Right))
                {
-                   filterContext.Result = new HttpStatusCodeResult(403, "You have no rights for this");
+                   filterContext.Result = new HttpStatusCodeResult(403, "You have no rights for request");
                }
            }
             
