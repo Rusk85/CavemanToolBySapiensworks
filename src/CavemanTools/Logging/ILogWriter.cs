@@ -1,18 +1,25 @@
 namespace CavemanTools.Logging
 {
 	/// <summary>
-	/// Used by LoggingUtility extension methods.
+	/// Use to abstract the usage of an explicit logger (log4net, nlog etc)
+	/// Implement it or extend the LogWriteBase.
 	/// </summary>
 	public interface ILogWriter
 	{
-		//void WriteInfo(string text);
-		//void WriteInfo(string message, params object[] args);
+	    /// <summary>
+	    /// Should return the real logger implementation
+	    /// </summary>
+	    /// <typeparam name="T">Logger type</typeparam>
+	    /// <returns></returns>
+        T GetLogger<T>();
+        void Info(string text);
+		void Info(string format, params object[] args);
 		/// <summary>
 		/// Writes a log entry with the specified logging level
 		/// </summary>
 		/// <param name="level">Status</param>
 		/// <param name="text">Entry Text</param>
-		void RegisterEntry(LogLevel level,string text);
+		void Log(LogLevel level,string text);
 
 		/// <summary>
 		/// Writes a formatted log entry with the specified logging level
@@ -20,15 +27,18 @@ namespace CavemanTools.Logging
 		/// <param name="level">Status</param>
 		/// <param name="message">Entry Text</param>
 		/// <param name="args">List of arguments</param>
-		void RegisterEntry(LogLevel level,string message, params object[] args);
+		void Log(LogLevel level,string message, params object[] args);
 
-		//void WriteError(string text);
-		//void WriteError(string message, params object[] args);
-	
-		//void WriteWarning(string text);
-		//void WriteWarning(string message, params object[] args);
+	    void Trace(string message);
+	    void Trace(string format,params object[] args);
 
-		//void WriteDebug(string mesage);
-		//void WriteDebug(string message, params object[] args);
+	    void Error(string text);
+	    void Error(string format, params object[] args);
+
+	    void Warning(string text);
+	    void Warning(string format, params object[] args);
+
+	    void Debug(string mesage);
+	    void Debug(string format, params object[] args);
 	}
 }

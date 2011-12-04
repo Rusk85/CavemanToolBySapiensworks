@@ -38,7 +38,7 @@ namespace CavemanTools.Logging
 		public static void Write(this ILogWriter logger, LogLevel level, string text)
 		{
 			if (logger==null) return;
-			logger.RegisterEntry(level,text);
+			logger.Log(level,text);
 		}
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace CavemanTools.Logging
 		public static void Write(this ILogWriter logger, LogLevel level, string text,params object[] args)
 		{
 			if (logger == null) return;
-			logger.RegisterEntry(level, text,args);
+			logger.Log(level, text,args);
 		}
 
 		#region Old

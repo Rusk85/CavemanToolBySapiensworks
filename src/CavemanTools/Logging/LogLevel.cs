@@ -2,7 +2,8 @@ namespace CavemanTools.Logging
 {
 	public enum LogLevel
 	{
-		Debug,
+		Trace,
+        Debug,
 		Info,
 		Warn,
 		Error,

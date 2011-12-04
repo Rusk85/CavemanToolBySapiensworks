@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace CavemanTools.Logging
 {
-	public class LogEventLogWriter:ILogWriter
+	public class LogEventLogWriter:LogWriterBase
 	{
 		private readonly EventLog log;
 
@@ -18,13 +18,18 @@ namespace CavemanTools.Logging
 			if (string.IsNullOrEmpty(src)) src = "Application";
 			log.Source = src;
 		}
-		
-		public void RegisterEntry(LogLevel level, string text)
+
+	    public override T GetLogger<T>()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public override void Log(LogLevel level, string text)
 		{
-			RegisterEntry(level,text,null);
+			Log(level,text,null);
 		}
 
-		public void RegisterEntry(LogLevel level, string message, params object[] args)
+		public override void Log(LogLevel level, string message, params object[] args)
 		{
 			message = args == null ? message : string.Format(message, args);
 			log.WriteEntry(message,Translate(level));
@@ -34,7 +39,8 @@ namespace CavemanTools.Logging
 		{
 			switch (level)
 			{
-				case LogLevel.Debug:
+				case LogLevel.Trace:
+                case LogLevel.Debug:
 				case LogLevel.Info:return EventLogEntryType.Information;
 				case LogLevel.Warn:return EventLogEntryType.Warning;
 				case LogLevel.Fatal:
