@@ -119,7 +119,6 @@ namespace CavemanTools.Model.Validation
 		 /// Validates object of type, calling the validators for each property
 		 /// It calls both validators defined in this service as well as the declared attributes if any
 		 /// </summary>
-		 /// <typeparam name="T">type of object</typeparam>
 		 /// <param name="object">Object to validate</param>
 		 /// <returns></returns>
 		 public bool ValidateObject(T @object)

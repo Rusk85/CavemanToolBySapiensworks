@@ -2,7 +2,7 @@ namespace CavemanTools.Logging
 {
     public abstract class LogWriterBase:ILogWriter
     {
-        public abstract T GetLogger<T>();
+        public abstract T GetLogger<T>() where T:class ;
         public abstract void Log(LogLevel level, string text);
 
 

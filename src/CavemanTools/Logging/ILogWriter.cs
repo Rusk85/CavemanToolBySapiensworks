@@ -11,7 +11,7 @@ namespace CavemanTools.Logging
 	    /// </summary>
 	    /// <typeparam name="T">Logger type</typeparam>
 	    /// <returns></returns>
-        T GetLogger<T>();
+	    T GetLogger<T>() where T : class;
         void Info(string text);
 		void Info(string format, params object[] args);
 		/// <summary>
