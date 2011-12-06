@@ -23,6 +23,17 @@ namespace CavemanTools.Mvc.Extensions
 			}
 			return request.UserHostAddress;
 		}
+
+        /// <summary>
+        /// Returns true if is a POST request
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public static bool IsPost(this HttpRequestBase req)
+        {
+            if (req == null) throw new ArgumentNullException("req");
+            return req.HttpMethod == "POST";
+        }
 	}
 	
 }

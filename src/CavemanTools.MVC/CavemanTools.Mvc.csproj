@@ -54,6 +54,7 @@
     <DocumentationFile>bin\Release\CavemanTools.MVC.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -72,20 +73,27 @@
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\TimeMvcRequestAttribute.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\InvalidModelException.cs" />
+    <Compile Include="Controllers\IPopulateModel.cs" />
+    <Compile Include="Controllers\ModelIsArgumentAttribute.cs" />
+    <Compile Include="Controllers\PopulateModel.cs" />
     <Compile Include="Extensions\Common.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\HtmlHelpers.cs" />
     <Compile Include="Extensions\ThemesExtensions.cs" />
     <Compile Include="Extensions\WebAppUtils.cs" />
-    <Compile Include="FormActionResult.cs" />
+    <Compile Include="UpdateModelResult.cs" />
     <Compile Include="IpTracking.cs" />
-    <Compile Include="LocalizationAttribute.cs" />
+    <Compile Include="Attributes\LocalizationAttribute.cs" />
     <Compile Include="ModelStateWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Authentication.cs" />
     <Compile Include="Security\DemandRight.cs" />
     <Compile Include="Security\UserRightModule.cs" />
-    <Compile Include="ThemeAttribute.cs" />
+    <Compile Include="Controllers\SmartController.cs" />
+    <Compile Include="Attributes\ThemeAttribute.cs" />
     <Compile Include="ViewEngines\BuildManagerWrapper.cs" />
     <Compile Include="ViewEngines\IBuildManager.cs" />
     <Compile Include="ViewEngines\IResolver.cs" />
