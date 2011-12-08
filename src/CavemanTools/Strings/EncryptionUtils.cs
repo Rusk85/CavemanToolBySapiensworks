@@ -9,7 +9,7 @@ namespace CavemanTools.Strings
 	{
 		#region Hashes
 		/// <summary>
-		/// Hash a string using the SHA256 algorithm.  32 unicode chars, 64 bytes
+		/// Hash a string using the SHA256 algorithm. 32 bytes (hex): 64 unicode chars, 128 bytes
 		/// </summary>
 		public static string Sha256(this string plainMessage)
 		{
@@ -28,6 +28,11 @@ namespace CavemanTools.Strings
 			}
 		}
 
+        /// <summary>
+        /// hash length is 40 unicode chars
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
 		public static string Sha1(this string dt)
 		{
 			byte[] data = Encoding.UTF8.GetBytes(dt);
@@ -45,7 +50,7 @@ namespace CavemanTools.Strings
 		}
 
 		/// <summary>
-		/// Hash a string using the SHA512 algorithm.  128 bytes
+		/// Hash a string using the SHA512 algorithm.  128 bytes(hex): 256 unicode chars
 		/// </summary>
 		public static string Sha512(this string plainMessage)
 		{
@@ -65,7 +70,7 @@ namespace CavemanTools.Strings
 		}
 
 		/// <summary>
-		/// Creates MD5 sum from string, 16 chars - 32 bytes
+		/// Creates MD5 sum from string, 16 bytes(hex): 32 unicode chars
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
