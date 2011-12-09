@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using CavemanTools.Web;
 
 namespace CavemanTools.Web
 {
@@ -21,6 +22,8 @@ namespace CavemanTools.Web
             context.PreSendRequestContent += (o, args) =>
                                                  {
                                                      var ctx = HttpContext.Current;
+                                                     if (ctx.Request.MatchesStaticResource()) return;
+                                                  
                                                      if (ctx.Items.Contains(StatsKey))
                                                      {
                                                          ctx.Response.Write(FormatRequestDuration((TimeSpan)ctx.Items[StatsKey]));
@@ -36,7 +39,7 @@ namespace CavemanTools.Web
                                                          ctx.Response.Write(FormatResultDuration((TimeSpan)ctx.Items[MvcResultDuration]));
                                                      }
 
-                                                     ctx.Response.Write(string.Format("Approximate memory usage as returned by GC.GetTotalMemory: {0} MB ", GC.GetTotalMemory(false)/1024/1024));
+                                                     ctx.Response.Write(string.Format("Approximate memory usage as returned by GC.GetTotalMemory: {0} MB", GC.GetTotalMemory(false)/1024/1024));
                                                  };
         }
 

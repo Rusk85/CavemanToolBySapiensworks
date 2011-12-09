@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Linq;
 
@@ -40,6 +41,16 @@ namespace CavemanTools.Web
 			for (int i = 0; i <= l; i++) d = d + all[i]+".";
 			return d.Remove(d.Length-1,1);
 		}
-        
+
+	   
+        /// <summary>
+        /// Tries to detect if the requested path is a static resource
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public static bool MatchesStaticResource(this HttpRequest req)
+        {
+            return Regex.IsMatch(req.FilePath,@"(js|css|\.ico|\.jpg|\.gif)");
+        }
 	}
 }
