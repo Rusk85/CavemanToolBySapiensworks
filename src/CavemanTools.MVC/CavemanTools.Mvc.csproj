@@ -73,7 +73,7 @@
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\TimeMvcRequestAttribute.cs" />
+    <Compile Include="Attributes\MvcRequestMetrics.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\InvalidModelException.cs" />
     <Compile Include="Controllers\IPopulateModel.cs" />
