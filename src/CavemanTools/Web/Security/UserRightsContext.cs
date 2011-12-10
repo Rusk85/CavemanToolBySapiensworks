@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CavemanTools.Web.Security
@@ -46,11 +47,11 @@ namespace CavemanTools.Web.Security
         /// <summary>
         /// True if user is member of one of the specified groups
         /// </summary>
-        /// <param name="groupId"></param>
+        /// <param name="groupIds"></param>
         /// <returns></returns>
-        public bool IsMemberOf(params int[] groupId)
+        public bool IsMemberOf(IEnumerable<int> groupIds)
         {
-            return groupId.Any(d=>d==_group.Id);
+            return groupIds.Any(d=>d==_group.Id);
         }
 
         public bool IsAuthenticated

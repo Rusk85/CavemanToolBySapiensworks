@@ -1,4 +1,6 @@
 ﻿// gg
+using System.Collections.Generic;
+
 
 namespace CavemanTools.Web.Security
 {
@@ -7,7 +9,8 @@ namespace CavemanTools.Web.Security
         bool HasRightTo(byte right);
         int? UserId { get; }
         string Name { get; }
-        bool IsMemberOf(params int[] groupId);
+        
+        bool IsMemberOf(IEnumerable<int> groupIds);
         bool IsAuthenticated { get; }
     }
 }
