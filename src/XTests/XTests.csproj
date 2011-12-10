@@ -31,34 +31,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq">
-      <HintPath>..\..\_setup\tdd\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit">
-      <HintPath>..\..\_setup\xunit\xunit.dll</HintPath>
+      <HintPath>..\packages\xunit.1.8.0.1549\lib\xunit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cookies\EncryptedCookieTests.cs" />
     <Compile Include="Cookies\ExtensionTests.cs" />
+    <Compile Include="General.cs" />
     <Compile Include="Model\ValidationTests.cs" />
+    <Compile Include="Mvc\Controller\BaseControllerTests.cs" />
     <Compile Include="OverridableOptionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\ValidateCredentialsFactoryTests.cs" />
+    <Compile Include="Security\UserRightsContextTests.cs" />
     <Compile Include="Strings\StringParsersTests.cs" />
     <Compile Include="Validation\ValidationHelperTests.cs" />
     <Compile Include="Web\OnlineUsersTests.cs" />
     <Compile Include="Web_Request\RequestLocaleTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CavemanTools.MVC\CavemanTools.Mvc.csproj">
+      <Project>{CC64B941-C7E5-4F06-9826-77D3C54827BA}</Project>
+      <Name>CavemanTools.Mvc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CavemanTools\CavemanTools.csproj">
       <Project>{7DC37B55-C861-4740-A3CD-96C5F52ADF32}</Project>
       <Name>CavemanTools</Name>
@@ -66,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
