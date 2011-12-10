@@ -23,6 +23,7 @@ namespace CavemanTools.Web.Security.AccessRules
 
         public virtual bool HasValidCredentials(IUserRightsContext user)
         {
+            if (user == null) throw new ArgumentNullException("user");
             return user.IsMemberOf(_groups);
         }
     }
