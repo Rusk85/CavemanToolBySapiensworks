@@ -47,6 +47,13 @@
 			<Output TaskParameter="Assemblies" ItemName="AsmInfo" />
 		</GetAssemblyIdentity>
 		
+		<!-- Get the version number of the CTMvc assembly to insert into the nuspec files -->
+		<GetAssemblyIdentity AssemblyFiles="$(OutputDir)\CavemanTools.Mvc\CavemanTools.Mvc.dll">
+			<Output TaskParameter="Assemblies" ItemName="MvcAsmInfo" />
+		</GetAssemblyIdentity>
+		
+
+		
 		<!-- insert the version number into the nuspec files -->
 		<XmlUpdate
 		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
@@ -59,7 +66,7 @@
 		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
 		  		XmlFileName="$(PackageDir)\temp\CavemanTools.Mvc\CavemanToolsMvc.nuspec"
 			XPath="/package/metadata/version"
-			Value="%(AsmInfo.Version)" />
+			Value="%(MvcAsmInfo.Version)" />
 			
 			<XmlUpdate
 		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
