@@ -84,6 +84,11 @@
     <Compile Include="Web\Security\IUserContextGroup.cs" />
     <Compile Include="Web\Security\IUserRightsContext.cs" />
     <Compile Include="Web\Security\IUserRightsRepository.cs" />
+    <Compile Include="Web\Security\AccessRules\IValidateCredentials.cs" />
+    <Compile Include="Web\Security\AccessRules\IValidateCredentialsFactory.cs" />
+    <Compile Include="Web\Security\AccessRules\MembersOnlyAccess.cs" />
+    <Compile Include="Web\Security\AccessRules\MustBeInGroupAccess.cs" />
+    <Compile Include="Web\Security\AccessRules\PublicAccess.cs" />
     <Compile Include="Web\Security\UserContextGroup.cs" />
     <Compile Include="Web\Security\UserBasicRights.cs" />
     <Compile Include="Web\Security\UserRightsContext.cs" />
@@ -113,6 +118,7 @@
     <Compile Include="Web\OnlineUserInfo.cs" />
     <Compile Include="Web\OnlineUsersData.cs" />
     <Compile Include="Web\RequestPersonalizationParameter.cs" />
+    <Compile Include="Web\Security\AccessRules\ValidateCredentialsFactory.cs" />
     <Compile Include="Web\WebExtensions.cs" />
     <Compile Include="Xml\XmlToObject.cs" />
     <Compile Include="Model\IResultSet.cs" />
