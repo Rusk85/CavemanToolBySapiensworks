@@ -15,7 +15,7 @@ namespace CavemanTools.Web.Security
         /// Value of Admin right.
         /// Default is UserBasicRights.Administration
         /// </summary>
-        public static byte AdminRight= UserBasicRights.Administration;
+        public static ushort AdminRight= UserBasicRights.Administration;
 
         public UserRightsContext(int? userId,IUserContextGroup group)
         {
@@ -29,7 +29,7 @@ namespace CavemanTools.Web.Security
         /// </summary>
         /// <param name="right">right id</param>
         /// <returns></returns>
-        public bool HasRightTo(byte right)
+        public bool HasRightTo(ushort right)
         {
             return _group.Rights.Any(r => r==AdminRight || r==right);
         }

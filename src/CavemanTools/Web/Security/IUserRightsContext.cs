@@ -6,7 +6,7 @@ namespace CavemanTools.Web.Security
 {
     public interface IUserRightsContext
     {
-        bool HasRightTo(byte right);
+        bool HasRightTo(ushort right);
         int? UserId { get; }
         string Name { get; }
         

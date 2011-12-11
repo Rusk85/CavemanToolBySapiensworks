@@ -8,7 +8,7 @@ namespace CavemanTools.Mvc.Security
     public class DemandRightAttribute:AuthorizeAttribute
     {
        
-        public byte Right { get; set; }
+        public ushort Right { get; set; }
 
       public override void OnAuthorization(AuthorizationContext filterContext)
         {

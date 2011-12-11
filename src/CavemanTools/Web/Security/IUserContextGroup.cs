@@ -6,6 +6,6 @@ namespace CavemanTools.Web.Security
     {
         int Id { get; }
        
-        IEnumerable<byte> Rights { get; }
+        IEnumerable<ushort> Rights { get; }
     }
 }
