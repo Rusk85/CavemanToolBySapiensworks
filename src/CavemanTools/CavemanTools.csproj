@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="EventArgs.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
     <Compile Include="Logging\LoggingUtility.cs" />
     <Compile Include="Logging\LogLevel.cs" />
