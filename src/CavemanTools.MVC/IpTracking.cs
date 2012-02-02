@@ -4,7 +4,8 @@ using System.Web.Security;
 
 namespace CavemanTools.Mvc
 {
-	/// <summary>
+	//todo review ip tracking
+    /// <summary>
 	/// Class for tracking ip changing
 	/// </summary>
 	public class IpTracking

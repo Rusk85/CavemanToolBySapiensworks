@@ -8,24 +8,38 @@ namespace CavemanTools.Mvc.Security
     public class DemandRightAttribute:AuthorizeAttribute
     {
        
-        public ushort Right { get; set; }
+        /// <summary>
+        /// Gets or sets the right needed by the user
+        /// </summary>
+        public ushort Permission { get; set; }
 
       public override void OnAuthorization(AuthorizationContext filterContext)
         {
-           if (!AuthorizeCore(filterContext.HttpContext) || Right==UserBasicRights.None) return;
-           var dt = filterContext.HttpContext.GetUserContext();
-           if (dt == null)
+            var dt = filterContext.HttpContext.GetUserContext();
+            if (dt == null)
+            {
+                throw new InvalidOperationException("UserContext doesn't exist. You need to register the 'CavemanUserContext' global filter or the 'UserRights' http module");
+             //   HandleUnauthorizedRequest(filterContext);
+            } 
+
+          if (Permission==UserBasicRights.None)
            {
-               HandleUnauthorizedRequest(filterContext);
+               return;
            }
-           else
-           {
-               if (!dt.HasRightTo(Right))
-               {
-                   filterContext.Result = new HttpStatusCodeResult(403, "You have no rights for request");
-               }
-           }
-            
+                     
+            if (!dt.HasRightTo(Permission))
+            {
+                if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    HandleUnauthorizedRequest(filterContext);
+                }
+                else
+                {
+                    filterContext.Result = new HttpStatusCodeResult(403, "You are not authorized to view this page");    
+                }
+                
+            }
+           
         }
     }
 }

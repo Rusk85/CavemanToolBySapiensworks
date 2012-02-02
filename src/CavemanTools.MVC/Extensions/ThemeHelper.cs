@@ -1,0 +1,72 @@
+using CavemanTools.Mvc.Extensions;
+
+namespace System.Web.Mvc
+{
+    public static class ThemeExtensions
+    {
+        public const string ThemeInfoKey = "_theme-info_";
+       
+        /// <summary>
+        /// Returns the info for the current theme
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public static ThemeInfo Theme(this WebViewPage page)
+        {
+            return page.ViewContext.HttpContext.GetThemeInfo();
+        }
+
+        public static ThemeInfo GetThemeInfo(this HttpContextBase ctx)
+        {
+            var t= ctx.Get<ThemeInfo>(ThemeInfoKey);
+            if (t==null)
+            {
+                t= new ThemeInfo(ctx);
+                ctx.Items[ThemeInfoKey] = t;
+            }
+            return t;
+        }
+
+        /// <summary>
+        /// Returns the name of the current theme
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public static string GetCurrentTheme(this HttpContextBase ctx)
+        {
+            return (string)ctx.Items["theme"];
+        }
+
+	    /// <summary>
+        /// Returns a link element pointing to the css file
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>       
+        public static MvcHtmlString ThemeCss(this HtmlHelper html,string file)
+        {
+            if (string.IsNullOrEmpty(file)) throw new ArgumentException("Filename required");
+            var t = html.ViewContext.HttpContext.GetThemeInfo();
+            return new MvcHtmlString(string.Format(@"<link href=""{0}"" rel=""stylesheet"" type=""text/css""/>",t.StyleUrl+"/"+file));
+        }
+     
+        /// <summary>
+        /// Returns a script element pointing to the specified file
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static MvcHtmlString ThemeScript(this HtmlHelper html,string file)
+        {
+            if (string.IsNullOrEmpty(file)) throw new ArgumentException("Filename required");
+            var t = html.ViewContext.HttpContext.GetThemeInfo();
+            return new MvcHtmlString(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>",t.ScriptsUrl+"/"+file));
+        }
+
+        public static void UpdateTheme(this HttpContextBase ctx,string theme)
+        {
+            ctx.Items["theme"] = theme;
+        }      
+
+	}
+};

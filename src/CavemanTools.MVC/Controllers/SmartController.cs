@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using CavemanTools.Mvc.Extensions;
 
 namespace CavemanTools.Mvc.Controllers
 {
@@ -26,11 +27,16 @@ namespace CavemanTools.Mvc.Controllers
             }
         }
 
+        protected new ActionResult UpdateModel<T>(T model, Action<T> action, Func<ActionResult> success = null, Func<ActionResult> failure = null)
+        {
+            throw new NotSupportedException("UpdateModel is not supported by SmartController");
+        }
+
         void EstablishModel(IDictionary<string,object> args,ActionDescriptor ad)
         {
             if (args.Count >1)
             {
-
+                //check if model param is specified by attribute
                 var attr = ad.GetCustomAttributes(typeof (ModelIsArgumentAttribute), true).Cast<ModelIsArgumentAttribute>().FirstOrDefault();
                 if (attr!=null)
                 {
@@ -44,13 +50,18 @@ namespace CavemanTools.Mvc.Controllers
                     }
                 }
             }
+            
             if(currentModel==null)
             {
+                //we setup the first param as the model
                 currentModel = args.Values.FirstOrDefault();
             }
+            
+            //if model is a value type ignore
             if(currentModel!=null && !(currentModel.GetType().IsClass))
             {
-                throw new InvalidModelException("Model must be of a reference type"); 
+               Debug.WriteLine("Action argument which is not an object is ignored by SmartController");
+                // throw new InvalidModelException("Model must be of a reference type"); 
             }
         }
 

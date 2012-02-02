@@ -193,8 +193,9 @@ namespace CavemanTools.Mvc.ViewEngines
 			}
 
 			string areaName = GetAreaName(controllerContext.RouteData);
-			
-			string theme = controllerContext.HttpContext.Items["theme"] as string;
+
+		    string theme = controllerContext.HttpContext.GetCurrentTheme();
+                //controllerContext.HttpContext.Items["theme"] as string;
 			if (string.IsNullOrEmpty(theme)) theme = "default";
 			
 			bool usingAreas = !String.IsNullOrEmpty(areaName);

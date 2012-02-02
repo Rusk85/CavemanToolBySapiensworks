@@ -73,7 +73,8 @@
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\MvcRequestMetrics.cs" />
+    <Compile Include="Extensions\ThemeInfo.cs" />
+    <Compile Include="MvcRequestMetrics.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\InvalidModelException.cs" />
     <Compile Include="Controllers\IPopulateModel.cs" />
@@ -81,19 +82,21 @@
     <Compile Include="Controllers\PopulateModel.cs" />
     <Compile Include="Extensions\Common.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
+    <Compile Include="Extensions\ExpressionObjectValue.cs" />
+    <Compile Include="Extensions\ExpressionParamValue.cs" />
     <Compile Include="Extensions\HtmlHelpers.cs" />
-    <Compile Include="Extensions\ThemesExtensions.cs" />
-    <Compile Include="Extensions\WebAppUtils.cs" />
+    <Compile Include="Extensions\ThemeHelper.cs" />
+    <Compile Include="OverrideThemeAttribute.cs" />
+    <Compile Include="Security\CavemanUserContext.cs" />
     <Compile Include="UpdateModelResult.cs" />
     <Compile Include="IpTracking.cs" />
-    <Compile Include="Attributes\LocalizationAttribute.cs" />
+    <Compile Include="LocalizationAttribute.cs" />
     <Compile Include="ModelStateWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Authentication.cs" />
+    <Compile Include="Extensions\Authentication.cs" />
     <Compile Include="Security\DemandRight.cs" />
-    <Compile Include="Security\UserRightModule.cs" />
     <Compile Include="Controllers\SmartController.cs" />
-    <Compile Include="Attributes\ThemeAttribute.cs" />
+    <Compile Include="ThemeAttribute.cs" />
     <Compile Include="ViewEngines\BuildManagerWrapper.cs" />
     <Compile Include="ViewEngines\IBuildManager.cs" />
     <Compile Include="ViewEngines\IResolver.cs" />
@@ -102,9 +105,6 @@
     <Compile Include="ViewEngines\ThemedBuildManagerViewEngine.cs" />
     <Compile Include="ViewEngines\ThemedRazorViewEngine.cs" />
     <Compile Include="ViewEngines\ThemedVirtualPathProviderViewEngine.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Extras\default\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -133,23 +133,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Extras\default\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Extras\default\Shared\_Layout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Extras\default\Shared\Error.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Extras\default\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CavemanTools\CavemanTools.csproj">
       <Project>{7DC37B55-C861-4740-A3CD-96C5F52ADF32}</Project>
       <Name>CavemanTools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

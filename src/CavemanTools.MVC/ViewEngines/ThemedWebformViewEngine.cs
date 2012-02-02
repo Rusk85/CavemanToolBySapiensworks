@@ -22,8 +22,8 @@ namespace CavemanTools.Mvc.ViewEngines
         {
             MasterLocationFormats = new[]
                                         {
-                                            "~/Themes/{2}/{1}/{0}.master",
-                                            "~/Themes/{2}/Shared/{0}.master",
+                                            "~/Themes/{2}/Views/{1}/{0}.master",
+                                            "~/Themes/{2}/Views/Shared/{0}.master",
 
                                             "~/Views/{1}/{0}.master",
                                             "~/Views/Shared/{0}.master"
@@ -40,10 +40,10 @@ namespace CavemanTools.Mvc.ViewEngines
 
             ViewLocationFormats = new[]
                                       {
-                                          "~/Themes/{2}/{1}/{0}.aspx",
-                                          "~/Themes/{2}/{1}/{0}.ascx",
-                                          "~/Themes/{2}/Shared/{0}.aspx",
-                                          "~/Themes/{2}/Shared/{0}.ascx",
+                                          "~/Themes/{2}/Views/{1}/{0}.aspx",
+                                          "~/Themes/{2}/Views/{1}/{0}.ascx",
+                                          "~/Themes/{2}/Views/Shared/{0}.aspx",
+                                          "~/Themes/{2}/Views/Shared/{0}.ascx",
 
                                           "~/Views/{1}/{0}.aspx",
                                           "~/Views/{1}/{0}.ascx",

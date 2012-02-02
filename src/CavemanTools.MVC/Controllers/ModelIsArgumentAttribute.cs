@@ -7,7 +7,7 @@ namespace CavemanTools.Mvc.Controllers
     public class ModelIsArgumentAttribute:ActionFilterAttribute
     {
         /// <summary>
-        /// Sets the name of the action argument which is the model
+        /// Specify the name of the action parameter which is the model
         /// </summary>
         /// <param name="paramName"></param>
         public ModelIsArgumentAttribute(string paramName)
@@ -17,7 +17,7 @@ namespace CavemanTools.Mvc.Controllers
         }
 
         /// <summary>
-        /// Sets the position of the model in action's argument list
+        /// Specify the position of the model in action's argument list
         /// </summary>
         /// <param name="position"></param>
         public ModelIsArgumentAttribute(int position)
@@ -25,8 +25,14 @@ namespace CavemanTools.Mvc.Controllers
             Position = position;
         }
 
+        /// <summary>
+        /// Specify the position of the model in the parameter list
+        /// </summary>
         public int Position { get; private set; }
 
+        /// <summary>
+        /// Specify which parameter is the model
+        /// </summary>
         public string ParameterName { get; private set; }
     }
 }

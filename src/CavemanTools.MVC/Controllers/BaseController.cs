@@ -21,8 +21,9 @@ namespace CavemanTools.Mvc.Controllers
 
         /// <summary>
         /// Returns a handler with the action result to use when a model update has errors.
+        /// Used also by SmartController
         /// </summary>
-        protected virtual Func<ActionResult> ActionFailResult<T>(T model) where T : class ,new()
+        protected virtual Func<ActionResult> ActionFailResult<T>(T model)
         {
             return ViewResultError(model);
         }
@@ -36,9 +37,9 @@ namespace CavemanTools.Mvc.Controllers
         /// <typeparam name="T"></typeparam>
         /// <param name="model">view model</param>
         /// <returns></returns>
-        protected Func<ActionResult> ViewResultError<T>(T model) where T : class,new()
+        protected Func<ActionResult> ViewResultError<T>(T model) 
         {
-            return () => View(GetModel(model));
+            return () => View(PopulateModel(model));
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace CavemanTools.Mvc.Controllers
         /// <typeparam name="T"></typeparam>
         /// <param name="model">view model</param>
         /// <returns></returns>
-        protected Func<ActionResult> JsonResultError<T>(T model) where T : class,new()
+        protected Func<ActionResult> JsonResultError<T>(T model)
         {
-            return () => Json(GetModel(model));
+            return () => Json(PopulateModel(model));
         } 
         #endregion
         
@@ -63,7 +64,8 @@ namespace CavemanTools.Mvc.Controllers
         /// <param name="failure">result if model state is invalid</param>
         /// <param name="success">result if action is succesful</param>
         /// <returns></returns>
-        protected ActionResult UpdateModelResult<T>(T model, Action<T> action, Func<ActionResult> failure = null,Func<ActionResult> success = null) where T : class,new()
+        protected ActionResult UpdateModel<T>(T model, Action<T> action, Func<ActionResult> success = null, Func<ActionResult> failure = null)
+            //where T : class,new()
         {
             if (action == null) throw new ArgumentNullException("action");
             if (success == null) success = ActionSuccessResult;
@@ -92,7 +94,7 @@ namespace CavemanTools.Mvc.Controllers
         /// </summary>
         /// <typeparam name="T">TModel</typeparam>
         /// <param name="action">action</param>
-        protected void Populate<T>(Action<T> action) where T : class
+        protected void SetupModel<T>(Action<T> action) where T : class
         {
             var vm = new PopulateModel<T>(action);
             _pop.Add(vm);
@@ -104,13 +106,13 @@ namespace CavemanTools.Mvc.Controllers
         /// <typeparam name="T">View model</typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        protected T GetModel<T>(T model = null) where T : class ,new()
+        protected T PopulateModel<T>(T model)
         {
-            if (model == null) model= new T();
-
-            var filler = _pop.Find(d => d.ModelType.Equals(typeof (T))) as PopulateModel<T>;
-             if (filler!=null) filler.Map(model);
-                        
+            if (typeof(T).IsClass)
+            {
+                var filler = _pop.Find(d => d.ModelType.Equals(typeof (T))) as PopulateModel<T>;
+                if (filler != null) filler.Map(model);
+            }
             return model;
         }
 

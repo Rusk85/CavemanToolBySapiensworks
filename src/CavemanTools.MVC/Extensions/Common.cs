@@ -1,13 +1,42 @@
-using System;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+using CavemanTools.Extensions;
 
-namespace CavemanTools.Mvc.Extensions
+namespace System.Web
 {
 	public static class Common
 	{
-		
-		/// <summary>
+	    /// <summary>
+	    /// Render error view 
+	    /// </summary>
+	    /// <param name="ctx">HttpContext</param>
+	    /// <param name="view">View name</param>
+	    /// <param name="viewData">For ViewData</param>
+	    public static void HandleError(this HttpContext ctx, string view, object viewData)
+	    {
+	        if (ctx == null) throw new ArgumentNullException("ctx");
+	        if (view == null) throw new ArgumentNullException("view");
+	        ctx.Response.Clear();
+
+	        RequestContext rc = ((MvcHandler)ctx.CurrentHandler).RequestContext;
+	        string controllerName = rc.RouteData.GetRequiredString("controller");
+	        IControllerFactory factory = ControllerBuilder.Current.GetControllerFactory();
+	        IController controller = factory.CreateController(rc, controllerName);
+	        ControllerContext cc = new ControllerContext(rc, (ControllerBase)controller);
+	        ViewResult viewResult = new ViewResult { ViewName = view };
+	        if (viewData != null)
+	        {
+	            foreach (var kv in viewData.ToDictionary())
+	            {
+	                viewResult.ViewData.Add(kv.Key, kv.Value);
+	            }
+	        }
+	        viewResult.ExecuteResult(cc);
+	        ctx.Server.ClearError();
+	    }
+
+	    /// <summary>
 		/// Gets the IP of the user  detects proxy
 		/// </summary>
 		/// <param name="request"></param>
@@ -19,7 +48,7 @@ namespace CavemanTools.Mvc.Extensions
 			if ( fip!= null)
 			{
 				var ip = fip.Split(',').LastOrDefault();
-				if (!string.IsNullOrEmpty(ip)) return ip.Trim();				
+				if (!String.IsNullOrEmpty(ip)) return ip.Trim();				
 			}
 			return request.UserHostAddress;
 		}
@@ -33,6 +62,24 @@ namespace CavemanTools.Mvc.Extensions
         {
             if (req == null) throw new ArgumentNullException("req");
             return req.HttpMethod == "POST";
+        }
+
+        /// <summary>
+        /// Gets an object from context items 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ctx"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static T Get<T>(this HttpContextBase ctx,string key,T defaultValue=default(T))
+        {
+            var rez = defaultValue;
+            if (ctx.Items.Contains(key))
+            {
+                rez = (T) ctx.Items[key];
+            }
+            return rez;
         }
 	}
 	

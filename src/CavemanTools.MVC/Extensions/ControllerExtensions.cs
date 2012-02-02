@@ -1,13 +1,11 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Linq.Expressions;
 using System.Web.Routing;
 using System.Linq;
+using CavemanTools.Mvc.Extensions;
 
-namespace CavemanTools.Mvc.Extensions
+
+namespace System.Web.Mvc
 {
-    
     public static class ControllerExtensions
     {
         /// <summary>
@@ -15,13 +13,25 @@ namespace CavemanTools.Mvc.Extensions
         /// </summary>
         /// <typeparam name="T">Controller</typeparam>
         /// <param name="ctrl">controller</param>
-        /// <param name="selector">lambda</param>
+        /// <param name="selector">lambda statement</param>
         /// <returns></returns>
-        public static ActionResult RedirectToAction<T>(this T ctrl,Expression<Func<T,object>> selector) where T:Controller
+        public static ActionResult RedirectToAction<T>(this T ctrl,Expression<Action<T>> selector) where T:Controller
          {
             return new RedirectToRouteResult(ToRouteValues(selector));            
          }
 
+        /// <summary>
+        /// Redirects to the selected action from another controller
+        /// </summary>
+        /// <typeparam name="T">Controller class</typeparam>
+        /// <param name="c"></param>
+        /// <param name="selector">lambda statement</param>
+        /// <returns></returns>
+        public static ActionResult RedirectToController<T>(this Controller c,Expression<Action<T>> selector) where T:Controller
+        {
+            return new RedirectToRouteResult(ToRouteValues(selector));
+        }
+     
         /// <summary>
         /// Gets the invoked action for controller
         /// </summary>
@@ -33,13 +43,15 @@ namespace CavemanTools.Mvc.Extensions
             return ctrl.RouteData.GetRequiredString("action");
         }
 
-       internal static RouteValueDictionary ToRouteValues<T>(Expression<Func<T,object>> selector) where T:Controller
+       
+
+       internal static RouteValueDictionary ToRouteValues<T>(Expression<Action<T>> selector) where T:Controller
        {
            var method = selector.Body as MethodCallExpression;
            var action = method.Method.Name;
            var args = method.Method.GetParameters();
-           var param = method.Arguments.Cast<ConstantExpression>().ToArray();
-
+            var param = method.Arguments.ToArray();
+           
            var rv = new RouteValueDictionary();
            rv["action"] = action;
            var cname = typeof(T).Name;
@@ -49,9 +61,10 @@ namespace CavemanTools.Mvc.Extensions
                cname = cname.Remove(cidx, 10);
            }
            rv["controller"] = cname;
+          
            foreach (var p in args)
-           {
-               rv[p.Name] = param[p.Position].Value;
+           {              
+               rv[p.Name] =ExpressionParamValue.ForExpression(param[p.Position]);
            }
            return rv;
        }

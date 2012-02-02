@@ -4,7 +4,8 @@ using CavemanTools.Web;
 
 namespace CavemanTools.Mvc
 {
-	public class ThemeAttribute:ActionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method)]
+    public class ThemeAttribute:ActionFilterAttribute
 	{
 		/// <summary>
 		/// Gets or sets the default theme
@@ -37,7 +38,8 @@ namespace CavemanTools.Mvc
 			{
 				th.LoadFromCache();
 			}
-			ctx.Items["theme"] = th.Value ?? Default ?? "default";
+			ctx.UpdateTheme(th.Value ?? Default ?? "default");
+            
 		}
 	}
 }

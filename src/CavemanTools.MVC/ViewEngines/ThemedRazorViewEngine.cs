@@ -104,11 +104,11 @@ namespace CavemanTools.Mvc.ViewEngines
 			//                                   };
 			//ss
 			ViewLocationFormats = new[] {
-                                            "~/Themes/{2}/{1}/{0}.cshtml",
-                                            "~/Themes/{2}/{1}/{0}.vbhtml",
+                                            "~/Themes/{2}/Views/{1}/{0}.cshtml",
+                                            "~/Themes/{2}/Views/{1}/{0}.vbhtml",
                                             
-                                            "~/Themes/{2}/Shared/{0}.cshtml",
-                                            "~/Themes/{2}/Shared/{0}.vbhtml",
+                                            "~/Themes/{2}/Views/Shared/{0}.cshtml",
+                                            "~/Themes/{2}/Views/Shared/{0}.vbhtml",
                                             
 
                                             "~/Views/{1}/{0}.cshtml",
@@ -120,11 +120,11 @@ namespace CavemanTools.Mvc.ViewEngines
                                         };
 
 			MasterLocationFormats = new[] {
-                                              "~/Themes/{2}/{1}/{0}.cshtml",
-                                              "~/Themes/{2}/{1}/{0}.vbhtml",
+                                              "~/Themes/{2}/Views/{1}/{0}.cshtml",
+                                              "~/Themes/{2}/Views/{1}/{0}.vbhtml",
                                             
-                                              "~/Themes/{2}/Shared/{0}.cshtml",
-                                              "~/Themes/{2}/Shared/{0}.vbhtml",
+                                              "~/Themes/{2}/Views/Shared/{0}.cshtml",
+                                              "~/Themes/{2}/Views/Shared/{0}.vbhtml",
                                             
 
                                               "~/Views/{1}/{0}.cshtml",
@@ -136,11 +136,11 @@ namespace CavemanTools.Mvc.ViewEngines
                                           };
 
 			PartialViewLocationFormats = new[] {
-                                                   "~/Themes/{2}/{1}/{0}.cshtml",
-                                                   "~/Themes/{2}/{1}/{0}.vbhtml",
+                                                   "~/Themes/{2}/Views/{1}/{0}.cshtml",
+                                                   "~/Themes/{2}/Views/{1}/{0}.vbhtml",
                                                    
-                                                   "~/Themes/{2}/Shared/{0}.cshtml",
-                                                   "~/Themes/{2}/Shared/{0}.vbhtml",
+                                                   "~/Themes/{2}/Views/Shared/{0}.cshtml",
+                                                   "~/Themes/{2}/Views/Shared/{0}.vbhtml",
                                                    
 
                                                    "~/Views/{1}/{0}.cshtml",

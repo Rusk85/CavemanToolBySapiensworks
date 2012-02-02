@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using System.Web.Mvc;
 using CavemanTools.Web.Helpers;
-using System.Web.Mvc.Html;
 
 
-namespace CavemanTools.Mvc.Extensions
+namespace System.Web.Mvc
 {
     public static class HtmlHelpers
     {
@@ -18,6 +14,7 @@ namespace CavemanTools.Mvc.Extensions
             foreach (var x in source) yield return lambda(x);
         }
      
+
         /// <summary>
         /// Creates page navigation links as an ul with CSS class=pager
         /// </summary>
@@ -25,21 +22,23 @@ namespace CavemanTools.Mvc.Extensions
         /// <param name="page">Current page</param>
         /// <param name="itemsOnPage">Number of items displayed on a page</param>
         /// <param name="totalItems">Total number of items available</param>
-        /// <param name="linkFormat">link format for paging navigation - {1} is page number to be displayed, {0} is page number used in the url</param>
-        /// <param name="currentFormat">format for current page navigation</param>
+        /// <param name="linkHrefFormat">link format for paging navigation </param>
+        /// <param name="currentFormat">format for current page navigation.Default it renders
+        /// &lt;span class="current"&gt;{0}&lt;span&gt;</param>
         /// <param name="ulClass">additional CSS class for the ul</param>
         /// <returns></returns>
-        public static MvcHtmlString Pager(this HtmlHelper html, int page,int itemsOnPage,int totalItems, string linkFormat,
-                                                  string currentFormat=null,string ulClass="")
+        public static MvcHtmlString Pager(this HtmlHelper html, int page, int itemsOnPage, int totalItems, Func<int,string> linkHrefFormat,
+                                                Func<int,string> currentFormat = null, string ulClass = "")
         {
             var pl = new PaginationLinks();
             pl.Current = page;
             pl.ItemsOnPage = itemsOnPage;
             pl.TotalItems = totalItems;
-            pl.LinkFormat = linkFormat;
-            pl.CurrentFormat = currentFormat??pl.CurrentFormat;
+            pl.LinkUrlFormat = linkHrefFormat;
+            pl.CurrentPageFormat = currentFormat ?? pl.CurrentPageFormat;
             var sb = new StringBuilder();
-            sb.AppendFormat("<ul class=\"pager {0}\">",ulClass);
+            if (ulClass != "") ulClass = " " + ulClass;
+            sb.AppendFormat("<ul class=\"pager{0}\">", ulClass);
             foreach (var link in pl.GetPages())
             {
                 sb.AppendFormat("<li>{0}</li>", link);
@@ -48,18 +47,6 @@ namespace CavemanTools.Mvc.Extensions
             return new MvcHtmlString(sb.ToString());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="html"></param>
-        /// <param name="text"></param>
-        /// <param name="selector">lambda to choose route values</param>
-        /// <param name="htmlAttributes"></param>
-        /// <returns></returns>
-        public static MvcHtmlString ActionLinkTo<T>(this HtmlHelper html,string text,Expression<Func<T,object>> selector,object htmlAttributes=null) where T:Controller
-        {
-            return html.RouteLink(text, ControllerExtensions.ToRouteValues(selector), HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
-        }
+     
     }
 }

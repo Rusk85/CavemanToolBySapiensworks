@@ -1,8 +1,7 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using CavemanTools.Web;
 
-namespace CavemanTools.Mvc.Attributes
+namespace CavemanTools.Mvc
 {
     /// <summary>
     /// RequestStatsModule is required to be active, in order to show the metrics
@@ -11,20 +10,20 @@ namespace CavemanTools.Mvc.Attributes
     {
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            RequestStatsModule.HandleDuration(RequestStatsModule.MvcActionDuration);            
+            RequestMetricsModule.HandleDuration(RequestMetricsModule.MvcActionDuration);            
         }
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            RequestStatsModule.HandleDuration(RequestStatsModule.MvcActionDuration);            
+            RequestMetricsModule.HandleDuration(RequestMetricsModule.MvcActionDuration);            
         }
 
         public void OnResultExecuting(ResultExecutingContext filterContext)
         {
-            RequestStatsModule.HandleDuration(RequestStatsModule.MvcResultDuration);            
+            RequestMetricsModule.HandleDuration(RequestMetricsModule.MvcResultDuration);            
         }
         public void OnResultExecuted(ResultExecutedContext filterContext)
         {
-            RequestStatsModule.HandleDuration(RequestStatsModule.MvcResultDuration);            
+            RequestMetricsModule.HandleDuration(RequestMetricsModule.MvcResultDuration);            
         }
     }
 }
