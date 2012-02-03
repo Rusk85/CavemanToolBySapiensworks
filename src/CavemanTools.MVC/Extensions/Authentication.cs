@@ -52,7 +52,7 @@ namespace System.Web.Mvc
         }
 
         /// <summary>
-        /// Returns the user context created by the UserRights module
+        /// Returns the Caveman user context 
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -62,13 +62,23 @@ namespace System.Web.Mvc
         }
 
         /// <summary>
-        /// Returns the user context created by the UserRights module
+        /// Returns the Caveman user context 
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="page"></param>
         /// <returns></returns>
         public static IUserRightsContext GetUserContext(this WebViewPage page)
         {
             return page.ViewContext.HttpContext.GetUserContext();
+        }
+
+        /// <summary>
+        /// Returns the Caveman user context 
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static IUserRightsContext GetUserContext(this Controller c)
+        {
+            return c.HttpContext.GetUserContext();
         }
     }
 }
