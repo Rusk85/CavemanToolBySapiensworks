@@ -1,6 +1,6 @@
 using System;
 using System.Web;
-using CavemanTools.Strings;
+
 
 namespace CavemanTools.Web
 {
@@ -159,6 +159,7 @@ namespace CavemanTools.Web
 		{
 			if (response == null) throw new ArgumentNullException("response");
 			if (!_isSealed) Seal();
+            
 			if (response[Cookie.Name]==null)
 			{
 				response.Add(Cookie);

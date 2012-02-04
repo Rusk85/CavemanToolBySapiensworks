@@ -1,24 +1,46 @@
 ﻿using System;
-using CavemanTools.Extensions;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Web;
+using System.Web.Security;
+using System.Linq;
+
 
 namespace CavemanTools.Web.Security
 {
     public static class AuthenticationUtils
     {
-         public static AuthenticationTicketData Unpack(this string ticket)
+        ///// <summary>
+        ///// Register implementation of IUserId interface to use with authentication ticket
+        ///// </summary>
+        ///// <param name="t">Type of class implementing IUserId</param>
+        //public static void RegisterUserIdType(Type t)
+        //{
+        //    var data = t.GetFullTypeName();
+        //        //string.Format("{0}, {1}", t.FullName, Assembly.GetAssembly(t));
+        //    if (!_types.Contains(data))
+        //    {
+        //        _types.Add(data);
+        //    }
+        //}
+
+        //static List<string> _types = new List<string>(2) { "CavemanTools.Web.Security.UserId, CavemanTools", "CavemanTools.Web.Security.UserGuid, CavemanTools" };
+
+        public static AuthenticationTicketData Unpack(string ticket)
          {
              if (ticket == null) throw new ArgumentNullException("ticket");
              AuthenticationTicketData res=null;
-             if (!string.IsNullOrEmpty(ticket))
+             if (!String.IsNullOrEmpty(ticket))
              {
                  var items = ticket.Split(';');
                  try
                  {
                      res = new AuthenticationTicketData();
-                     res.Id = items[0].ConvertTo<int>();
-                     res.GroupId = items[1].ConvertTo<int>();
+                     res.UserId = UnpackUserId(items[0]);
+                     res.Groups = items[1].Split(',').Select(d => d.Parse<int>()).ToArray();
+                     // res.GroupId = items[1].ConvertTo<int>();
                  }
-                 catch(IndexOutOfRangeException)
+                 catch(Exception)
                  {
                      //nothing, invalid ticket
                      res = null;
@@ -31,14 +53,65 @@ namespace CavemanTools.Web.Security
         public static string Pack(this AuthenticationTicketData data)
         {
             if (data == null) throw new ArgumentNullException("data");
-            return string.Format("{0};{1}",data.Id,data.GroupId);
+            return String.Format("{0};{1}",PackUserId(data.UserId),string.Join(",",data.Groups));
+        }
+
+        static string PackUserId(IUserIdValue uid)
+        {
+            if (uid == null) throw new ArgumentNullException("uid");
+            var tpn = uid.GetType().GetFullTypeName();
+            return String.Format("{0}|{1}",tpn,uid.ToString());
+        }
+
+        static IUserIdValue UnpackUserId(string data)
+        {
+            if (String.IsNullOrEmpty(data)) return null;
+            var items = data.Split('|');
+            if (items.Length==2)
+            {
+                var typeName = items[0];
+                var uid = (IUserIdValue) Activator.CreateInstance(Type.GetType(typeName, true), items[1]);
+                return uid;               
+            }
+            return null;
+        }
+
+
+        public static HttpCookie CreateCookie(IUserIdValue userId, string name, IEnumerable<int> group, bool isPersistent = false)
+        {
+            var user = new AuthenticationTicketData() { Groups = @group, UserId = userId };
+            var ft = new FormsAuthenticationTicket(2, name, DateTime.Now, DateTime.Now.Add(FormsAuthentication.Timeout),
+                                                   isPersistent, user.Pack());
+            var ck = new HttpCookie(FormsAuthentication.FormsCookieName)
+                         {
+                             Value = FormsAuthentication.Encrypt(ft),
+                             Path = FormsAuthentication.FormsCookiePath,
+                             Domain = FormsAuthentication.CookieDomain
+                         };
+            if (isPersistent)
+            {
+                ck.Expires = DateTime.Now.Add(FormsAuthentication.Timeout);
+            }
+            return ck;
+        }
+
+        /// <summary>
+        /// Returns the user context created by the UserRights module
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static IUserRightsContext GetUserContext(this HttpContext context)
+        {
+            return context.Items[UserRightModule.ContextKey] as IUserRightsContext;
         }
     }
 
+    
+
     public class AuthenticationTicketData
     {
-        public int Id { get; set; }
-        public int GroupId { get; set; }
+        public IUserIdValue UserId { get; set; }
+        public IEnumerable<int> Groups { get; set; }
     }
 
 

@@ -1,6 +1,6 @@
 using System;
+using System.Text;
 using System.Web;
-using CavemanTools.Strings;
 
 namespace CavemanTools.Web
 {
@@ -16,7 +16,7 @@ namespace CavemanTools.Web
 		/// </summary>
 		/// <param name="paraName"></param>
 		public RequestPersonalizationParameter(string paraName)
-			: this(HttpContext.Current.Request.Cookies,HttpContext.Current.Response.Cookies,new GenericStringParser<T>(),new CookieCaching<T>(){CookieName = "_"+paraName})
+			: this(HttpContext.Current.Request.Cookies,HttpContext.Current.Response.Cookies,new GenericStringParser<T>(),new CookieCache<T>(){CookieName = "_"+paraName})
 		{
 
 		}

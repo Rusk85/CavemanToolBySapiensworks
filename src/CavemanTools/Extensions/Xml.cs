@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Xml;
-using CavemanTools.Extensions;
+using CavemanTools.Xml;
 
-namespace CavemanTools.Xml
+namespace System.Xml
 {
 	public static class Xml
 	{

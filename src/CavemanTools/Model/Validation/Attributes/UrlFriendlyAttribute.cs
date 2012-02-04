@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using CavemanTools.Strings;
 
 namespace CavemanTools.Model.Validation.Attributes
 {
@@ -16,7 +15,7 @@ namespace CavemanTools.Model.Validation.Attributes
 		public override bool IsValid(object value)
 		{
 			var t = value as string;
-			if (t.IsTrimmedNullOrEmpty()) return true;
+			if (string.IsNullOrWhiteSpace(t)) return true;
 			var s = t.MakeSlug();
 			return s.Equals(t,StringComparison.InvariantCultureIgnoreCase);
 		}

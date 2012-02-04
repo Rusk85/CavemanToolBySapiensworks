@@ -3,7 +3,7 @@ namespace CavemanTools.Model
 	/// <summary>
 	/// Used for paginating stuff
 	/// </summary>
-	public class PaginationUtility
+	public class PagerHelper
 	{
 		/// <summary>
 		/// How many items should be skipped to reach the result page

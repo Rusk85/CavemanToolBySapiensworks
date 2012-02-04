@@ -9,19 +9,23 @@ namespace CavemanTools.Web.Security
     /// </summary>
     public class UserRightsContext:IUserRightsContext
     {
-        private readonly IUserContextGroup _group;
+        private readonly IEnumerable<IUserContextGroup> _groups;
 
         /// <summary>
         /// Value of Admin right.
-        /// Default is UserBasicRights.Administration
+        /// Default is UserBasicRights.DoEverything
         /// </summary>
-        public static ushort AdminRight= UserBasicRights.Administration;
+        public static ushort AdminRight= UserBasicRights.DoEverything;
 
-        public UserRightsContext(int? userId,IUserContextGroup group)
+        public UserRightsContext(IUserIdValue userId,IUserContextGroup grp):this(userId,new[]{grp})
         {
-            if (group == null) throw new ArgumentNullException("group");
-            UserId = userId;
-            _group = group;
+            
+        }
+        public UserRightsContext(IUserIdValue userId,IEnumerable<IUserContextGroup> groups)
+        {
+            if (groups == null) throw new ArgumentNullException("groups");
+            Id = userId;
+            _groups = groups;
         }
 
         /// <summary>
@@ -31,13 +35,13 @@ namespace CavemanTools.Web.Security
         /// <returns></returns>
         public bool HasRightTo(ushort right)
         {
-            return _group.Rights.Any(r => r==AdminRight || r==right);
+            return _groups.Any(g=>g.Rights.Any(r => r==AdminRight || r==right));
         }
 
         /// <summary>
         /// Gets the user id or null if anonymous
         /// </summary>
-        public int? UserId { get; private set; }
+        public IUserIdValue Id { get; private set; }
 
         /// <summary>
         /// User name or empty if anonymous
@@ -49,14 +53,25 @@ namespace CavemanTools.Web.Security
         /// </summary>
         /// <param name="groupIds"></param>
         /// <returns></returns>
-        public bool IsMemberOf(IEnumerable<int> groupIds)
+        public bool IsMemberOf(params int[] groupIds)
         {
-            return groupIds.Any(d=>d==_group.Id);
+            return groupIds.Any(d=>_groups.Any(g=>g.Id==d));
         }
 
+        
         public bool IsAuthenticated
         {
-            get { return UserId != null; }
+            get { return Id != null; }
+        }
+        
+        Dictionary<string,object> _other= new Dictionary<string, object>();
+
+        /// <summary>
+        /// Gets a dictionary where you can store other information about the user
+        /// </summary>
+        public IDictionary<string, object> OtherData
+        {
+            get { return _other; }
         }
     }
 }

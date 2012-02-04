@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace CavemanTools.Lists
+namespace System.Collections.Generic
 {
 	/// <summary>
 	/// INterface for the result of 2 sequences comparison

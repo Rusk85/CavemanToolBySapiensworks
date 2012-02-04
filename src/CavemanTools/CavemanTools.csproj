@@ -53,12 +53,14 @@
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
-    <Compile Include="Logging\LoggingUtility.cs" />
+    <Compile Include="Extensions\LoggingUtility.cs" />
+    <Compile Include="Logging\DeveloperLog.cs" />
+    <Compile Include="Logging\LogHelper.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Lists\IModifiedSet.cs" />
     <Compile Include="Lists\ListUtils.cs" />
     <Compile Include="Logging\LogWriterBase.cs" />
-    <Compile Include="Model\PaginationUtility.cs" />
+    <Compile Include="Model\PagerHelper.cs" />
     <Compile Include="Model\Validation\Attributes\ForbidWordsAttribute.cs" />
     <Compile Include="Model\Validation\Attributes\RegularExpressionAttribute.cs" />
     <Compile Include="Model\Validation\Attributes\UrlFriendlyAttribute.cs" />
@@ -73,16 +75,18 @@
     <Compile Include="Model\Validation\ValidationServiceItem.cs" />
     <Compile Include="Model\Validation\ValidationUtils.cs" />
     <Compile Include="Lists\ModifiedSet.cs" />
-    <Compile Include="Logging\LogEventLogWriter.cs" />
+    <Compile Include="Logging\WindowsEventLogWriter.cs" />
     <Compile Include="Logging\ILogWriter.cs" />
     <Compile Include="EnumUtils.cs" />
     <Compile Include="Extensions\LinqExt.cs" />
-    <Compile Include="Reflection\AssemblyExtensions.cs" />
-    <Compile Include="Reflection\AttributeUtils.cs" />
-    <Compile Include="Reflection\ObjectCreateMethod.cs" />
-    <Compile Include="Web\RequestStatsModule.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\AttributeUtils.cs" />
+    <Compile Include="Reflection\ObjectCreator.cs" />
+    <Compile Include="Web\ContextRegistry.cs" />
+    <Compile Include="Web\RequestMetricsModule.cs" />
     <Compile Include="Web\Security\AuthenticationUtils.cs" />
     <Compile Include="Web\Security\IUserContextGroup.cs" />
+    <Compile Include="Web\Security\IUserIdValue.cs" />
     <Compile Include="Web\Security\IUserRightsContext.cs" />
     <Compile Include="Web\Security\IUserRightsRepository.cs" />
     <Compile Include="Web\Security\AccessRules\IValidateCredentials.cs" />
@@ -92,17 +96,21 @@
     <Compile Include="Web\Security\AccessRules\PublicAccess.cs" />
     <Compile Include="Web\Security\UserContextGroup.cs" />
     <Compile Include="Web\Security\UserBasicRights.cs" />
+    <Compile Include="Web\Security\UserGuid.cs" />
+    <Compile Include="Web\Security\UserId.cs" />
+    <Compile Include="Web\Security\UserIdBase.cs" />
+    <Compile Include="Web\Security\UserRightModule.cs" />
     <Compile Include="Web\Security\UserRightsContext.cs" />
-    <Compile Include="Strings\EncryptionUtils.cs" />
+    <Compile Include="Extensions\EncryptionUtils.cs" />
     <Compile Include="Strings\GenericStringParser.cs" />
     <Compile Include="Strings\IStringParser.cs" />
     <Compile Include="Extensions\ObjectExtend.cs" />
     <Compile Include="Extensions\TimeUtils.cs" />
     <Compile Include="Special\OverridableOption.cs" />
-    <Compile Include="Strings\Serializers.cs" />
-    <Compile Include="Strings\StringParsers.cs" />
-    <Compile Include="Web\CookieCaching.cs" />
-    <Compile Include="Web\CookieExtensions.cs" />
+    <Compile Include="Extensions\Serializers.cs" />
+    <Compile Include="Extensions\StringParsers.cs" />
+    <Compile Include="Web\CookieCache.cs" />
+    <Compile Include="Extensions\CookieExtensions.cs" />
     <Compile Include="Web\DefaultCookieEncryption.cs" />
     <Compile Include="Web\Email\EmailUtils.cs" />
     <Compile Include="Web\Email\TemplateEmailFormatter.cs" />
@@ -127,19 +135,13 @@
     <Compile Include="Model\Validation\DefaultValidationWrapper.cs" />
     <Compile Include="Model\ResultSet.cs" />
     <Compile Include="Extensions\CopyOptionsAttribute.cs" />
-    <Compile Include="Reflection\ReflectionUtils.cs" />
-    <Compile Include="Strings\StringUtils.cs" />
-    <Compile Include="Xml\Xml.cs" />
+    <Compile Include="Extensions\ReflectionUtils.cs" />
+    <Compile Include="Extensions\StringUtils.cs" />
+    <Compile Include="Extensions\Xml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Extras\Log4Net\log4net.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Extras\Log4Net\log4net.debug.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,6 @@
+using System.Text;
 using System.Web;
-using CavemanTools.Strings;
+
 
 namespace CavemanTools.Web
 {

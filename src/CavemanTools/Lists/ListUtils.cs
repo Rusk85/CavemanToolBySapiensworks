@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace CavemanTools.Lists
+namespace System.Collections.Generic
 {
 	public static class ListUtils
 	{
@@ -33,7 +31,7 @@ namespace CavemanTools.Lists
 
 	    /// <summary>
 	    /// Compares two sequences and returns the added or removed items.
-	    /// USe this when T doesn't implement IEquatable
+	    /// Use this when T doesn't implement IEquatable
 	    /// </summary>
 	    /// <typeparam name="T">Type</typeparam>
 	    /// <param name="fresh">Recent sequence</param>
@@ -103,7 +101,7 @@ namespace CavemanTools.Lists
         /// <param name="old"></param>
         /// <param name="fresh"></param>
         /// <returns></returns>
-        public static void Update<T>(this IList<T> old,IEnumerable<T> fresh) where T:IEquatable<T>
+        public static void Update<T>(this ICollection<T> old,IEnumerable<T> fresh) where T:IEquatable<T>
         {
             if (old == null) throw new ArgumentNullException("old");
             if (fresh == null) throw new ArgumentNullException("fresh");
@@ -125,15 +123,15 @@ namespace CavemanTools.Lists
         /// <param name="old"></param>
         /// <param name="fresh"></param>
         /// <returns></returns>
-        public static void Update<T>(this IList<T> old, IEnumerable<T> fresh,Func<T,T,bool> match)
+        public static void Update<T>(this IList<T> old, IEnumerable<T> fresh,Func<T,T,bool> isEqual)
         {
             if (old == null) throw new ArgumentNullException("old");
             if (fresh == null) throw new ArgumentNullException("fresh");
-            var diff = fresh.Compare(old,match);
+            var diff = fresh.Compare(old,isEqual);
             
             foreach (var item in diff.Removed)
             {
-                var i = old.Where(d => match(d, item)).Select((d,idx)=>idx).First();
+                var i = old.Where(d => isEqual(d, item)).Select((d,idx)=>idx).First();
                 old.RemoveAt(i);
             }
             foreach (var item in diff.Added)

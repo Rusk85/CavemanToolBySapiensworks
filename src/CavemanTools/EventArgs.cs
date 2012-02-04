@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CavemanTools
+﻿namespace System
 {
 	/// <summary>
 	/// Generic event args

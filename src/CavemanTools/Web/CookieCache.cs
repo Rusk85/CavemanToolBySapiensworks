@@ -1,6 +1,6 @@
 using System;
+using System.Text;
 using System.Web;
-using CavemanTools.Strings;
 
 namespace CavemanTools.Web
 {
@@ -9,10 +9,10 @@ namespace CavemanTools.Web
 	/// Caches a single object in a cookie
 	/// </summary>
 	/// <typeparam name="T">Type of object</typeparam>
-	public class CookieCaching<T>:ICookieCache<T>
+	public class CookieCache<T>:ICookieCache<T>
 	{
 
-		public CookieCaching()
+		public CookieCache()
 		{
 
 		}
@@ -23,7 +23,7 @@ namespace CavemanTools.Web
 		/// </summary>
 		/// <param name="name">Cookie name</param>
 		/// <param name="value">Value</param>
-		public CookieCaching(string name, T value)
+		public CookieCache(string name, T value)
 		{
 			if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 			CookieName = name;
@@ -112,7 +112,7 @@ namespace CavemanTools.Web
 		}
 
 		/// <summary>
-		/// Gets the underlaying cookie
+		/// Gets the underlying cookie
 		/// </summary>
 		public HttpCookie Cookie { get; private set; }
 	}

@@ -11,25 +11,20 @@ namespace CavemanTools.Web.Helpers
 	{
 	    public PaginationLinks()
 	    {
-	        CurrentFormat = @"<span class=""selected"">{0}</span>";            
+	        CurrentPageFormat = i=>@"<span class=""current"">"+i+"</span>";
 	    }
         private string _linkFormat;
 
-		/// <summary>
-		/// &lt;a href="/bla/{0}"&gt;{1}&lt;/a&gt;
-		/// First argument is number of page used for url, second is number of page used for text
-		/// </summary>
-		public string LinkFormat
-		{
-			get { return _linkFormat; }
-			set { _linkFormat = HttpUtility.UrlDecode(value); }
-		}
+        /// <summary>
+        /// Gets or sets the url format for links.
+        /// </summary>
+        public Func<int, string> LinkUrlFormat { get; set; }
 
 		/// <summary>
-		/// Active page html element format. Something like
-		/// &lt;span class="selected"&gt;{0}&lt;span&gt;
+		/// Active page html element format. Default it renders
+		/// &lt;span class="current"&gt;{0}&lt;span&gt;
 		/// </summary>
-		public string CurrentFormat { get; set;}
+		public Func<int,string> CurrentPageFormat { get; set;}
 		/// <summary>
 		/// Gets or sets the total results number
 		/// </summary>
@@ -49,7 +44,8 @@ namespace CavemanTools.Web.Helpers
 		/// <returns></returns>
 		public string[] GetPages()
 		{
-			var total = TotalToPages(TotalItems, ItemsOnPage);
+			if (LinkUrlFormat==null) throw new InvalidOperationException("You must set the LinkFormat property");
+            var total = TotalToPages(TotalItems, ItemsOnPage);
 			if (Current>total) Current = total;
 			var l = new List<string>();
 			var i = (int)Math.Ceiling((double) Current/10);
@@ -57,7 +53,7 @@ namespace CavemanTools.Web.Helpers
 			if (i>1)
 			{
 				l.Add(FormatPageLink(1));
-				l.Add(string.Format(LinkFormat,(i-1)*10,"[...]"));
+				l.Add(GetLinkTag((i-1)*10,"[...]"));
 			}
 			var ist = (i - 1)*10 + 1;
 			var ei = i*10;
@@ -67,21 +63,25 @@ namespace CavemanTools.Web.Helpers
 			var ti = (int)Math.Ceiling((double)total / 10);
 			if (ti>i)
 			{
-				l.Add(string.Format(LinkFormat, i * 10+1, "[...]"));
-				l.Add(FormatPageLink(total));
+                l.Add(GetLinkTag(i * 10+1, "[...]"));
+                l.Add(FormatPageLink(total));
 			}
 
 			return l.ToArray();
 		}
 
+        string GetLinkTag(int i,string text)
+        {
+            return string.Format(@"<a href=""{0}"">{1}</a>", LinkUrlFormat(i), text);
+        }
+
 		string FormatPageLink(int i)
 		{
 			if (i==Current)
 			{
-				if (string.IsNullOrEmpty(CurrentFormat)) return i.ToString();
-				return string.Format(CurrentFormat, i);
+				return CurrentPageFormat(i);
 			}
-			return string.Format(LinkFormat, i,i);
+		    return GetLinkTag(i, i.ToString());
 		}
 
 		/// <summary>

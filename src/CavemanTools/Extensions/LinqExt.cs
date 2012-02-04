@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 
-namespace CavemanTools.Extensions
+namespace System.Linq
 {
 	public static class LinqExt
 	{

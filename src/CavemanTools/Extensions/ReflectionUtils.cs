@@ -1,9 +1,6 @@
-using System;
 using System.Diagnostics;
-using System.Reflection;
-using CavemanTools.Extensions;
 
-namespace CavemanTools.Reflection
+namespace System.Reflection
 {
 	public static class ReflectionUtils
 	{
@@ -57,10 +54,10 @@ namespace CavemanTools.Reflection
 		}
 
 		/// <summary>
-		/// Gets the value of a property
+		/// Gets the value of a public property
 		/// </summary>
 		/// <param name="object">Object to get value from</param>
-		/// <param name="propertyName">Property name</param>
+		/// <param name="propertyName">Public property name</param>
 		/// <returns></returns>
 		public static object GetPropertyValue(this object @object, string propertyName)
 		{
@@ -69,6 +66,8 @@ namespace CavemanTools.Reflection
 			if (tp == null) throw new ArgumentException("Property doesn't exist.", "propertyName");
 			return tp.GetValue(@object, null);
 		}
+
+        
 
 		/// <summary>
 		/// Gets the file version of current executing assembly
@@ -87,5 +86,16 @@ namespace CavemanTools.Reflection
 		{
 			return Assembly.GetCallingAssembly().GetName().Version;
 		}
+
+        /// <summary>
+        /// Returns the full name of type, including assembly, i.e: namespace.type, assembly
+        /// </summary>
+        /// <param name="t">Type</param>
+        /// <returns></returns>
+        public static string GetFullTypeName(this Type t)
+        {
+            if (t == null) throw new ArgumentNullException("t");
+            return string.Format("{0}, {1}", t.FullName, Assembly.GetAssembly(t).GetName().Name);
+        }
 	}
 }

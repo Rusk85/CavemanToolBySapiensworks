@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace CavemanTools.Lists
+namespace System.Collections.Generic
 {
 	/// <summary>
 	/// Default implementation of IModifiedSet.

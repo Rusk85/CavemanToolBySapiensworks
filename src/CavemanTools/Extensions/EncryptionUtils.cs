@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CavemanTools.Strings
+namespace System
 {
 	public static class EncryptionUtils
 	{

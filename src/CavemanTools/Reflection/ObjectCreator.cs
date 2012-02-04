@@ -1,23 +1,22 @@
-﻿using System;
-using System.Reflection;
-using System.Reflection.Emit;
+﻿using System.Reflection.Emit;
 
-namespace CavemanTools.Reflection
+namespace System.Reflection
 {
 	/// <summary>
-	/// Class which creates a dynamic method for the given type
+	/// Create an object from type using the parameterless constructor.
+	/// Faster than Activator on average by 2x. Use it if you need to create mnay of objects of the same type
 	/// </summary>
-	public class ObjectCreateMethod
+	public class ObjectCreator
 	{
 		delegate object MethodInvoker();
 		MethodInvoker methodHandler = null;
 
-		public ObjectCreateMethod(Type type)
+		public ObjectCreator(Type type)
 		{
 			CreateMethod(type.GetConstructor(Type.EmptyTypes));
 		}
 
-		public ObjectCreateMethod(ConstructorInfo target)
+		public ObjectCreator(ConstructorInfo target)
 		{
 			CreateMethod(target);
 		}

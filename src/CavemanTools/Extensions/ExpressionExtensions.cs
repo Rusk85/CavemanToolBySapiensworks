@@ -1,10 +1,8 @@
-using System;
-using System.Linq.Expressions;
 using System.Reflection;
 
-namespace CavemanTools.Extensions
+namespace System.Linq.Expressions
 {
-	public static  class ExpressionExtensions
+    public static  class ExpressionExtensions
 	{
 		/// <summary>
 		/// Returns reflection information for a property expression

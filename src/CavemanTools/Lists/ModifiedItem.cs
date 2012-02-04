@@ -1,4 +1,4 @@
-﻿namespace CavemanTools.Lists
+﻿namespace System.Collections.Generic
 {
 	/// <summary>
 	/// Pair of old and new objects. Used by list comparator

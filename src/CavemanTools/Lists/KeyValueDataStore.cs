@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace CavemanTools.Lists
+namespace System.Collections
 {
+    /// <summary>
+    ///  A simple bag object, where a string key can hold a list of string values
+    /// </summary>
     public class KeyValueDataStore:IEnumerable<KeyValuePair<string,ICollection<string>>>
     {
         Dictionary<string,List<string>> _items= new Dictionary<string, List<string>>();

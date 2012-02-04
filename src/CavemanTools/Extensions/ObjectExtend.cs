@@ -1,12 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using CavemanTools.Reflection;
+using CavemanTools.Extensions;
 
-namespace CavemanTools.Extensions
+
+namespace System
 {
 	public static class ObjectExtend
 	{
@@ -37,7 +37,7 @@ namespace CavemanTools.Extensions
 		}
 
 		/// <summary>
-		/// Creates destination object and copies source. Use CopyOptionsAttribute to mark the properties you want ignored.
+        ///  Shallow copies source object into destination, only public properties are copied. Use CopyOptionsAttribute to mark the properties you want ignored.
         /// Use Automapper for heavy duty mapping
         /// </summary>
 		/// <seealso cref="CopyOptionsAttribute"/>
@@ -52,10 +52,10 @@ namespace CavemanTools.Extensions
 
 
 		/// <summary>
-		/// Copy source object into destination. For ocasional use.
+		/// Shallow copies source object into destination, only public properties are copied. For ocasional use.
 		/// Use Automapper for heavy duty mapping
 		/// </summary>
-		/// <exception cref="ArgumentNullException">If source or destinaiton are null</exception>
+		/// <exception cref="ArgumentNullException">If source or destination are null</exception>
 		/// <typeparam name="T">Destination Type</typeparam>
 		/// <param name="source">Object to copy from</param>
 		/// <param name="destination">Object to copy to. Unmatching or read-only properties are ignored</param>
@@ -88,7 +88,7 @@ namespace CavemanTools.Extensions
 		
 		/// <summary>
 		/// Converts object to type.
-		/// Supports conversion to Enum, DateTime,TimeSpan
+		/// Supports conversion to Enum, DateTime,TimeSpan and CultureInfo
 		/// </summary>
 		/// <exception cref="InvalidCastException"></exception>
 		/// <param name="data">Object to be converted</param>
@@ -125,7 +125,6 @@ namespace CavemanTools.Extensions
 
 		/// <summary>
 		///	Tries to convert the object to type.
-		/// If it fails it throws an exception
 		/// </summary>
 		/// <exception cref="InvalidCastException"></exception>
 		/// <exception cref="FormatException"></exception>
@@ -142,28 +141,34 @@ namespace CavemanTools.Extensions
 		
 
 		/// <summary>
-		///	 Tries to convert the object to type.
-		/// If it fails it returns the default of type.
+		///	Tries to convert the object to type.
+		/// If it fails it returns the specified default value.
 		/// </summary>
 		/// <typeparam name="T">Type to convert to</typeparam>
 		/// <param name="data">Object</param>
+		/// <param name="defaultValue">IF not set , the default for T is used</param>
 		/// <returns></returns>
-		public static T SilentConvertTo<T>(this object data)
+		public static T SilentConvertTo<T>(this object data,T defaultValue=default(T))
 		{
 			var tp = typeof (T);  
 			try
 			{
 				var temp = (T) ConvertTo(data, tp);
 				return temp;
-		}
+		    }
 			catch (InvalidCastException)
 			{
-				return default(T);
+			    return defaultValue;
 			}			
 		}
 
-
-		public static T As<T>(this object o)where  T:class 
+        /// <summary>
+        /// Shorthand for lazy people to cast an object to a type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public static T As<T>(this object o)where  T:class 
 		{
 			if (o == null) throw new ArgumentNullException("o");
 			return o as T;

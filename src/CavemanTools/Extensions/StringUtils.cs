@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CavemanTools.Strings
+namespace System
 {
 	public static class StringUtils
 	{
@@ -89,16 +89,16 @@ namespace CavemanTools.Strings
 			return value.Substring(0, l);
 		}
 		
-		/// <summary>
-		/// Returns true if the string is empty or contains only blancs
-		/// </summary>
-		/// <param name="data"></param>
-		/// <returns></returns>
-		public static bool IsTrimmedNullOrEmpty(this string data)
-		{
-			if (data == null) return true;
-			return String.IsNullOrEmpty(data.Trim());
-		}
+        ///// <summary>
+        ///// Returns true if the string is empty or contains only blancs
+        ///// </summary>
+        ///// <param name="data"></param>
+        ///// <returns></returns>
+        //public static bool IsTrimmedNullOrEmpty(this string data)
+        //{
+        //    if (data == null) return true;
+        //    return String.IsNullOrEmpty(data.Trim());
+        //}
 
 		/// <summary>
 		/// Converts strings form unicode to specified encoding

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security;
 using System.Web;
-using CavemanTools.Strings;
+
 
 namespace CavemanTools.Web
 {
@@ -10,7 +10,7 @@ namespace CavemanTools.Web
 		public DefaultCookieEncryption(string secret)
 		{
 			if (string.IsNullOrEmpty(secret) || secret.Length < 8)
-				throw new InvalidOperationException("The secret should be at least 8 characters long");
+				throw new InvalidOperationException("The secret should be between 8 and 16 characters long");
 			Secret = secret;
 		}
 		public void Encrypt(HttpCookie cookie)

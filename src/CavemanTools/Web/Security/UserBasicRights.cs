@@ -9,7 +9,7 @@ namespace CavemanTools.Web.Security
         /// <summary>
         /// Value is 1
         /// </summary>
-        public const ushort Administration = 1;
+        public const ushort DoEverything = 1;
         /// <summary>
         /// Value is 2
         /// </summary>

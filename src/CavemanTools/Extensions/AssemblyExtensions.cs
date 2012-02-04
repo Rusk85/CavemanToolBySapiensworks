@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
-namespace CavemanTools.Reflection
+namespace System.Reflection
 {
 	public static class AssemblyExtensions
 	{

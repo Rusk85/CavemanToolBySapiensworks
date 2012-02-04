@@ -1,5 +1,7 @@
 ﻿// gg
 
+using System.Collections.Generic;
+
 namespace CavemanTools.Web.Security
 {
     public interface IUserRightsRepository
@@ -9,7 +11,7 @@ namespace CavemanTools.Web.Security
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        IUserContextGroup GetGroupById(int id);
+        IEnumerable<IUserContextGroup> GetGroupsById(IEnumerable<int> ids);
 
         /// <summary>
         /// Returns the default group for anonymous users

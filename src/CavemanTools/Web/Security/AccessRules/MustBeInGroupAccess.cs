@@ -5,9 +5,9 @@ namespace CavemanTools.Web.Security.AccessRules
 {
     public class MustBeInGroupAccess:IValidateCredentials
     {
-        private IEnumerable<int> _groups;
+        private int[] _groups;
 
-        public MustBeInGroupAccess(IEnumerable<int> groups)
+        public MustBeInGroupAccess(params int[] groups)
         {
             if (groups == null) throw new ArgumentNullException("groups");
             _groups = groups;
@@ -24,7 +24,7 @@ namespace CavemanTools.Web.Security.AccessRules
         public virtual bool HasValidCredentials(IUserRightsContext user)
         {
             if (user == null) throw new ArgumentNullException("user");
-            return user.IsMemberOf(_groups);
+            return user.IsMemberOf(_groups) || user.HasRightTo(UserBasicRights.DoEverything);
         }
     }
 }

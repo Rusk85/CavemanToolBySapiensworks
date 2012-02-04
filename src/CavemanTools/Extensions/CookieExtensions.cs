@@ -1,12 +1,16 @@
-using System;
-using System.Web;
-using CavemanTools.Strings;
 
-namespace CavemanTools.Web
+using System.Text;
+
+namespace System.Web
 {
 	public static  class CookieExtensions
 	{
-		public static void Attach(this HttpCookieCollection cookies,HttpCookie cookie)
+		/// <summary>
+		/// Updates or appends a cookie to collection
+		/// </summary>
+		/// <param name="cookies"></param>
+		/// <param name="cookie"></param>
+        public static void Attach(this HttpCookieCollection cookies,HttpCookie cookie)
 		{
 			if (cookies == null) throw new ArgumentNullException("cookies");
 			if (cookie == null) throw new ArgumentNullException("cookie");

@@ -1,7 +1,4 @@
-using System;
-using System.Reflection;
-
-namespace CavemanTools.Reflection
+namespace System.Reflection
 {
 	public static class AttributeUtils
 	{

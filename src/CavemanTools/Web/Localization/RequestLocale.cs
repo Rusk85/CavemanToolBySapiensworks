@@ -1,7 +1,8 @@
 using System.Globalization;
+using System.Text;
 using System.Threading;
 using System.Web;
-using CavemanTools.Strings;
+
 
 namespace CavemanTools.Web.Localization
 {
@@ -27,7 +28,7 @@ namespace CavemanTools.Web.Localization
 		{
 			
 		}
-		public RequestLocale(HttpCookieCollection request,HttpCookieCollection response):base(request,response,new GenericStringParser<CultureInfo>(),new CookieCaching<CultureInfo>(){CookieName = "_locale"})
+		public RequestLocale(HttpCookieCollection request,HttpCookieCollection response):base(request,response,new GenericStringParser<CultureInfo>(),new CookieCache<CultureInfo>(){CookieName = "_locale"})
 		{
 			
 		}

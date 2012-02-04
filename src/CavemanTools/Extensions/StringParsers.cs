@@ -1,7 +1,7 @@
-using System;
 using System.Globalization;
+using System.Text;
 
-namespace CavemanTools.Strings
+namespace System
 {
 	public static class StringParsers
 	{

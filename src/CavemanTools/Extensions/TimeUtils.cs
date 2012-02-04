@@ -1,6 +1,6 @@
 using System;
 
-namespace CavemanTools.Extensions
+namespace System
 {
 	public static class TimeUtils
 	{
@@ -25,6 +25,11 @@ namespace CavemanTools.Extensions
 			}
 		}
 
+        /// <summary>
+        /// Outputs the 'human friendly' format (ex: 4 days ago). English only
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static string ToHuman(this TimeSpan time)
         {
             if (time.TotalDays>=365)

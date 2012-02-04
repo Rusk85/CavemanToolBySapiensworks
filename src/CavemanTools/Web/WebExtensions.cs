@@ -1,10 +1,7 @@
-using System;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Linq;
 
-namespace CavemanTools.Web
+namespace System.Web
 {
 	public static class WebExtensions
 	{
@@ -50,7 +47,7 @@ namespace CavemanTools.Web
         /// <returns></returns>
         public static bool MatchesStaticResource(this HttpRequest req)
         {
-            return Regex.IsMatch(req.FilePath,@"(js|css|\.ico|\.jpg|\.gif)");
+            return Regex.IsMatch(req.FilePath,@"(js|css|\.ico|\.jpe?g|\.gif|\.png|\.bmp)");
         }
 	}
 }

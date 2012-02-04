@@ -1,6 +1,4 @@
-using System;
-
-namespace CavemanTools.Strings
+namespace System.Text
 {
 	
 	/// <summary>

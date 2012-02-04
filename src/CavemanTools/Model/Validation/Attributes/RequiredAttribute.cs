@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using CavemanTools.Strings;
+
 
 namespace CavemanTools.Model.Validation.Attributes
 {
@@ -16,7 +16,7 @@ namespace CavemanTools.Model.Validation.Attributes
 		public override bool IsValid(object value)
 		{
 			var t = value as string;
-			if (t.IsTrimmedNullOrEmpty()) return false;
+			if (string.IsNullOrWhiteSpace(t)) return false;
 			return true;
 		}
 

@@ -1,7 +1,4 @@
-﻿using System;
-using CavemanTools.Extensions;
-
-namespace CavemanTools.Strings
+﻿namespace System.Text
 {
 	/// <summary>
 	/// Generic string parser class

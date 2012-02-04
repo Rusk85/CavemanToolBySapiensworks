@@ -3,15 +3,15 @@ using System.Diagnostics;
 
 namespace CavemanTools.Logging
 {
-	public class LogEventLogWriter:LogWriterBase
+	public class WindowsEventLogWriter:LogWriterBase
 	{
 		private readonly EventLog log;
 
-		public LogEventLogWriter(string src ):this("Application",src)
+		public WindowsEventLogWriter(string src ):this("Application",src)
 		{
 
 		}
-		public LogEventLogWriter(string logname, string src)
+		public WindowsEventLogWriter(string logname, string src)
 		{
 			log = new EventLog();
 			log.Log = logname;
