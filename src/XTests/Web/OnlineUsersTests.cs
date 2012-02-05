@@ -44,7 +44,7 @@ namespace XTests.Web
 		{
 			_ou.CheckInMember("bla",2);
 			Assert.Equal(1,_ou.CountMembers());
-			Thread.Sleep(500);
+			Thread.Sleep(510);
 			Assert.Equal(0,_ou.CountMembers());
 		}
 

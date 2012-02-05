@@ -1,5 +1,6 @@
 using System;
-using CavemanTools.Strings;
+using System.Text;
+
 using Xunit;
 
 namespace XTests.Strings

@@ -1,4 +1,5 @@
-﻿using CavemanTools.Web.Security;
+﻿using System.Reflection;
+using CavemanTools.Web.Security;
 using Xunit;
 using System;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ namespace XTests.Security
 
         public UserRightsContextTests()
         {
-            _user = new UserRightsContext(1, new UserContextGroup(1, new byte[1] {UserBasicRights.Login}));            
+            _user = new UserRightsContext(new UserId(1), new UserContextGroup(1, new ushort[1] {UserBasicRights.Login}));            
         }
 
         [Fact]
@@ -27,6 +28,18 @@ namespace XTests.Security
         {
             Assert.True(_user.HasRightTo(UserBasicRights.Login));
         }
+
+        [Fact]
+        public void pack_unpack_authentication_ticket_is_ok()
+        {
+            var auth = new AuthenticationTicketData() {UserId = new UserId(3), Groups = new[] {3, 6}};
+            var packed = auth.Pack();
+            var auth2 = AuthenticationUtils.Unpack(packed);
+            Assert.Equal(auth.Groups,auth2.Groups);
+            Assert.Equal(auth.UserId,auth2.UserId);
+            
+        }
+
         private void Write(string format, params object[] param)
         {
             Console.WriteLine(format, param);
