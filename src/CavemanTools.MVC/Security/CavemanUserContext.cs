@@ -14,4 +14,6 @@ namespace CavemanTools.Mvc.Security
             UserRightModule.CreateUserRightContext(HttpContext.Current, DependencyResolver.Current.GetService<IUserRightsRepository>());
         }
     }
+
+
 }
