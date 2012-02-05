@@ -14,31 +14,36 @@ namespace CavemanTools.Mvc
 
 		/// <summary>
 		/// Query parameter name for theme
-		/// Default is 'theme'
+		/// Default is null, which means the theme can't be changed via url query
 		/// </summary>
 		public string ParamName { get; set; }
 
+      
 		public ThemeAttribute()
 		{
-			Default = "default";
-			ParamName = "theme";
+			Default = "default";			
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
 			if (filterContext == null) throw new ArgumentNullException("filterContext");
 			var ctx = filterContext.HttpContext;
-			var th = new RequestPersonalizationParameter<string>(ParamName);
-			
-			if (th.LoadFromString(ctx.Request.QueryString[ParamName]))
-			{
-				th.Cache();
-			}
-			else
-			{
-				th.LoadFromCache();
-			}
-			ctx.UpdateTheme(th.Value ?? Default ?? "default");
+		    var theme = Default;
+            if (!string.IsNullOrEmpty(ParamName))
+            {
+                var th = new RequestPersonalizationParameter<string>(ParamName);
+
+                if (th.LoadFromString(ctx.Request.QueryString[ParamName]))
+                {
+                    th.Cache();
+                }
+                else
+                {
+                    th.LoadFromCache();
+                }
+                theme = th.Value ?? Default;
+            }
+		    ctx.UpdateTheme(theme);
             
 		}
 	}
