@@ -88,6 +88,24 @@ namespace System.Reflection
 		}
 
         /// <summary>
+        /// Returns the assembly version
+        /// </summary>
+        /// <param name="asm"></param>
+        /// <returns></returns>
+        public static Version Version(this Assembly asm)
+        {
+            return asm.GetName().Version;
+        }
+
+        /// <summary>
+        /// Returns the version of assembly containing type
+        /// </summary>
+        /// <returns></returns>
+        public static Version AssemblyVersion(this Type tp)
+        {
+            return Assembly.GetAssembly(tp).Version();
+        }
+        /// <summary>
         /// Returns the full name of type, including assembly, i.e: namespace.type, assembly
         /// </summary>
         /// <param name="t">Type</param>
