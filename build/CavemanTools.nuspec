@@ -6,9 +6,9 @@
     <authors>Mihai Mogosanu</authors>
     <owners>Mihai Mogosanu</owners>
     <licenseUrl>http://cavemantools.codeplex.com/license</licenseUrl>
-    <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/Home</projectUrl>
+    <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/CTools</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Straight forward generic toolkit for faster development with less code, written in C# on .Net 4.0. It features extension methods and helper classes for specific tasks.</description>
+    <description>Straight forward generic toolkit for faster asp.net development with less code, written in C# on .Net 4.0. It features extension methods and helper classes for specific tasks.</description>
     <language>en-US</language>
     <tags>toolkit, extension, methods, libray, caveman, tools, utility</tags>
   </metadata>
