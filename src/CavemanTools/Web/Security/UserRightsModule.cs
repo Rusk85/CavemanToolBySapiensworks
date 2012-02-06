@@ -9,13 +9,13 @@ namespace CavemanTools.Web.Security
     /// Requires an utility (like HttpModuleMagic.Mvc3 nuget package) for module dependecy injection.
     /// Automatically creates UserContext
     /// </summary>
-    public class UserRightModule:IHttpModule
+    public class UserRightsModule:IHttpModule
     {
         private Func<IUserRightsRepository> _repo;
 
         public const string ContextKey = "_usr-context_";
 
-        public UserRightModule(Func<IUserRightsRepository> repository)
+        public UserRightsModule(Func<IUserRightsRepository> repository)
         {
             if (repository == null) throw new ArgumentNullException("repository");
             _repo = repository;

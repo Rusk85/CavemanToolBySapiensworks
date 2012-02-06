@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CavemanTools.MVC3")]
+[assembly: AssemblyTitle("CavemanTools.MVC")]
 [assembly: AssemblyDescription("Utils for asp.net mvc 3")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("CavemanTools.Mvc")]
-[assembly: AssemblyCopyright("Copyright ©  2011 Mihai Mogosanu")]
+[assembly: AssemblyCopyright("Copyright ©  2012 Mihai Mogosanu")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

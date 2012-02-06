@@ -56,11 +56,11 @@
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
     <Compile Include="Extensions\LoggingUtility.cs" />
-    <Compile Include="Logging\DeveloperLog.cs" />
+    <Compile Include="Logging\DeveloperLogger.cs" />
     <Compile Include="Logging\LogHelper.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Lists\IModifiedSet.cs" />
-    <Compile Include="Lists\ListUtils.cs" />
+    <Compile Include="Extensions\ListUtils.cs" />
     <Compile Include="Logging\LogWriterBase.cs" />
     <Compile Include="Model\PagerHelper.cs" />
     <Compile Include="Model\Validation\Attributes\ForbidWordsAttribute.cs" />
@@ -101,7 +101,7 @@
     <Compile Include="Web\Security\UserGuid.cs" />
     <Compile Include="Web\Security\UserId.cs" />
     <Compile Include="Web\Security\UserIdBase.cs" />
-    <Compile Include="Web\Security\UserRightModule.cs" />
+    <Compile Include="Web\Security\UserRightsModule.cs" />
     <Compile Include="Web\Security\UserRightsContext.cs" />
     <Compile Include="Extensions\EncryptionUtils.cs" />
     <Compile Include="Strings\GenericStringParser.cs" />
@@ -130,7 +130,7 @@
     <Compile Include="Web\OnlineUsersData.cs" />
     <Compile Include="Web\RequestPersonalizationParameter.cs" />
     <Compile Include="Web\Security\AccessRules\ValidateCredentialsFactory.cs" />
-    <Compile Include="Web\WebExtensions.cs" />
+    <Compile Include="Extensions\WebExtensions.cs" />
     <Compile Include="Xml\XmlToObject.cs" />
     <Compile Include="Model\IResultSet.cs" />
     <Compile Include="Model\Validation\IValidationDictionary.cs" />

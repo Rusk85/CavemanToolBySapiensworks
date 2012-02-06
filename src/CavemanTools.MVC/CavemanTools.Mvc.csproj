@@ -90,7 +90,7 @@
     <Compile Include="Extensions\ThemeHelper.cs" />
     <Compile Include="OverrideThemeAttribute.cs" />
     <Compile Include="Security\CavemanUserContext.cs" />
-    <Compile Include="UpdateModelResult.cs" />
+    <Compile Include="Controllers\UpdateModelResult.cs" />
     <Compile Include="IpTracking.cs" />
     <Compile Include="LocalizationAttribute.cs" />
     <Compile Include="ModelStateWrapper.cs" />

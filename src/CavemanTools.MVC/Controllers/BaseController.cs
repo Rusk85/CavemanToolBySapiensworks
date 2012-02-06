@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace CavemanTools.Mvc.Controllers
 {
+    //todo review base controller for update model
     /// <summary>
     /// Base controller with methods to help you keep the actions slim. 
     /// </summary>
@@ -12,7 +13,7 @@ namespace CavemanTools.Mvc.Controllers
     {
         public BaseController()
         {
-            ActionSuccessResult=()=>{ throw new InvalidOperationException("Action success result is not set!"); };
+           ActionSuccessResult=()=>{ throw new InvalidOperationException("Action success result is not set!"); };
         }
         /// <summary>
         /// Gets or sets the default result handler when a model update is successful

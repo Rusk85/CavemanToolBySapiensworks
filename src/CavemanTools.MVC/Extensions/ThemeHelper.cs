@@ -63,6 +63,11 @@ namespace System.Web.Mvc
             return new MvcHtmlString(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>",t.ScriptsUrl+"/"+file));
         }
 
+        /// <summary>
+        /// Sets the current theme name
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <param name="theme"></param>
         public static void UpdateTheme(this HttpContextBase ctx,string theme)
         {
             ctx.Items["theme"] = theme;

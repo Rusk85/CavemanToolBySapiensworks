@@ -46,7 +46,7 @@ namespace System.Web.Mvc
         /// <param name="response"></param>
         /// <param name="userId"></param>
         /// <param name="name">username </param>
-        /// <param name="group">group id</param>
+        /// <param name="groups">group id</param>
         /// <param name="isPersistent"></param>
         /// <returns></returns>
         public static HttpCookie SetAuthCookie(this HttpResponseBase response, int userId, string name, IEnumerable<int> groups, bool isPersistent = false)
@@ -91,7 +91,7 @@ namespace System.Web.Mvc
         /// <returns></returns>
         public static IUserRightsContext GetUserContext(this HttpContextBase context)
         {
-            return context.Items[UserRightModule.ContextKey] as IUserRightsContext;
+            return context.Items[UserRightsModule.ContextKey] as IUserRightsContext;
         }
 
         /// <summary>

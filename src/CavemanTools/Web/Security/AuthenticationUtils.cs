@@ -96,13 +96,29 @@ namespace CavemanTools.Web.Security
         }
 
         /// <summary>
+        /// Creates and attaches to response the authentication cookie
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="userId"></param>
+        /// <param name="name"></param>
+        /// <param name="group"></param>
+        /// <param name="isPersistent"></param>
+        /// <returns></returns>
+        public static HttpCookie SetAuthCookie(this HttpResponse response,IUserIdValue userId, string name, IEnumerable<int> group, bool isPersistent = false)
+        {
+            var ck = CreateCookie(userId, name, group, isPersistent);
+            response.AppendCookie(ck);
+            return ck;
+        }
+
+        /// <summary>
         /// Returns the user context created by the UserRights module
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
         public static IUserRightsContext GetUserContext(this HttpContext context)
         {
-            return context.Items[UserRightModule.ContextKey] as IUserRightsContext;
+            return context.Items[UserRightsModule.ContextKey] as IUserRightsContext;
         }
     }
 

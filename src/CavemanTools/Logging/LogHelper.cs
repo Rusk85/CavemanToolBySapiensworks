@@ -25,7 +25,7 @@ namespace CavemanTools.Logging
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static ILogWriter GetLog(string name)
+        public static ILogWriter GetLogger(string name)
         {
             var t= _logs.Find(d => d.Item1 == name);
             if (t == null) throw new KeyNotFoundException("There isn't a log registered with this name");
@@ -35,7 +35,7 @@ namespace CavemanTools.Logging
         /// <summary>
         /// Gets the default registered log or the first registered log
         /// </summary>
-        public static ILogWriter DefaultLog
+        public static ILogWriter DefaultLogger
         {
             get
             {

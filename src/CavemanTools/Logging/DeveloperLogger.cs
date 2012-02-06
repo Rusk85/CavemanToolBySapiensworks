@@ -1,6 +1,6 @@
 ﻿namespace CavemanTools.Logging
 {
-    public class DeveloperLog:LogWriterBase
+    public class DeveloperLogger:LogWriterBase
     {
         public override T GetLogger<T>()
         {

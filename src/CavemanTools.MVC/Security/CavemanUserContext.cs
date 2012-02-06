@@ -11,7 +11,7 @@ namespace CavemanTools.Mvc.Security
     {
         public void OnAuthorization(AuthorizationContext filterContext)
         {
-            UserRightModule.CreateUserRightContext(HttpContext.Current, DependencyResolver.Current.GetService<IUserRightsRepository>());
+            UserRightsModule.CreateUserRightContext(HttpContext.Current, DependencyResolver.Current.GetService<IUserRightsRepository>());
         }
     }
 

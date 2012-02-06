@@ -3,9 +3,9 @@
 using System;
 using System.Web.Mvc;
 
-namespace CavemanTools.Mvc
+namespace CavemanTools.Mvc.Controllers
 {
-
+    //todo review update model result
     /// <summary>
     /// Action result handling success and failure cases for a model update
     /// </summary>
