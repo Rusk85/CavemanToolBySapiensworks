@@ -18,5 +18,7 @@ namespace CavemanTools.Web.Security
         {
             get { return _rights; }
         }
+
+        public AuthorizationScopeId ScopeId { get;  set; }
     }
 }

@@ -26,6 +26,7 @@ namespace CavemanTools.Web.Security
             if (groups == null) throw new ArgumentNullException("groups");
             Id = userId;
             _groups = groups;
+         
         }
 
         /// <summary>
@@ -35,7 +36,13 @@ namespace CavemanTools.Web.Security
         /// <returns></returns>
         public bool HasRightTo(ushort right)
         {
-            return _groups.Any(g=>g.Rights.Any(r => r==AdminRight || r==right));
+          return GetValidGroups().Any(g=>g.Rights.Any(r => r==AdminRight || r==right));
+        }
+
+        IEnumerable<IUserContextGroup> GetValidGroups()
+        {
+            if (ScopeId == null) return _groups.Where(g => g.ScopeId == null);
+            return _groups.Where(g => g.ScopeId == null || ScopeId.Equals(g.ScopeId));
         }
 
         /// <summary>
@@ -72,6 +79,18 @@ namespace CavemanTools.Web.Security
         public IDictionary<string, object> OtherData
         {
             get { return _other; }
+        }
+
+      
+        private AuthorizationScopeId _scope;
+
+        public AuthorizationScopeId ScopeId
+        {
+            get { return _scope; }
+            set
+            {
+                _scope = value;
+            }
         }
     }
 }
