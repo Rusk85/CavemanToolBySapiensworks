@@ -7,14 +7,16 @@ namespace CavemanTools.Web.Security
             Value = value;
         }
 
-        public int Value { get; private set; }
-
         public override bool Equals(AuthorizationScopeId other)
         {
             var o = other as DefaultAuthorizationScopeId;
             if (o==null) return false;
-            return o.Value == Value;
+            return (int)o.Value == (int)Value;
         }
+
+        public override object Value
+        {
+            get; protected set; }
 
         public override bool Equals(object obj)
         {

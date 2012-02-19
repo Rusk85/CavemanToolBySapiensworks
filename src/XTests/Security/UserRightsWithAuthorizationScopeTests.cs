@@ -33,7 +33,7 @@ namespace XTests.Security
            
             _user.ScopeId=new DefaultAuthorizationScopeId(1);
             Assert.True(_user.HasRightTo(3));
-            Assert.True(_user.HasRightTo(5));
+            Assert.True(_user.HasRightTo(UserBasicRights.DoEverything));
         }
 
         [Fact]
