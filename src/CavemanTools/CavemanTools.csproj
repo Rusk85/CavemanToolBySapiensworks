@@ -85,6 +85,7 @@
     <Compile Include="Extensions\AttributeUtils.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
     <Compile Include="SingletonsRegistry.cs" />
+    <Compile Include="Web\ContextInstance.cs" />
     <Compile Include="Web\ContextRegistry.cs" />
     <Compile Include="Web\RequestMetricsModule.cs" />
     <Compile Include="Web\Security\AuthenticationUtils.cs" />
