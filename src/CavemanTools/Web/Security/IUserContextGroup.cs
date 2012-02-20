@@ -13,5 +13,7 @@ namespace CavemanTools.Web.Security
         /// Gets the rights assigned to group
         /// </summary>
         IEnumerable<ushort> Rights { get; }
+
+        AuthorizationScopeId ScopeId { get; }
     }
 }

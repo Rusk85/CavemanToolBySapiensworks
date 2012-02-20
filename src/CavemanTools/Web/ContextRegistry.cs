@@ -1,31 +1,20 @@
-﻿using System;
-using System.Management.Instrumentation;
 using System.Web;
 
 namespace CavemanTools.Web
 {
-    public abstract class ContextRegistry<T> where T : class
+    /// <summary>
+    /// Helper to set/get objects in the current http context
+    /// </summary>
+    public static class ContextRegistry
     {
-        public const string ContextKey = "_context-info_";
-        
-        public static T Instance
+        public static void Set(string key,object value)
         {
-            get
-            {
-                var inst = HttpContext.Current.Items[ContextKey] as T;
-                if (inst == null)
-                {
-                    throw new InstanceNotFoundException(string.Format("An instance of {0} was not found", typeof(T).Name));
-                }
-                return inst;
-            }
+            HttpContext.Current.Items[key] = value;
         }
 
-        public static void Register(T inst)
+        public static T Get<T>(string key,T defaultValue)
         {
-            if (inst == null) throw new ArgumentNullException("inst");
-            if (HttpContext.Current.Items.Contains(ContextKey)) throw new InvalidOperationException("There is an instance registered already");
-            HttpContext.Current.Items[ContextKey] = inst;
+            return HttpContext.Current.Get(key, defaultValue);
         }
     }
 }

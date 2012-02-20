@@ -84,9 +84,13 @@
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\AttributeUtils.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
+    <Compile Include="SingletonsRegistry.cs" />
+    <Compile Include="Web\ContextInstance.cs" />
     <Compile Include="Web\ContextRegistry.cs" />
     <Compile Include="Web\RequestMetricsModule.cs" />
     <Compile Include="Web\Security\AuthenticationUtils.cs" />
+    <Compile Include="Web\Security\AuthorizationScopeId.cs" />
+    <Compile Include="Web\Security\DefaultAuthorizationScopeId.cs" />
     <Compile Include="Web\Security\IUserContextGroup.cs" />
     <Compile Include="Web\Security\IUserIdValue.cs" />
     <Compile Include="Web\Security\IUserRightsContext.cs" />

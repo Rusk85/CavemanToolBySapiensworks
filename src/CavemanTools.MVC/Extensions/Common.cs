@@ -64,23 +64,7 @@ namespace System.Web
             return req.HttpMethod == "POST";
         }
 
-        /// <summary>
-        /// Gets an object from context items 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ctx"></param>
-        /// <param name="key"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public static T Get<T>(this HttpContextBase ctx,string key,T defaultValue=default(T))
-        {
-            var rez = defaultValue;
-            if (ctx.Items.Contains(key))
-            {
-                rez = (T) ctx.Items[key];
-            }
-            return rez;
-        }
+       
 	}
 	
 }
