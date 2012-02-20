@@ -120,6 +120,18 @@ namespace CavemanTools.Web.Security
         {
             return context.Items[UserRightsModule.ContextKey] as IUserRightsContext;
         }
+
+        public static void SetAuthScope(AuthorizationScopeId scopeId)
+        {
+            if (scopeId == null) throw new ArgumentNullException("scopeId");
+            var ctx = HttpContext.Current;
+            var usr = ctx.GetUserContext();
+            if (usr!=null) usr.ScopeId = scopeId;
+            else
+            {
+                ctx.Items[UserRightsModule.ContextScopeIdKey] = scopeId;    
+            }
+        }
     }
 
     
