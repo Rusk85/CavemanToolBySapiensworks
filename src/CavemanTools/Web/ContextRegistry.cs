@@ -2,6 +2,9 @@ using System.Web;
 
 namespace CavemanTools.Web
 {
+    /// <summary>
+    /// Helper to set/get objects in the current http context
+    /// </summary>
     public static class ContextRegistry
     {
         public static void Set(string key,object value)
