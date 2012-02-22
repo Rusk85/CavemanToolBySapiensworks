@@ -1,37 +1,49 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using CavemanTools.Web.Security;
 
 namespace CavemanTools.Mvc.Security
 {
     [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method)]
-    public class DemandRightAttribute:AuthorizeAttribute
+    public class DemandRightAttribute:FilterAttribute,IAuthorizationFilter
     {
-       
+        private ushort[] _rights;
+
         /// <summary>
         /// Gets or sets the right needed by the user
-        /// </summary>
+        /// </summary>        
+        [Obsolete("Use constructor",true)]
         public ushort Permission { get; set; }
 
-      public override void OnAuthorization(AuthorizationContext filterContext)
+        /// <summary>
+        /// The authorization succeeds if user has any of the specified rights
+        /// </summary>
+        /// <param name="rights"></param>
+        public DemandRightAttribute(params ushort[] rights)
+        {
+            if (rights.Length==0) throw new InvalidOperationException("At least a right needs to be specified!");
+            _rights = rights;
+        }
+
+      public void OnAuthorization(AuthorizationContext filterContext)
         {
             var dt = filterContext.HttpContext.GetUserContext();
             if (dt == null)
             {
                 throw new InvalidOperationException("UserContext doesn't exist. You need to register the 'CavemanUserContext' global filter or the 'UserRights' http module");
-             //   HandleUnauthorizedRequest(filterContext);
-            } 
-
-          if (Permission==UserBasicRights.None)
-           {
-               return;
-           }
+             }           
+                    
+          //if ( Permission==UserBasicRights.None)
+          // {
+          //     return;
+          // }
                      
-            if (!dt.HasRightTo(Permission))
+            if (!_rights.Any(dt.HasRightTo))
             {
                 if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    HandleUnauthorizedRequest(filterContext);
+                    filterContext.Result = new HttpUnauthorizedResult();
                 }
                 else
                 {

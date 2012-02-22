@@ -36,7 +36,7 @@ namespace CavemanTools.Web.Security
         /// <returns></returns>
         public bool HasRightTo(ushort right)
         {
-          return GetValidGroups().Any(g=>g.Rights.Any(r => r==AdminRight || r==right));
+            return GetValidGroups().Any(g => g.ContainsRights(right, AdminRight));
         }
 
         IEnumerable<IUserContextGroup> GetValidGroups()
