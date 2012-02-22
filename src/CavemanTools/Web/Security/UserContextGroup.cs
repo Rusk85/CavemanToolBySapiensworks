@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CavemanTools.Web.Security
 {
@@ -17,6 +18,11 @@ namespace CavemanTools.Web.Security
         public IEnumerable<ushort> Rights
         {
             get { return _rights; }
+        }
+
+        public bool ContainsRights(params ushort[] right)
+        {
+            return _rights.Any(r => right.Any(d => d == r));
         }
 
         public AuthorizationScopeId ScopeId { get;  set; }
