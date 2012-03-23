@@ -47,7 +47,7 @@ namespace System.Web
         /// <returns></returns>
         public static bool MatchesStaticResource(this HttpRequest req)
         {
-            return Regex.IsMatch(req.FilePath,@"(js|css|\.ico|\.jpe?g|\.gif|\.png|\.bmp)");
+            return Regex.IsMatch(req.FilePath,@"\.(js|css|ico|jpe?g|gif|png|bmp|html?)");
         }
 
         /// <summary>
