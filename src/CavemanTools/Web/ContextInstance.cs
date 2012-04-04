@@ -4,11 +4,17 @@ using System.Web;
 
 namespace CavemanTools.Web
 {
+    /// <summary>
+    /// Base class for types which will be used as singletons within a http request
+    /// </summary>
+    /// <typeparam name="T">Reference type</typeparam>
     public abstract class ContextInstance<T> where T : class
     {
         public const string ContextKey = "_context-info_";
         
-        static object _lock=new object();
+        /// <summary>
+        /// Gets the single instance of type for the current request
+        /// </summary>
         public static T Instance
         {
             get
@@ -23,11 +29,16 @@ namespace CavemanTools.Web
             }
         }
 
+        /// <summary>
+        /// Register an instance of T to http context as a request scoped singleton
+        /// </summary>
+        /// <param name="inst"></param>
         protected void Register(T inst)
         {
             if (inst == null) throw new ArgumentNullException("inst");
             var key = ContextKey + (inst.GetType().Name);
-            lock (_lock)
+            
+            lock (HttpContext.Current.Items.SyncRoot)
             {
                 //if (HttpContext.Current.Items.Contains(key)) throw new InvalidOperationException("There is an instance registered already");
                 if (!HttpContext.Current.Items.Contains(key)) HttpContext.Current.Items[key] = inst;
