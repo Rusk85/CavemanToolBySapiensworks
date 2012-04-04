@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using CavemanTools.Web.Security;
 
 namespace CavemanTools.Mvc.Security
 {
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method,AllowMultiple = true)]
     public class DemandRightAttribute:FilterAttribute,IAuthorizationFilter
     {
         private ushort[] _rights;

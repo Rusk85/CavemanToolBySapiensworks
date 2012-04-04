@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Reflection;
 
 namespace CavemanTools.Mvc.Controllers
 {
@@ -14,12 +15,19 @@ namespace CavemanTools.Mvc.Controllers
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-           
+            var attr = filterContext.ActionDescriptor.GetSingleAttribute<SmartActionAttribute>();
+            if (attr==null)
+            {
+                HandleActionExecuting(filterContext);
+            }
+        }
+
+        internal void HandleActionExecuting(ActionExecutingContext filterContext)
+        {
             if (HttpContext.Request.IsPost())
             {
                 currentModel = null;
-               EstablishModel(filterContext.ActionParameters,filterContext.ActionDescriptor);
-               
+                EstablishModel(filterContext.ActionParameters, filterContext.ActionDescriptor);
                 if (!ModelState.IsValid)
                 {
                     filterContext.Result = ActionFailResult(currentModel)();
@@ -67,8 +75,16 @@ namespace CavemanTools.Mvc.Controllers
 
         private dynamic currentModel;
 
-    
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            var attr = filterContext.ActionDescriptor.GetSingleAttribute<SmartActionAttribute>();
+            if (attr == null)
+            {
+                HandleActionExecuted(filterContext);
+            }
+        }
+
+        internal void HandleActionExecuted(ActionExecutedContext filterContext)
         {
             if (filterContext.Canceled) return;
             if (filterContext.HttpContext.Request.IsPost())
