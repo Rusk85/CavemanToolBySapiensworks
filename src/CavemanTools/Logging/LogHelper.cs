@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace CavemanTools.Logging
 {
-    public static class LogHelper
+     /// <summary>
+        /// Not thread safe
+        /// </summary>
+	public static class LogHelper
     {
         /// <summary>
-        /// Register a log
+        /// Register a log, not thread safe
         /// </summary>
         /// <param name="log"></param>
         /// <param name="name"></param>
