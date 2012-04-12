@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Management.Instrumentation;
 using System.Web;
 
 namespace CavemanTools.Web
@@ -23,7 +22,7 @@ namespace CavemanTools.Web
                 var inst = HttpContext.Current.Items[key] as T;
                 if (inst == null)
                 {
-                    throw new InstanceNotFoundException(string.Format("An instance of {0} was not found", typeof(T).Name));
+                    throw new InvalidOperationException(string.Format("An instance of {0} was not found", typeof(T).Name));
                 }
                 return inst;
             }
