@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace CavemanTools.Model.Validation
 {
 	/// <summary>
@@ -21,5 +23,7 @@ namespace CavemanTools.Model.Validation
         /// Gets if object state is valid
         /// </summary>
         bool IsValid { get; }
+
+	    void CopyTo(IValidationDictionary other);
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using System.Web.Routing;
 using System.Linq;
+using CavemanTools.Model;
+using CavemanTools.Mvc;
 using CavemanTools.Mvc.Extensions;
 
 
@@ -43,7 +45,61 @@ namespace System.Web.Mvc
             return ctrl.RouteData.GetRequiredString("action");
         }
 
-       
+        /// <summary>
+        /// Handle the specified command using the current DependecyResolver
+        ///  to resolve the command handler. 
+        /// Use <see cref="ValidationErrorsException"/> in the command handler 
+        /// to send the errors to the ModelState
+        /// </summary>
+        /// <typeparam name="T">Reference type</typeparam>
+        /// <param name="ctrl">Controller</param>
+        /// <param name="cmd">Command object</param>
+        public static void Handle<T>(this Controller ctrl,T cmd) where T:class
+        {
+            ctrl.Handle(cmd,DependencyResolver.Current);
+        }
+
+        /// <summary>
+        /// Handle the specified command using the specified command handler
+        /// Use <see cref="ValidationErrorsException"/> in the command handler 
+        /// to send the errors to the ModelState
+        /// </summary>
+        /// <typeparam name="T">Reference type</typeparam>
+        /// <param name="ctrl">Controller</param>
+        /// <param name="cmd">Command object</param>
+        /// <param name="handler">Handler implementation </param>
+        public static void Handle<T>(this Controller ctrl,T cmd,IHandleCommand<T> handler) where T:class
+        {
+            if (ctrl == null) throw new ArgumentNullException("ctrl");
+            if (cmd == null) throw new ArgumentNullException("cmd");
+            if (handler == null) throw new ArgumentNullException("handler");
+
+            try 
+            {
+               handler.Handle(cmd);
+            }
+            catch (ValidationErrorsException ex)
+            {
+                var md = new ModelStateWrapper(ctrl.ModelState);
+                ex.Errors.CopyTo(md);
+            }
+        }
+
+        /// <summary>
+        /// Handle the specified command using the specified dependency resolver
+        ///  to resolve the command handler
+        /// </summary>
+        /// <typeparam name="T">Reference type</typeparam>
+        /// 
+        /// <param name="ctrl">Controller</param>
+        /// <param name="ioc">Implementation of IoC container</param>
+        /// <param name="cmd">Command object</param>
+       public static void Handle<T>(this Controller ctrl,T cmd,IDependencyResolver ioc) where T:class 
+       {
+           if (ioc == null) throw new ArgumentNullException("ioc");
+           var handler = ioc.GetService<IHandleCommand<T>>();
+           Handle(ctrl,cmd,handler);
+       }
 
        internal static RouteValueDictionary ToRouteValues<T>(Expression<Action<T>> selector) where T:Controller
        {
