@@ -55,7 +55,25 @@ namespace CavemanTools.Logging
                     }
 
                 }
-                return null;
+                return new NullLogger();
+            }
+        }
+
+        class NullLogger:LogWriterBase
+        {
+            public override T GetLogger<T>()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void Log(LogLevel level, string text)
+            {
+                
+            }
+
+            public override void Log(LogLevel level, string message, params object[] args)
+            {
+                
             }
         }
     }
