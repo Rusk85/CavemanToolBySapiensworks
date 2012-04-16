@@ -16,9 +16,7 @@ namespace CavemanTools.Mvc
 		{
 			_modelState = modelState;			
 		}
-	
-
-	
+	      
 
 		#region IValidationDictionary Members
 
@@ -37,6 +35,11 @@ namespace CavemanTools.Mvc
 			get { return _modelState.IsValid; }
 		}
 
-		#endregion
+	    public void CopyTo(IValidationDictionary other)
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    #endregion
 	}
 }

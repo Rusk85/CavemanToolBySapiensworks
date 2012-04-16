@@ -6,7 +6,7 @@ using System.Text;
 namespace CavemanTools.Model.Validation
 {
 	/// <summary>
-	/// Collects error messages from vlaidation
+	/// Collects error messages from validation
 	/// </summary>
 	public class DefaultValidationWrapper:IValidationDictionary, IDataErrorInfo
 	{
@@ -19,7 +19,8 @@ namespace CavemanTools.Model.Validation
 		/// <param name="errorMessage">Text</param>
 		public void AddError(string key, string errorMessage)
 		{
-			err.Add(key,errorMessage);
+		    if (key == null) throw new ArgumentNullException("key");
+            err.Add(key,errorMessage);
 		}
 
 		public bool HasErrors
@@ -35,8 +36,18 @@ namespace CavemanTools.Model.Validation
 			get { return err.Count == 0; }
 		}
 
-	
-		public string this[string columnName]
+        /// <summary>
+        /// copies errors to another dictionary
+        /// </summary>
+        /// <param name="other"></param>
+	    public void CopyTo(IValidationDictionary other)
+	    {
+	        if (other == null) throw new ArgumentNullException("other");
+            foreach(var kv in err) other.AddError(kv.Key,kv.Value);
+	    }
+
+
+	    public string this[string columnName]
 		{
 			get { 
 				if (err.ContainsKey(columnName)) return err[columnName];
