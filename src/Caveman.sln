@@ -29,10 +29,13 @@ Global
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{04FE1493-FDD4-489F-965A-03E9172C5547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04FE1493-FDD4-489F-965A-03E9172C5547}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04FE1493-FDD4-489F-965A-03E9172C5547}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04FE1493-FDD4-489F-965A-03E9172C5547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FE1493-FDD4-489F-965A-03E9172C5547}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FE1493-FDD4-489F-965A-03E9172C5547}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MvcApplication1\MvcApplication1.csproj
 	EndGlobalSection
 EndGlobal
