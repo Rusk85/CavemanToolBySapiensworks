@@ -4,9 +4,9 @@ using System.Web.Mvc;
 namespace CavemanTools.Mvc.Controllers
 {
     /// <summary>
-    /// Use this attribute to trigger the SmartController automatic model state handling
+    /// Use this attribute to trigger the SmartController automatic model validation handling
     /// AFTER other action filters.
-    /// By default, SmartController handles the model state BEFORE any other controller/action filter
+    /// By default, SmartController handles the model validation BEFORE any other controller/action filter
     /// and if the model state is invalid, the other filters are NOT triggered.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
