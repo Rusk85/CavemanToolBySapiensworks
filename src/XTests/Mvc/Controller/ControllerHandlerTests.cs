@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using CavemanTools.Model;
-using CavemanTools.Model.Validation;
 using CavemanTools.Mvc.UnitTesting;
 using Xunit;
 using Moq;
@@ -25,9 +24,7 @@ namespace XTests.Mvc.Controller
                 if (command.Id==0) throw new Exception();
                 if (command.Id==7)
                 {
-                    var err = new DefaultValidationWrapper();
-                    err.AddError("test","hello");
-                    throw new ValidationErrorsException(err);
+                    throw new BusinessRuleException("test","hello");
                 }
                 command.Handled = true;
             }
@@ -78,6 +75,19 @@ namespace XTests.Mvc.Controller
         public void any_non_validate_errors_exception_is_let_through()
         {
             Assert.Throws<Exception>(() => _ctrl.Handle(new Command(), _ioc.Object));
+        }
+
+        [Fact]
+        public void process_command_with_lambda()
+        {
+            Assert.Equal(0,_ctrl.Process(new Command(), c => 0));
+        }
+
+        [Fact]
+        public void null_handler_throws()
+        {
+            Func<Command, int> f = null;
+            Assert.Throws<ArgumentNullException>(() => _ctrl.Process(new Command(),f));
         }
 
         private void Write(string format, params object[] param)

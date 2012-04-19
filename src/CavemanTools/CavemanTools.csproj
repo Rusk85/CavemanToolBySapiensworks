@@ -61,7 +61,9 @@
     <Compile Include="Extensions\ListUtils.cs" />
     <Compile Include="Logging\LogWriterBase.cs" />
     <Compile Include="Model\IdName.cs" />
+    <Compile Include="Model\IHandleCommand.cs" />
     <Compile Include="Model\PagerHelper.cs" />
+    <Compile Include="Model\BusinessRuleException.cs" />
     <Compile Include="Model\Validation\Attributes\ForbidWordsAttribute.cs" />
     <Compile Include="Model\Validation\Attributes\RegularExpressionAttribute.cs" />
     <Compile Include="Model\Validation\Attributes\UrlFriendlyAttribute.cs" />
