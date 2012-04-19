@@ -100,6 +100,7 @@
     <Compile Include="Security\DemandRight.cs" />
     <Compile Include="Controllers\SmartController.cs" />
     <Compile Include="ThemeAttribute.cs" />
+    <Compile Include="UnitTesting\FakeController.cs" />
     <Compile Include="ViewEngines\BuildManagerWrapper.cs" />
     <Compile Include="ViewEngines\IBuildManager.cs" />
     <Compile Include="ViewEngines\IResolver.cs" />
