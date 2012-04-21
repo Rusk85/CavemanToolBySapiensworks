@@ -162,17 +162,29 @@ namespace System
 			}			
 		}
 
+        
         /// <summary>
         /// Shorthand for lazy people to cast an object to a type
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="o"></param>
         /// <returns></returns>
-        public static T As<T>(this object o)where  T:class 
-		{
-			if (o == null) throw new ArgumentNullException("o");
-			return o as T;
+        [Obsolete("Use the Cast<T> method")]
+        public static T As<T>(this object o)
+        {
+            return o.Cast<T>() ;
 		}
-		
+
+        /// <summary>
+        /// Shorthand for lazy people to cast an object to a type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public static T Cast<T>(this object o)
+        {
+            return (T)o;
+        }
+
 	}
 }								 

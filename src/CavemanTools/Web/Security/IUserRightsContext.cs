@@ -35,6 +35,8 @@ namespace CavemanTools.Web.Security
         /// <summary>
         /// Gets a dictionary where you can store other information about the user
         /// </summary>
-        IDictionary<string, object> OtherData { get; }        
+        IDictionary<string, object> OtherData { get; }
+
+        AuthorizationScopeId ScopeId { get; set; }
     }
 }

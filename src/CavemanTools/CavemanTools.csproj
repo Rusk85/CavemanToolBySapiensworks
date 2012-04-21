@@ -10,13 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CavemanTools</RootNamespace>
     <AssemblyName>CavemanTools</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,13 +31,10 @@
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>bin\Release\CavemanTools.XML</DocumentationFile>
-    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -47,22 +42,28 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventArgs.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\Images.cs" />
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
     <Compile Include="Extensions\LoggingUtility.cs" />
+    <Compile Include="Lists\TrackedListItem.cs" />
     <Compile Include="Logging\DeveloperLogger.cs" />
     <Compile Include="Logging\LogHelper.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Lists\IModifiedSet.cs" />
     <Compile Include="Extensions\ListUtils.cs" />
     <Compile Include="Logging\LogWriterBase.cs" />
+    <Compile Include="Model\IdName.cs" />
+    <Compile Include="Model\IHandleCommand.cs" />
     <Compile Include="Model\PagerHelper.cs" />
+    <Compile Include="Model\BusinessRuleException.cs" />
     <Compile Include="Model\Validation\Attributes\ForbidWordsAttribute.cs" />
     <Compile Include="Model\Validation\Attributes\RegularExpressionAttribute.cs" />
     <Compile Include="Model\Validation\Attributes\UrlFriendlyAttribute.cs" />
@@ -84,9 +85,17 @@
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\AttributeUtils.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
-    <Compile Include="Web\ContextRegistry.cs" />
+    <Compile Include="SingletonsRegistry.cs" />
+    <Compile Include="Web\ContextInstance.cs" />
+    <Compile Include="Web\HttpContextRegistry.cs" />
     <Compile Include="Web\RequestMetricsModule.cs" />
     <Compile Include="Web\Security\AuthenticationUtils.cs" />
+    <Compile Include="Web\Security\AuthorizationScopeId.cs" />
+    <Compile Include="Web\Security\DefaultAuthorizationScopeId.cs" />
+    <Compile Include="Web\Security\HashedPassword.cs" />
+    <Compile Include="Web\Security\IHashPassword.cs" />
+    <Compile Include="Web\Security\Password.cs" />
+    <Compile Include="Web\Security\Sha256Password.cs" />
     <Compile Include="Web\Security\IUserContextGroup.cs" />
     <Compile Include="Web\Security\IUserIdValue.cs" />
     <Compile Include="Web\Security\IUserRightsContext.cs" />
