@@ -93,7 +93,8 @@
     <Compile Include="Web\Security\AuthorizationScopeId.cs" />
     <Compile Include="Web\Security\DefaultAuthorizationScopeId.cs" />
     <Compile Include="Web\Security\HashedPassword.cs" />
-    <Compile Include="Web\Security\IHashingStrategy.cs" />
+    <Compile Include="Web\Security\IHashPassword.cs" />
+    <Compile Include="Web\Security\Password.cs" />
     <Compile Include="Web\Security\Sha256Password.cs" />
     <Compile Include="Web\Security\IUserContextGroup.cs" />
     <Compile Include="Web\Security\IUserIdValue.cs" />
