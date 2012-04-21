@@ -5,9 +5,9 @@
 	<title>CavemanTools Mvc</title>
     <version></version> 
     <authors>Mihai Mogosanu</authors>
-    <description>Asp.Net Mvc 3 toolkit for faster development with less code. Features theming support for both Razor and WebForm engines and easy to use helpers. </description> 
+    <description>Asp.Net Mvc 3 toolkit for faster development with less code. Features SmartController, theming support for both Razor and WebForm engines and easy to use helpers. </description> 
     <language>en-US</language>
-	<tags>toolkit utility mvc asp.net viewengine themes</tags>
+	<tags>toolkit utility mvc asp.net viewengine themes skins dry controller</tags>
     <licenseUrl>http://cavemantoolsmvc.codeplex.com/license</licenseUrl>
     <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/CToolsMvc</projectUrl>
 	<dependencies>

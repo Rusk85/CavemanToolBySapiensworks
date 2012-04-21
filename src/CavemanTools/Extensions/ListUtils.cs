@@ -150,5 +150,19 @@ namespace System.Collections.Generic
 		{
 			return items == null || !items.Any();
 		}
+
+        /// <summary>
+        /// Gets typed value from dictionary or a default value if key is missing
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dic"></param>
+        /// <param name="key"></param>
+        /// <param name="defValue">Value to return if dictionary doesn't contain the key</param>
+        /// <returns></returns>
+        public static T GetValue<T>(this IDictionary<string,object> dic,string key,T defValue=default(T))
+        {
+            if (dic.ContainsKey(key)) return dic[key].Cast<T>();
+            return defValue;
+        }
 	}
 }

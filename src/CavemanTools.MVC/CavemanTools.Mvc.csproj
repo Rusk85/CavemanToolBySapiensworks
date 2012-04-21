@@ -75,6 +75,7 @@
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SmartActionAttribute.cs" />
     <Compile Include="Extensions\ThemeInfo.cs" />
     <Compile Include="MvcRequestMetrics.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Security\DemandRight.cs" />
     <Compile Include="Controllers\SmartController.cs" />
     <Compile Include="ThemeAttribute.cs" />
+    <Compile Include="UnitTesting\FakeController.cs" />
     <Compile Include="ViewEngines\BuildManagerWrapper.cs" />
     <Compile Include="ViewEngines\IBuildManager.cs" />
     <Compile Include="ViewEngines\IResolver.cs" />

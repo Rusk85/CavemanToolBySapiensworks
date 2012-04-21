@@ -4,32 +4,35 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Reflection;
 
 namespace CavemanTools.Mvc.Controllers
 {
     /// <summary>
     /// Base controller that handles automatically invalid model state.
     /// </summary>
-    public abstract class SmartController:BaseController
+    public abstract class SmartController:Controller
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-           
+            var attr = filterContext.ActionDescriptor.GetSingleAttribute<SmartActionAttribute>();
+            if (attr==null)
+            {
+                HandleActionExecuting(filterContext);
+            }
+        }
+
+        internal void HandleActionExecuting(ActionExecutingContext filterContext)
+        {
             if (HttpContext.Request.IsPost())
             {
                 currentModel = null;
-               EstablishModel(filterContext.ActionParameters,filterContext.ActionDescriptor);
-               
+                EstablishModel(filterContext.ActionParameters, filterContext.ActionDescriptor);
                 if (!ModelState.IsValid)
                 {
                     filterContext.Result = ActionFailResult(currentModel)();
                 }
             }
-        }
-
-        protected new ActionResult UpdateModel<T>(T model, Action<T> action, Func<ActionResult> success = null, Func<ActionResult> failure = null)
-        {
-            throw new NotSupportedException("UpdateModel is not supported by SmartController");
         }
 
         void EstablishModel(IDictionary<string,object> args,ActionDescriptor ad)
@@ -66,9 +69,18 @@ namespace CavemanTools.Mvc.Controllers
         }
 
         private dynamic currentModel;
+        private List<IPopulateModel> _pop = new List<IPopulateModel>();
 
-    
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            var attr = filterContext.ActionDescriptor.GetSingleAttribute<SmartActionAttribute>();
+            if (attr == null)
+            {
+                HandleActionExecuted(filterContext);
+            }
+        }
+
+        internal void HandleActionExecuted(ActionExecutedContext filterContext)
         {
             if (filterContext.Canceled) return;
             if (filterContext.HttpContext.Request.IsPost())
@@ -78,6 +90,64 @@ namespace CavemanTools.Mvc.Controllers
                     filterContext.Result = ActionFailResult(currentModel)();
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns a ViewResult handler
+        /// Default ActionFailResult
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model">view model</param>
+        /// <returns></returns>
+        protected Func<ActionResult> ViewResultError<T>(T model) 
+        {
+            return () => View((object) PopulateModel<T>(model));
+        }
+
+        /// <summary>
+        /// Returns a JsonResult handler
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model">view model</param>
+        /// <returns></returns>
+        protected Func<ActionResult> JsonResultError<T>(T model)
+        {
+            return () => Json(PopulateModel(model));
+        }
+
+        /// <summary>
+        /// Returns a handler with the action result to use when a model update has errors.
+       /// </summary>
+        protected virtual Func<ActionResult> ActionFailResult<T>(T model)
+        {
+            return ViewResultError(model);
+        }
+
+        /// <summary>
+        /// Sets the action which populates a view model
+        /// </summary>
+        /// <typeparam name="T">TModel</typeparam>
+        /// <param name="action">action</param>
+        protected void SetupModel<T>(Action<T> action) where T : class
+        {
+            var vm = new PopulateModel<T>(action);
+            _pop.Add(vm);
+        }
+
+        /// <summary>
+        /// Get view model with populated data
+        /// </summary>
+        /// <typeparam name="T">View model</typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        protected T PopulateModel<T>(T model)
+        {
+            if (typeof(T).IsClass)
+            {
+                var filler = _pop.Find(d => d.ModelType.Equals(typeof (T))) as PopulateModel<T>;
+                if (filler != null) filler.Map(model);
+            }
+            return model;
         }
     }
 }
