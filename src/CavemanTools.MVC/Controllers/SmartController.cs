@@ -61,7 +61,7 @@ namespace CavemanTools.Mvc.Controllers
             }
             
             //if model is a value type ignore
-            if(currentModel!=null && !(currentModel.GetType().IsClass))
+            if(currentModel!=null && !(currentModel.GetType().IsClass) && !(currentModel is string))
             {
                Debug.WriteLine("Action argument which is not an object is ignored by SmartController");
                 // throw new InvalidModelException("Model must be of a reference type"); 
