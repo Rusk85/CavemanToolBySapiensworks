@@ -10,9 +10,10 @@ namespace CavemanTools.Web
         public const string StatsKey = "_req-duration";
         public const string MvcActionDuration = "_req-mvcaction-duration";
         public const string MvcResultDuration = "_req-mvcresult-duration";
-        
+        private bool _debug;
         public void Init(HttpApplication context)
         {
+            _debug = HttpContext.Current.IsDebuggingEnabled;
             context.BeginRequest += (o, args) =>
                                                     {
                                                        HandleDuration(StatsKey);
@@ -23,13 +24,15 @@ namespace CavemanTools.Web
                                                      HandleDuration(StatsKey); 
                                                      var ctx = HttpContext.Current;
                                                      if (!CanAppendStats(ctx)) return;
-                                                   
+                                                    if (!_debug) ctx.Response.Write("<!-- ");
+                                                     
                                                      HandleTimer(StatsKey,FormatRequestDuration);
                                                      HandleTimer(MvcActionDuration,FormatActionDuration);
                                                      HandleTimer(MvcResultDuration,FormatResultDuration);
                                                      
                                                      
                                                      ctx.Response.Write(string.Format("Approximate memory usage as returned by GC.GetTotalMemory: {0} MB", GC.GetTotalMemory(false)/1024/1024));
+                                                     if (!_debug) ctx.Response.Write("-->");
                                                  };
         }
 
