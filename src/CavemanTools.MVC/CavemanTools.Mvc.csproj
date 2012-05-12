@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Controllers\SmartActionAttribute.cs" />
     <Compile Include="Extensions\ThemeInfo.cs" />
+    <Compile Include="AjaxRequestAttribute.cs" />
     <Compile Include="MvcRequestMetrics.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\InvalidModelException.cs" />

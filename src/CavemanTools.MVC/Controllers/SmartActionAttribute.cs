@@ -12,6 +12,10 @@ namespace CavemanTools.Mvc.Controllers
     [AttributeUsage(AttributeTargets.Method)]
     public class SmartActionAttribute:ActionFilterAttribute
     {
+        /// <summary>
+        /// True to disable smart controller for this action only
+        /// </summary>
+        public bool Ignore { get; set; }
         public SmartActionAttribute()
         {
             Order = 100;
@@ -20,14 +24,14 @@ namespace CavemanTools.Mvc.Controllers
         {
             var ctrl = (SmartController) filterContext.Controller;
             if (ctrl==null) throw new NotSupportedException("This attribute works only with SmartController");
-            ctrl.HandleActionExecuting(filterContext);
+            if (!Ignore)ctrl.HandleActionExecuting(filterContext);
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var ctrl = (SmartController)filterContext.Controller;
             if (ctrl == null) throw new NotSupportedException("This attribute works only with SmartController");
-            ctrl.HandleActionExecuted(filterContext);
+            if (!Ignore)ctrl.HandleActionExecuted(filterContext);
         }
     }
 }
