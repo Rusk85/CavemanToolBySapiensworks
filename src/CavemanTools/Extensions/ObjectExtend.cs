@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using CavemanTools.Extensions;
 
@@ -10,7 +11,8 @@ namespace System
 {
 	public static class ObjectExtend
 	{
-
+	   
+     
 		/// <summary>
 		/// Creates dictionary from object properties.
 		/// </summary>
@@ -96,10 +98,12 @@ namespace System
 		/// <returns></returns>
 		public static object ConvertTo(this object data, Type tp)
 		{
-			if (data == null) throw new ArgumentNullException("data");
+		    if (data == null) throw new ArgumentNullException("data");
+            var otp = data.GetType();
+            if (otp.Equals(tp)) return data;
 			if (tp.IsEnum)
 			{
-				if (data.GetType().FullName == "System.String")
+				if (otp.FullName == "System.String")
 				{
 					return Enum.Parse(tp, data.ToString());
 				}
@@ -185,6 +189,5 @@ namespace System
         {
             return (T)o;
         }
-
 	}
 }								 
