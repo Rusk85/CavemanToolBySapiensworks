@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Reflection.Emit;
 
 namespace System.Reflection
 {
-	public static class ReflectionUtils
+    public static class ReflectionUtils
 	{
 		/// <summary>
 		/// Used for checking if a class implements an interface
@@ -15,6 +18,7 @@ namespace System.Reflection
 			return (typeof(T)).IsAssignableFrom(type);
 		}
 
+       
 		/// <summary>
 		/// Returns true if object is specifically of type. 
 		/// Use "is" operator to check if an object is an instance of a type that derives from type.
@@ -41,35 +45,139 @@ namespace System.Reflection
 			return tp.GetValue(null, null).ConvertTo<T>();
 		}
 
-		/// <summary>
-		/// Gets the value of a property
-		/// </summary>
-		/// <typeparam name="T">Type of property value</typeparam>
-		/// <param name="object">Object to get value from</param>
-		/// <param name="propertyName">Property name</param>
-		/// <returns></returns>
-		public static T GetPropertyValue<T>(this object @object,string propertyName)
-		{
-			return GetPropertyValue(@object,propertyName).ConvertTo<T>();
-		}
+        private delegate void Setter(object dest, object value);
 
-		/// <summary>
-		/// Gets the value of a public property
-		/// </summary>
-		/// <param name="object">Object to get value from</param>
-		/// <param name="propertyName">Public property name</param>
-		/// <returns></returns>
-		public static object GetPropertyValue(this object @object, string propertyName)
-		{
-			if (@object == null) throw new ArgumentNullException("@object");
-			var tp = @object.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.IgnoreCase | BindingFlags.Public);
-			if (tp == null) throw new ArgumentException("Property doesn't exist.", "propertyName");
-			return tp.GetValue(@object, null);
-		}
+        private static Dictionary<int, Setter> _cache;
+        static object setLock=new object();
 
+        /// <summary>
+        /// Fast setter. aprox 8x faster than simple Reflection
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="value"></param>
+        public static void SetValueFast(this PropertyInfo p, object a, object value)
+        {
+            Setter inv = null;
+            lock(setLock)
+           {
+               if (_cache == null)
+               {
+                   _cache = new Dictionary<int, Setter>();
+               }
+               var key = p.GetHashCode();
+               
+               if (!_cache.TryGetValue(key,out inv))
+               {
+                var mi = p.GetSetMethod();
+                   DynamicMethod met = new DynamicMethod("set_" + key, typeof(void), new[] { typeof(object), typeof(object) }, typeof(ObjectExtend).Module, true);
+                   var il = met.GetILGenerator();
+                   il.Emit(OpCodes.Ldarg_0);//instance           
+                   il.Emit(OpCodes.Ldarg_1);//value
+                   if (p.PropertyType.IsValueType)
+                   {
+                       il.Emit(OpCodes.Unbox_Any, p.PropertyType);
+                   }
+                   il.Emit(OpCodes.Call, mi);
+                   il.Emit(OpCodes.Ret);
+                   inv = (Setter)met.CreateDelegate(typeof(Setter));
+
+                   _cache[key] = inv;
+
+               }
+           }
+          
+            inv(a, value);
+        }
+
+
+        /// <summary>
+        /// Gets the value of a property
+        /// </summary>
+        /// <typeparam name="T">Type of property value</typeparam>
+        /// <param name="object">Object to get value from</param>
+        /// <param name="propertyName">Property name</param>
+        /// <returns></returns>
+        public static T GetPropertyValue<T>(this object @object,string propertyName)
+        {
+         return GetPropertyValue(@object,propertyName).ConvertTo<T>();
+		    
+        }
+
+       
+        //public static object GetPropertyValue(this object @object, string propertyName)
+        //{
+        //    if (@object == null) throw new ArgumentNullException("@object");
+        //    var tp = @object.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.IgnoreCase | BindingFlags.Public);
+        //    if (tp == null) throw new ArgumentException("Property doesn't exist.", "propertyName");
+        //    return tp.GetValue(@object, null);
+        //}
+
+
+
+        /// <summary>
+        /// Gets the value of a public property
+        /// </summary>
+        /// <param name="object">Object to get value from</param>
+        /// <param name="property">Public property name</param>
+        /// <returns></returns>
+        public static object GetPropertyValue(this object @object, string property)
+        {
+            if (@object == null) return null;
+            
+            var pi = @object.GetType().GetProperty(property,
+                                             BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+            if (pi == null) throw new ArgumentException("Property doesn't exist.", "property");
+            return pi.GetValueFast(@object);
+        }
+        private static Dictionary<int, Func<object, object>> _cacheGet;
         
+        static object getLock = new object();
+	    /// <summary>
+	    /// Fast getter. aprox 5x faster than simple Reflection, aprox. 10x slower than manual get
+	    /// </summary>
+	    /// <param name="a"></param>	      
+	    public static object GetValueFast(this PropertyInfo p, object a)
+	    {
+            Func<object, object> inv = null;
+            lock (getLock)
+	        {
+                if (_cacheGet == null)
+                {
+                    _cacheGet = new Dictionary<int, Func<object, object>>();
+                }
+                var key = p.GetHashCode();
+                
+                if (!_cacheGet.TryGetValue(key,out inv))
+                {
+                    var mi = p.GetGetMethod();
+                    DynamicMethod met = new DynamicMethod("get_" + key, typeof(object), new[] { typeof(object) }, typeof(ObjectExtend).Module, true);
+                    var il = met.GetILGenerator();
+                    il.Emit(OpCodes.Ldarg_0);//instance           
+                    il.Emit(OpCodes.Call, mi);//call getter
+                    if (p.PropertyType.IsValueType) il.Emit(OpCodes.Box,p.PropertyType);
+                    il.Emit(OpCodes.Ret);
 
-		/// <summary>
+                    inv = (Func<object, object>)met.CreateDelegate(Expression.GetFuncType(typeof(object), typeof(object)));
+                    _cacheGet[key] = inv;
+
+                } 
+	        }
+            
+	        return inv(a);
+	    }
+
+        /// <summary>
+        /// Gets delegate to quickly create instances of type using public parameterless constructor.
+        /// Use this only when you want to create LOTS of instances (dto scenario)
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Func<object> GetFactory(this Type type)
+        {
+            type.MustNotBeNull("type");
+            return TypeFactory.GetFactory(type);
+        }
+	    /// <summary>
 		/// Gets the file version of current executing assembly
 		/// </summary>
 		/// <returns></returns>
@@ -113,7 +221,7 @@ namespace System.Reflection
         public static string GetFullTypeName(this Type t)
         {
             if (t == null) throw new ArgumentNullException("t");
-            return string.Format("{0}, {1}", t.FullName, Assembly.GetAssembly(t).GetName().Name);
+            return String.Format("{0}, {1}", t.FullName, Assembly.GetAssembly(t).GetName().Name);
         }
 	}
 }

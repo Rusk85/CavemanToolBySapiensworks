@@ -42,15 +42,20 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Dao.cs" />
+    <Compile Include="Data\JsonErrorStruct.cs" />
+    <Compile Include="Data\JsonStatus.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="Extensions\AssertionsExtensions.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\Images.cs" />
+    <Compile Include="Extensions\TypeFactory.cs" />
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
     <Compile Include="Extensions\LoggingUtility.cs" />

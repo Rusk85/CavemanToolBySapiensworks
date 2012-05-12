@@ -4,7 +4,7 @@ namespace System.Reflection
 {
 	/// <summary>
 	/// Create an object from type using the parameterless constructor.
-	/// Faster than Activator on average by 2x. Use it if you need to create mnay of objects of the same type
+	/// Faster than Activator on average by 2x. Use it if you need to create many of objects of the same type at the same location
 	/// </summary>
 	public class ObjectCreator
 	{
@@ -28,11 +28,8 @@ namespace System.Reflection
 						new Type[0],
 						target.DeclaringType);
 			ILGenerator il = dynamic.GetILGenerator();
-			il.DeclareLocal(target.DeclaringType);
-			il.Emit(OpCodes.Newobj, target);
-			il.Emit(OpCodes.Stloc_0);
-			il.Emit(OpCodes.Ldloc_0);
-			il.Emit(OpCodes.Ret);
+            il.Emit(OpCodes.Newobj, target);
+            il.Emit(OpCodes.Ret);
 
 			methodHandler = (MethodInvoker)dynamic.CreateDelegate(typeof(MethodInvoker));
 		}
