@@ -33,11 +33,8 @@ namespace System.Reflection
                 if (_actCache == null) _actCache = new Dictionary<Type, Func<object>>();
                 if (!_actCache.TryGetValue(t,out inv))
                 {
-                    var meth = new DynamicMethod("dynctor", typeof(object), new Type[0], t);
-                    var il = meth.GetILGenerator();
-                    il.Emit(OpCodes.Newobj, t.GetConstructor(new Type[0]));
-                    il.Emit(OpCodes.Ret);
-                    inv = (Func<object>)meth.CreateDelegate(Expression.GetFuncType(typeof(object)));
+                    var body = Expression.New(t);
+                    inv = Expression.Lambda<Func<object>>(body).Compile();
                     _actCache[t] = inv;
                 }
 
