@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
 using Xunit;
 using System;
 using System.Diagnostics;
@@ -81,7 +83,7 @@ namespace XTests.Reflection
            
         }
 
-
+        
         [Fact]
         public void fast_getter_benchmark()
         {
@@ -96,7 +98,7 @@ namespace XTests.Reflection
             _t.Stop();
             Write("Fastgetter: {0} ms", _t.ElapsedMilliseconds);
 
-            _t.Restart();
+           _t.Restart();
             for (int i = 0; i < Iterations; i++)
             {
                 _propName.GetValue(_mc, null);

@@ -1,7 +1,10 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
+using CavemanTools.Model;
 
 namespace System.Reflection
 {
@@ -22,8 +25,9 @@ namespace System.Reflection
 		/// <summary>
 		/// Returns true if object is specifically of type. 
 		/// Use "is" operator to check if an object is an instance of a type that derives from type.
+		/// Returns false is T is nullable
 		/// </summary>
-		/// <typeparam name="T">Type</typeparam>
+		/// <typeparam name="T">any not nullable Type</typeparam>
 		/// <param name="o">Object</param>
 		/// <returns></returns>
 		public static bool IsExactlyType<T>(this object o)
@@ -47,8 +51,8 @@ namespace System.Reflection
 
         private delegate void Setter(object dest, object value);
 
-        private static Dictionary<int, Setter> _cache;
-        static object setLock=new object();
+        private static ConcurrentDictionary<int, Setter> _cache;
+        //static object setLock=new object();
 
         /// <summary>
         /// Fast setter. aprox 8x faster than simple Reflection
@@ -58,11 +62,10 @@ namespace System.Reflection
         public static void SetValueFast(this PropertyInfo p, object a, object value)
         {
             Setter inv = null;
-            lock(setLock)
-           {
+          
                if (_cache == null)
                {
-                   _cache = new Dictionary<int, Setter>();
+                   _cache = new ConcurrentDictionary<int, Setter>();
                }
                var key = p.GetHashCode();
                
@@ -80,11 +83,10 @@ namespace System.Reflection
                    il.Emit(OpCodes.Call, mi);
                    il.Emit(OpCodes.Ret);
                    inv = (Setter)met.CreateDelegate(typeof(Setter));
-
-                   _cache[key] = inv;
+                   _cache.TryAdd(key, inv);
 
                }
-           }
+           
           
             inv(a, value);
         }
@@ -104,17 +106,7 @@ namespace System.Reflection
         }
 
        
-        //public static object GetPropertyValue(this object @object, string propertyName)
-        //{
-        //    if (@object == null) throw new ArgumentNullException("@object");
-        //    var tp = @object.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.IgnoreCase | BindingFlags.Public);
-        //    if (tp == null) throw new ArgumentException("Property doesn't exist.", "propertyName");
-        //    return tp.GetValue(@object, null);
-        //}
-
-
-
-        /// <summary>
+       /// <summary>
         /// Gets the value of a public property
         /// </summary>
         /// <param name="object">Object to get value from</param>
@@ -123,15 +115,17 @@ namespace System.Reflection
         public static object GetPropertyValue(this object @object, string property)
         {
             if (@object == null) return null;
-            
-            var pi = @object.GetType().GetProperty(property,
+            property.MustNotBeEmpty();
+            var tp = @object.GetType();
+          
+            var pi = tp.GetProperty(property,
                                              BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
             if (pi == null) throw new ArgumentException("Property doesn't exist.", "property");
             return pi.GetValueFast(@object);
         }
-        private static Dictionary<int, Func<object, object>> _cacheGet;
+        private static ConcurrentDictionary<int, Func<object, object>> _cacheGet;
         
-        static object getLock = new object();
+        //static object getLock = new object();
 	    /// <summary>
 	    /// Fast getter. aprox 5x faster than simple Reflection, aprox. 10x slower than manual get
 	    /// </summary>
@@ -139,11 +133,9 @@ namespace System.Reflection
 	    public static object GetValueFast(this PropertyInfo p, object a)
 	    {
             Func<object, object> inv = null;
-            lock (getLock)
-	        {
                 if (_cacheGet == null)
                 {
-                    _cacheGet = new Dictionary<int, Func<object, object>>();
+                    _cacheGet = new ConcurrentDictionary<int, Func<object, object>>();
                 }
                 var key = p.GetHashCode();
                 
@@ -154,15 +146,13 @@ namespace System.Reflection
                     var il = met.GetILGenerator();
                     il.Emit(OpCodes.Ldarg_0);//instance           
                     il.Emit(OpCodes.Call, mi);//call getter
-                    if (p.PropertyType.IsValueType) il.Emit(OpCodes.Box,p.PropertyType);
+                    if (p.PropertyType.IsValueType) il.Emit(OpCodes.Box, p.PropertyType);
                     il.Emit(OpCodes.Ret);
-
                     inv = (Func<object, object>)met.CreateDelegate(Expression.GetFuncType(typeof(object), typeof(object)));
-                    _cacheGet[key] = inv;
+                    _cacheGet.TryAdd(key, inv);
 
                 } 
-	        }
-            
+	        
 	        return inv(a);
 	    }
 
@@ -194,6 +184,17 @@ namespace System.Reflection
 		{
 			return Assembly.GetCallingAssembly().GetName().Version;
 		}
+
+        /// <summary>
+        /// This always returns false if the type is taken from an instance.
+        /// That is always use typeof
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsNullable(this Type type)
+        {
+            return (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>));
+        }
 
         /// <summary>
         /// Returns the assembly version
