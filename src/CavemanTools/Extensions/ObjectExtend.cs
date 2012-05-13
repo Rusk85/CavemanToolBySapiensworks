@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -98,33 +99,48 @@ namespace System
 		/// <returns></returns>
 		public static object ConvertTo(this object data, Type tp)
 		{
-		    if (data == null) throw new ArgumentNullException("data");
-            var otp = data.GetType();
-            if (otp.Equals(tp)) return data;
-			if (tp.IsEnum)
-			{
-				if (otp.FullName == "System.String")
-				{
-					return Enum.Parse(tp, data.ToString());
-				}
-				var o = Enum.ToObject(tp, data);
-				return o;
-			}
+		   if (data==null)
+		   {
+		       if (tp.IsValueType && !tp.IsNullable())
+		       {
+		           throw new InvalidCastException("Cant convert null to a value type");
+		       }
+		       return null;
+		   }
+           
+                var otp = data.GetType();
+                if (otp.Equals(tp)) return data;
+                if (tp.IsEnum)
+                {
+                    if (data is string)
+                    {
+                        return Enum.Parse(tp, data.ToString());
+                    }
+                    var o = Enum.ToObject(tp, data);
+                    return o;
+                }
 
-			if (tp.IsValueType)
-			{
-				if (tp == typeof(TimeSpan))
-				{
-					return TimeSpan.Parse(data.ToString().Trim());					
-				}
+                if (tp.IsValueType)
+                {
+                    if (tp == typeof (TimeSpan))
+                    {
+                        return TimeSpan.Parse(data.ToString());
+                    }
 
-				if (tp == typeof(DateTime))
-				{
-					data = data.ToString().Trim();
-				}
-			}
-			if (tp == typeof(CultureInfo)) return new CultureInfo(data.ToString());
-			return System.Convert.ChangeType(data, tp);
+                    if (tp == typeof (DateTime))
+                    {
+                        return DateTime.Parse(data.ToString());                        
+                    }
+                   
+                    if (tp.IsNullable())
+                    {
+                        var under=Nullable.GetUnderlyingType(tp);
+                        return data.ConvertTo(under);
+                    }
+                }
+                else if (tp == typeof (CultureInfo)) return new CultureInfo(data.ToString());
+          
+		    return System.Convert.ChangeType(data, tp);
 		}
 
 		/// <summary>
