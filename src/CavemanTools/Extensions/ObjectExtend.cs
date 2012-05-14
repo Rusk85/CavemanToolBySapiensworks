@@ -1,7 +1,10 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
@@ -12,18 +15,73 @@ namespace System
 {
 	public static class ObjectExtend
 	{
-	   
-     
+	    private static ConcurrentDictionary<Type, TypeInfo> _typeDicts;
 		/// <summary>
 		/// Creates dictionary from object properties.
 		/// </summary>
 		/// <param name="value">Object</param>
 		/// <returns></returns>
-		public static IDictionary<string,object> ToDictionary(this object value)
+		public static IDictionary<string,object> ToDictionary<T>(this T value)
 		{
-			return value.GetType().GetProperties().ToDictionary(p => p.Name, p => p.GetValue(value, null));			
+			if (_typeDicts==null)
+			{
+			    _typeDicts= new ConcurrentDictionary<Type, TypeInfo>();
+			}
+
+		    TypeInfo inv;
+		    var tp = value.GetType();
+            if (tp==typeof(ExpandoObject))
+            {
+                return (IDictionary<string, object>) value;
+            }
+
+            if(!_typeDicts.TryGetValue(tp,out inv))
+            {
+                var allp = tp.GetProperties(BindingFlags.Instance|BindingFlags.Public|BindingFlags.GetProperty);
+                
+                //lambda
+                var dict = Expression.Parameter(typeof (IDictionary<string, object>),"dict");
+                var inst = Expression.Parameter(tp,"obj");
+                var lblock=new List<Expression>(allp.Length);
+                
+                
+                for(int i=0;i<allp.Length;i++)
+                {
+                    var prop = allp[i];
+                    var indexer = Expression.Property(dict, "Item",Expression.Constant(prop.Name));
+                    lblock.Add(
+                        Expression.Assign(indexer,
+                            Expression.ConvertChecked(Expression.Property(inst, prop.Name),typeof(object))
+                            ));
+                }
+                var body = Expression.Block(lblock);
+                var lambda = Expression.Lambda(Expression.GetActionType(typeof(IDictionary<string,object>),tp),body, dict, inst);
+                
+                inv=new TypeInfo(allp.Length,lambda.Compile());
+                _typeDicts.TryAdd(tp, inv);
+            }
+
+            inv.Update(value);
+		    return inv.Dictionary;         
 		}
 		
+        class TypeInfo
+        {
+            private readonly Delegate _del;
+            public Dictionary<string, object> Dictionary {get; private set; }
+
+            public TypeInfo(int size,Delegate del)
+            {
+                Dictionary=new Dictionary<string, object>(size);
+                _del = del;
+            }
+
+            public void Update<T>(T o)
+            {
+                (_del as Action<IDictionary<string,object>,T>)(Dictionary, o);
+            }
+        }
+
 		/// <summary>
 		/// Generates a string containing the properties and values of the object
 		/// </summary>

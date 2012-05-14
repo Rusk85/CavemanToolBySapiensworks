@@ -20,6 +20,7 @@ namespace XTests.Reflection
         {
             public int Id { get; set; }
             public DateTime? Date { get; set; }
+            public string Name { get; set; }
         }
 
         [Fact]
@@ -46,6 +47,15 @@ namespace XTests.Reflection
             Assert.Equal(JsonStatus.Redirect, target);
             target = d.ConvertTo<JsonStatus>();
             Assert.Equal(JsonStatus.Redirect, target);
+        }
+
+        [Fact]
+        public void object_dictionary()
+        {
+            var d = new MyClass(){Id=45,Name = "Test"}.ToDictionary();
+            Assert.Equal(45,d["Id"]);
+            Assert.Equal("Test",d["Name"]);
+            Assert.Null(d["Date"]);
         }
 
         private void Write(string format, params object[] param)
