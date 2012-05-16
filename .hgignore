@@ -12,3 +12,6 @@ glob:packages
 syntax: glob
 temp
 _ReSharper*
+MvcApplication*
+*DotSett*
+*.userprefs
