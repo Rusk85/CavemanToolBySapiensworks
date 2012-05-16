@@ -60,6 +60,7 @@
     <Compile Include="OverridableOptionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\FasterImplementationTests.cs" />
+    <Compile Include="Reflection\ReflectionUtilsTests.cs" />
     <Compile Include="Security\MultipleGroupsTests.cs" />
     <Compile Include="Security\UserIdTests.cs" />
     <Compile Include="Security\UserRightsWithAuthorizationScopeTests.cs" />
