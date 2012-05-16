@@ -8,9 +8,9 @@
     <licenseUrl>http://cavemantools.codeplex.com/license</licenseUrl>
     <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/CTools</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Straight forward generic toolkit for faster asp.net development with less code, written in C# on .Net 4.0. It features extension methods and helper classes for specific tasks.</description>
+    <description>Straight forward generic toolkit for faster asp.net development with less code, written in C# on .Net 4.0. It features extension methods and helper classes for specific tasks. Now with  ReflectionEmit IL  helpers</description>
     <language>en-US</language>
-    <tags>toolkit, extension, methods, library, tools, utility</tags>
+    <tags>toolkit, extension, methods, library, tools, utility, lcg, reflection</tags>
   </metadata>
   <files>
     <file src="lib\net40\CavemanTools.dll" target="lib\net40\CavemanTools.dll" />
