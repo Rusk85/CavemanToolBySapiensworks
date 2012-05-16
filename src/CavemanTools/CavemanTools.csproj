@@ -37,6 +37,7 @@
     <DocumentationFile>bin\Release\CavemanTools.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
@@ -49,12 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Dao.cs" />
-    <Compile Include="Data\JsonErrorStruct.cs" />
+    <Compile Include="Data\JsonMessageStruct.cs" />
     <Compile Include="Data\JsonStatus.cs" />
+    <Compile Include="Data\JsonStruct.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="Extensions\AssertionsExtensions.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\Images.cs" />
+    <Compile Include="Extensions\LCGUtils.cs" />
     <Compile Include="Extensions\TypeFactory.cs" />
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />

@@ -52,10 +52,14 @@ namespace XTests.Reflection
         [Fact]
         public void object_dictionary()
         {
-            var d = new MyClass(){Id=45,Name = "Test"}.ToDictionary();
+            var mc = new MyClass() {Id = 45, Name = "Test"};
+            var d = mc.ToDictionary();
             Assert.Equal(45,d["Id"]);
             Assert.Equal("Test",d["Name"]);
             Assert.Null(d["Date"]);
+
+            object o = mc;
+            d=o.ToDictionary();
         }
 
         private void Write(string format, params object[] param)

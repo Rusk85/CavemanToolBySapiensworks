@@ -21,7 +21,7 @@ namespace System
 		/// </summary>
 		/// <param name="value">Object</param>
 		/// <returns></returns>
-		public static IDictionary<string,object> ToDictionary<T>(this T value)
+		public static IDictionary<string,object> ToDictionary(this object value)
 		{
 			if (_typeDicts==null)
 			{
@@ -34,14 +34,15 @@ namespace System
             {
                 return (IDictionary<string, object>) value;
             }
-
+            
             if(!_typeDicts.TryGetValue(tp,out inv))
             {
                 var allp = tp.GetProperties(BindingFlags.Instance|BindingFlags.Public|BindingFlags.GetProperty);
                 
                 //lambda
                 var dict = Expression.Parameter(typeof (IDictionary<string, object>),"dict");
-                var inst = Expression.Parameter(tp,"obj");
+                var inst = Expression.Parameter(typeof(object),"obj");
+              
                 var lblock=new List<Expression>(allp.Length);
                 
                 
@@ -51,17 +52,19 @@ namespace System
                     var indexer = Expression.Property(dict, "Item",Expression.Constant(prop.Name));
                     lblock.Add(
                         Expression.Assign(indexer,
-                            Expression.ConvertChecked(Expression.Property(inst, prop.Name),typeof(object))
+                            Expression.ConvertChecked(
+                                Expression.Property(
+                                   Expression.ConvertChecked(inst, tp), prop.Name), typeof(object))
                             ));
                 }
                 var body = Expression.Block(lblock);
-                var lambda = Expression.Lambda(Expression.GetActionType(typeof(IDictionary<string,object>),tp),body, dict, inst);
+                var lambda = Expression.Lambda(Expression.GetActionType(typeof(IDictionary<string,object>),typeof(object)),body, dict, inst);
                 
                 inv=new TypeInfo(allp.Length,lambda.Compile());
                 _typeDicts.TryAdd(tp, inv);
             }
 
-            inv.Update(value);
+            inv.Update(value.ConvertTo(tp));
 		    return inv.Dictionary;         
 		}
 		
@@ -76,9 +79,9 @@ namespace System
                 _del = del;
             }
 
-            public void Update<T>(T o)
+            public void Update(object o)
             {
-                (_del as Action<IDictionary<string,object>,T>)(Dictionary, o);
+              (_del as Action<IDictionary<string,object>,object>)(Dictionary, o);
             }
         }
 
