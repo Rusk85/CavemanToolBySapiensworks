@@ -97,7 +97,10 @@
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\AttributeUtils.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
+    <Compile Include="Reflection\PrivateReflectionDynamicObject.cs" />
     <Compile Include="SingletonsRegistry.cs" />
+    <Compile Include="Testing\BenchmarkResult.cs" />
+    <Compile Include="Testing\BenchmarkUnit.cs" />
     <Compile Include="Web\ContextInstance.cs" />
     <Compile Include="Web\HttpContextRegistry.cs" />
     <Compile Include="Web\RequestMetricsModule.cs" />
