@@ -12,9 +12,15 @@ namespace CavemanTools.Web
             HttpContext.Current.Items[key] = value;
         }
 
-        public static T Get<T>(string key,T defaultValue)
+       public static void Set(this HttpContext ctx,string key, object value)
+       {
+           ctx.Items[key] = value;
+       }
+
+        public static T Get<T>(string key,T defaultValue=default(T))
         {
             return HttpContext.Current.Get(key, defaultValue);
         }
+     
     }
 }
