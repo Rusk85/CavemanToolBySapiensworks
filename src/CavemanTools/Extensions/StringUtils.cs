@@ -178,5 +178,17 @@ namespace System
 			return builder.ToString();
 
 		}
+
+        /// <summary>
+        /// Removes last character from builder
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <returns></returns>
+        public static StringBuilder RemoveLast(this StringBuilder sb)
+        {
+            sb.MustNotBeNull();
+            return sb.Remove(sb.Length - 1, 1);
+        }
+            
 	}
 }
