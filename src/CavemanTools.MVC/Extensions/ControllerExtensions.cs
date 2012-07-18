@@ -45,147 +45,147 @@ namespace System.Web.Mvc
             return ctrl.RouteData.GetRequiredString("action");
         }
 
-        /// <summary>
-        /// Handle the specified command using the current DependecyResolver
-        ///  to resolve the command handler. 
-        /// Use <see cref="BusinessRuleException"/> in the command handler 
-        /// to send the errors to the ModelState
-        /// </summary>
-        /// <typeparam name="T">Reference type</typeparam>
-        /// <param name="ctrl">Controller</param>
-        /// <param name="cmd">Command object</param>
-        public static void Handle<T>(this Controller ctrl,T cmd) where T:class
-        {
-            ctrl.Handle(cmd,DependencyResolver.Current);
-        }
+       // /// <summary>
+       // /// Handle the specified command using the current DependecyResolver
+       // ///  to resolve the command handler. 
+       // /// Use <see cref="BusinessRuleException"/> in the command handler 
+       // /// to send the errors to the ModelState
+       // /// </summary>
+       // /// <typeparam name="T">Reference type</typeparam>
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="cmd">Command object</param>
+       // public static void Handle<T>(this Controller ctrl,T cmd) where T:class
+       // {
+       //     ctrl.Handle(cmd,DependencyResolver.Current);
+       // }
 
-        /// <summary>
-        /// Handle the specified command using the specified command handler
-        /// Use <see cref="BusinessRuleException"/> in the command handler 
-        /// to send the errors to the ModelState
-        /// </summary>
-        /// <typeparam name="T">Reference type</typeparam>
-        /// <param name="ctrl">Controller</param>
-        /// <param name="cmd">Command object</param>
-        /// <param name="handler">Handler implementation </param>
-        public static void Handle<T>(this Controller ctrl,T cmd,IHandleCommand<T> handler) where T:class
-        {
-            ctrl.Handle(cmd,handler.Handle);
-        }
+       // /// <summary>
+       // /// Handle the specified command using the specified command handler
+       // /// Use <see cref="BusinessRuleException"/> in the command handler 
+       // /// to send the errors to the ModelState
+       // /// </summary>
+       // /// <typeparam name="T">Reference type</typeparam>
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="cmd">Command object</param>
+       // /// <param name="handler">Handler implementation </param>
+       // public static void Handle<T>(this Controller ctrl,T cmd,IHandleCommand<T> handler) where T:class
+       // {
+       //     ctrl.Handle(cmd,handler.Handle);
+       // }
 
-        /// <summary>
-        /// Handle the specified command using the specified command handler
-        /// Use <see cref="BusinessRuleException"/> in the command handler 
-        /// to send the errors to the ModelState
-        /// </summary>
-        /// <typeparam name="T">Reference type</typeparam>
-        /// <param name="ctrl">Controller</param>
-        /// <param name="cmd">Command object</param>
-        /// <param name="handler">Handler implementation </param>
-        public static void Handle<T>(this Controller ctrl, T cmd, Action<T> handler) where T : class
-        {
-            if (ctrl == null) throw new ArgumentNullException("ctrl");
-            if (cmd == null) throw new ArgumentNullException("cmd");
-            if (handler == null) throw new ArgumentNullException("handler");
+       // /// <summary>
+       // /// Handle the specified command using the specified command handler
+       // /// Use <see cref="BusinessRuleException"/> in the command handler 
+       // /// to send the errors to the ModelState
+       // /// </summary>
+       // /// <typeparam name="T">Reference type</typeparam>
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="cmd">Command object</param>
+       // /// <param name="handler">Handler implementation </param>
+       // public static void Handle<T>(this Controller ctrl, T cmd, Action<T> handler) where T : class
+       // {
+       //     if (ctrl == null) throw new ArgumentNullException("ctrl");
+       //     if (cmd == null) throw new ArgumentNullException("cmd");
+       //     if (handler == null) throw new ArgumentNullException("handler");
 
-            try
-            {
-                handler(cmd);
-            }
-            catch (BusinessRuleException ex)
-            {
-                ctrl.ModelState.AddModelError(ex.Name,ex.Message);                
-            }
-        }
+       //     try
+       //     {
+       //         handler(cmd);
+       //     }
+       //     catch (BusinessRuleException ex)
+       //     {
+       //         ctrl.ModelState.AddModelError(ex.Name,ex.Message);                
+       //     }
+       // }
 
 
-        /// <summary>
-        /// Processes a command and returns a result.
-        /// Request handlers must be registered with a DI Container
-        /// Useful if you want to return data required for the controller to continue if command was successful.
-        /// </summary>
-        /// <typeparam name="T">Command Type</typeparam>
-        /// <typeparam name="R">Result type</typeparam>
-        /// <param name="ctrl">Controller</param>
-        /// <param name="cmd">Command</param>
-        /// <returns></returns>
-        public static R Process<T,R>(this Controller ctrl,T cmd) where T:class 
-        {
-            return ctrl.Process<T,R>(cmd, DependencyResolver.Current);
-        }
+       // /// <summary>
+       // /// Processes a command and returns a result.
+       // /// Request handlers must be registered with a DI Container
+       // /// Useful if you want to return data required for the controller to continue if command was successful.
+       // /// </summary>
+       // /// <typeparam name="T">Command Type</typeparam>
+       // /// <typeparam name="R">Result type</typeparam>
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="cmd">Command</param>
+       // /// <returns></returns>
+       // public static R Process<T,R>(this Controller ctrl,T cmd) where T:class 
+       // {
+       //     return ctrl.Process<T,R>(cmd, DependencyResolver.Current);
+       // }
 
-        /// <summary>
-        /// Processes a command and returns a result.
-        /// Useful if you want to return data required for the controller to continue if command was successful.
-        /// </summary>
-        /// <typeparam name="T">Command Type</typeparam>
-        /// <typeparam name="R">Result type</typeparam>
-        /// <param name="ctrl">Controller</param>
-        /// <param name="cmd">Command</param>
-        /// <param name="ioc">Container to resolve handler </param>
-        /// <returns></returns>
-        public static R Process<T,R>(this Controller ctrl,T cmd,IDependencyResolver ioc) where T:class 
-        {
-            if (ioc == null) throw new ArgumentNullException("ioc");
-            var handler = ioc.GetService<IHandleRequest<T,R>>();
-            return Process(ctrl, cmd, handler);
-        }
+       // /// <summary>
+       // /// Processes a command and returns a result.
+       // /// Useful if you want to return data required for the controller to continue if command was successful.
+       // /// </summary>
+       // /// <typeparam name="T">Command Type</typeparam>
+       // /// <typeparam name="R">Result type</typeparam>
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="cmd">Command</param>
+       // /// <param name="ioc">Container to resolve handler </param>
+       // /// <returns></returns>
+       // public static R Process<T,R>(this Controller ctrl,T cmd,IDependencyResolver ioc) where T:class 
+       // {
+       //     if (ioc == null) throw new ArgumentNullException("ioc");
+       //     var handler = ioc.GetService<IHandleRequest<T,R>>();
+       //     return Process(ctrl, cmd, handler);
+       // }
 
-        /// <summary>
-        /// Processes a command and returns a result.
-        /// Useful if you want to return data required for the controller to continue if command was successful.
-        /// </summary>
-        /// <typeparam name="T">Command Type</typeparam>
-        /// <typeparam name="R">Result type</typeparam>
-        /// <param name="ctrl">Controller</param>
-        /// <param name="cmd">Command</param>
-        /// <param name="handler">Handler implementation</param>
-        public static R Process<T,R>(this Controller ctrl,T cmd,IHandleRequest<T,R> handler) where T:class 
-        {
-            return ctrl.Process(cmd, handler.Process);
-        }
+       // /// <summary>
+       // /// Processes a command and returns a result.
+       // /// Useful if you want to return data required for the controller to continue if command was successful.
+       // /// </summary>
+       // /// <typeparam name="T">Command Type</typeparam>
+       // /// <typeparam name="R">Result type</typeparam>
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="cmd">Command</param>
+       // /// <param name="handler">Handler implementation</param>
+       // public static R Process<T,R>(this Controller ctrl,T cmd,IHandleRequest<T,R> handler) where T:class 
+       // {
+       //     return ctrl.Process(cmd, handler.Process);
+       // }
 
-        /// <summary>
-        /// Processes a command and returns a result.
-        /// Useful if you want to return data required for the controller to continue if command was successful.
-        /// </summary>
-        /// <typeparam name="T">Command Type</typeparam>
-        /// <typeparam name="R">Result type</typeparam>
-        /// <param name="ctrl">Controller</param>
-        /// <param name="cmd">Command</param>
-        /// <param name="handler">Handler implementation</param>
-        public static R Process<T,R>(this Controller ctrl,T cmd,Func<T,R> handler)
-        {
-            if (ctrl == null) throw new ArgumentNullException("ctrl");
-            if (cmd == null) throw new ArgumentNullException("cmd");
-            if (handler == null) throw new ArgumentNullException("handler");
+       // /// <summary>
+       // /// Processes a command and returns a result.
+       // /// Useful if you want to return data required for the controller to continue if command was successful.
+       // /// </summary>
+       // /// <typeparam name="T">Command Type</typeparam>
+       // /// <typeparam name="R">Result type</typeparam>
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="cmd">Command</param>
+       // /// <param name="handler">Handler implementation</param>
+       // public static R Process<T,R>(this Controller ctrl,T cmd,Func<T,R> handler)
+       // {
+       //     if (ctrl == null) throw new ArgumentNullException("ctrl");
+       //     if (cmd == null) throw new ArgumentNullException("cmd");
+       //     if (handler == null) throw new ArgumentNullException("handler");
 
-            try
-            {
-                return handler(cmd);
-            }
-            catch (BusinessRuleException ex)
-            {
-                ctrl.ModelState.AddModelError(ex.Name, ex.Message);
-            }
-            return default(R);
-        }
+       //     try
+       //     {
+       //         return handler(cmd);
+       //     }
+       //     catch (BusinessRuleException ex)
+       //     {
+       //         ctrl.ModelState.AddModelError(ex.Name, ex.Message);
+       //     }
+       //     return default(R);
+       // }
 
-        /// <summary>
-        /// Handle the specified command using the specified dependency resolver
-        ///  to resolve the command handler
-        /// </summary>
-        /// <typeparam name="T">Reference type</typeparam>
-        /// 
-        /// <param name="ctrl">Controller</param>
-        /// <param name="ioc">Implementation of IoC container</param>
-        /// <param name="cmd">Command object</param>
-       public static void Handle<T>(this Controller ctrl,T cmd,IDependencyResolver ioc) where T:class 
-       {
-           if (ioc == null) throw new ArgumentNullException("ioc");
-           var handler = ioc.GetService<IHandleCommand<T>>();
-           Handle(ctrl,cmd,handler);
-       }
+       // /// <summary>
+       // /// Handle the specified command using the specified dependency resolver
+       // ///  to resolve the command handler
+       // /// </summary>
+       // /// <typeparam name="T">Reference type</typeparam>
+       // /// 
+       // /// <param name="ctrl">Controller</param>
+       // /// <param name="ioc">Implementation of IoC container</param>
+       // /// <param name="cmd">Command object</param>
+       //public static void Handle<T>(this Controller ctrl,T cmd,IDependencyResolver ioc) where T:class 
+       //{
+       //    if (ioc == null) throw new ArgumentNullException("ioc");
+       //    var handler = ioc.GetService<IHandleCommand<T>>();
+       //    Handle(ctrl,cmd,handler);
+       //}
 
        internal static RouteValueDictionary ToRouteValues<T>(Expression<Action<T>> selector) where T:Controller
        {
