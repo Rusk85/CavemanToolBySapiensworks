@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Reflection;
+using CavemanTools.Web;
 
 namespace CavemanTools.Mvc.Controllers
 {
@@ -13,12 +14,17 @@ namespace CavemanTools.Mvc.Controllers
     /// </summary>
     public abstract class SmartController:Controller
     {
+        private const string ViewNameKey = "_smart-view";
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var attr = filterContext.ActionDescriptor.GetSingleAttribute<SmartActionAttribute>();
             if (attr==null)
             {
                 HandleActionExecuting(filterContext);
+            }
+            else
+            {
+                HttpContextRegistry.Set(ViewNameKey, attr.ViewName);
             }
         }
 
@@ -78,6 +84,10 @@ namespace CavemanTools.Mvc.Controllers
             {
                 HandleActionExecuted(filterContext);
             }
+            else
+            {
+                HttpContextRegistry.Set(ViewNameKey,attr.ViewName);
+            }
         }
 
         internal void HandleActionExecuted(ActionExecutedContext filterContext)
@@ -99,9 +109,11 @@ namespace CavemanTools.Mvc.Controllers
         /// <typeparam name="T"></typeparam>
         /// <param name="model">view model</param>
         /// <returns></returns>
-        protected Func<ActionResult> ViewResultError<T>(T model) 
+        protected Func<ActionResult> ViewResultError<T>(T model,string viewName=null) 
         {
-            return () => View((object) PopulateModel<T>(model));
+            if (viewName == null) viewName = this.GetActionName();
+            
+            return () => View(viewName,(object) PopulateModel<T>(model));
         }
 
         /// <summary>
@@ -120,7 +132,7 @@ namespace CavemanTools.Mvc.Controllers
        /// </summary>
         protected virtual Func<ActionResult> ActionFailResult<T>(T model)
         {
-            return ViewResultError(model);
+            return ViewResultError(model,HttpContextRegistry.Get<string>(ViewNameKey));
         }
 
         /// <summary>

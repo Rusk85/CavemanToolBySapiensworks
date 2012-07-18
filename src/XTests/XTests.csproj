@@ -52,6 +52,10 @@
     <Compile Include="Cookies\EncryptedCookieTests.cs" />
     <Compile Include="Cookies\ExtensionTests.cs" />
     <Compile Include="General.cs" />
+    <Compile Include="Infrastructure\ServiceBus\BufferingTests.cs" />
+    <Compile Include="Infrastructure\ServiceBus\ServiceBusExtensionTests.cs" />
+    <Compile Include="Infrastructure\ServiceBus\ServiceBusTests.cs" />
+    <Compile Include="Infrastructure\ServiceBus\Setup.cs" />
     <Compile Include="Lists\KeyValueStoreTests.cs" />
     <Compile Include="LoggingHelperTests.cs" />
     <Compile Include="Model\ValidationTests.cs" />

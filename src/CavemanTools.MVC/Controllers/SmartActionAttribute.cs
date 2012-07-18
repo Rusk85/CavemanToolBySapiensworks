@@ -16,6 +16,11 @@ namespace CavemanTools.Mvc.Controllers
         /// True to disable smart controller for this action only
         /// </summary>
         public bool Ignore { get; set; }
+
+        /// <summary>
+        /// Use this view to display the invalid model
+        /// </summary>
+        public string ViewName { get; set; }
         public SmartActionAttribute()
         {
             Order = 100;
