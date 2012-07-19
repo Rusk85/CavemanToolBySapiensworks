@@ -3,13 +3,30 @@ using System.Collections.Generic;
 
 namespace CavemanTools.Infrastructure.Internals
 {
-    internal class Subscription<T>:IDisposable,ISubscription where T:IMessage
+    internal class HandlerWrapper
+    {
+        private dynamic _h;
+
+        public void Wrap<T>(Action<T> handler) where T:IMessage
+        {
+            _h = handler;
+        }
+        public void Handle(dynamic msg)
+        {
+            _h(msg);
+        }
+    }
+
+    internal class Subscription:IDisposable
+        
     {
         private IRemoveHandler _manager;
         private Type _event;
-        private Action<T> _handler;
+        
+         private dynamic _handler;
+      
 
-        public Subscription(IRemoveHandler d,Type evnt,Action<T> handler)
+        public Subscription(IRemoveHandler d,Type evnt,object handler)
         {
             if (d == null) throw new ArgumentNullException("d");
           
@@ -32,7 +49,7 @@ namespace CavemanTools.Infrastructure.Internals
 
         public void Handle(IMessage evnt)
         {
-            _handler((T)evnt);
+            _handler.Handle((dynamic)evnt);            
         }
 
         public void Dispose()
@@ -40,17 +57,7 @@ namespace CavemanTools.Infrastructure.Internals
             _manager.Unsubscribe(this);
         }
 
-        //public bool Equals(Subscription other)
-        //{
-        //    if (other == null) return false;
-        //    return other._event.Equals(_event) && other._handler == _handler;
-        //}
-
-        //public override bool Equals(object obj)
-        //{
-        //    return Equals((Subscription)obj);
-        //}
-
+      
         public override int GetHashCode()
         {
             unchecked

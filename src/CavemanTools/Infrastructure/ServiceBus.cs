@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CavemanTools.Infrastructure.Internals;
 using Buffer = CavemanTools.Infrastructure.Internals.Buffer;
+using System.Reflection;
 
 namespace CavemanTools.Infrastructure
 {
@@ -18,20 +19,46 @@ namespace CavemanTools.Infrastructure
            _subs.AddRange(sb._subs);
         }
 
-        private List<ISubscription> _subs= new List<ISubscription>();
+        private List<Subscription> _subs= new List<Subscription>();
+        public IDisposable RegisterCommandHandlerFor<T>(IHandleCommand<T> handler) where T : ICommand
+        {
+            if (handler == null) throw new ArgumentNullException("handler");
+            return AddSubscription(handler, typeof (T));
+        }
         public IDisposable RegisterCommandHandlerFor<T>(Action<T> handler) where T : ICommand
         {
             if (handler == null) throw new ArgumentNullException("handler");
-            if (ExistsCommandHandler(typeof(T)))
-           {
-               throw new DuplicateCommandHandlerException();
-           }
-            return AddSubscription(handler);
+            var w = new HandlerWrapper();
+            w.Wrap(handler);
+            return AddSubscription(w,typeof(T));
         }
 
-        IDisposable AddSubscription<T>(Action<T> handler) where T:IMessage
+        /// <summary>
+        /// Register a handler for a message
+        /// </summary>
+        /// <param name="msgType"></param>
+        /// <param name="handler"></param>
+        /// <returns></returns>
+        public IDisposable RegisterHandler(Type msgType,object handler)
         {
-            var s = new Subscription<T>(this, typeof(T), handler);
+            if (!msgType.Implements<IMessage>()) throw new ArgumentException("Message must implement IMessage");
+            handler.MustNotBeNull();
+            
+            var tp = handler.GetType();
+            var alli =
+                tp.GetInterfaces().FirstOrDefault(
+                    i => i.IsGenericType && i.GetGenericArguments()[0].IsAssignableFrom(msgType));
+            if (alli==null) throw new ArgumentException("PRovided object is not a suitable handler");
+            return AddSubscription(handler, msgType);
+        }
+
+        IDisposable AddSubscription(object handler,Type msg)
+        {
+            if (msg.Implements<ICommand>() && ExistsCommandHandler(msg))
+            {
+                throw new DuplicateCommandHandlerException();
+            }
+            var s = new Subscription(this,msg, handler);
             lock (_sync)
             {
                 _subs.Add(s);
@@ -44,28 +71,34 @@ namespace CavemanTools.Infrastructure
             return _subs.Any(s => s.IsExactlyFor(cmd));
         }
 
-        public IDisposable RegisterCommandHandlerFor<T>(IHandleCommand<T> handler) where T : ICommand
-        {
-            if (handler == null) throw new ArgumentNullException("handler");
-            return RegisterCommandHandlerFor<T>(handler.Handle);
-        }
+       
 
         public IDisposable SubscribeToEvent<T>(Action<T> subscriber) where T : IEvent
         {
             if (subscriber == null) throw new ArgumentNullException("subscriber");
-            return AddSubscription(subscriber);
+            var w = new HandlerWrapper();
+            w.Wrap(subscriber);
+            return AddSubscription(w,typeof(T));
         }
 
         public IDisposable SubscribeToEvent<T>(IHandleEvent<T> subscriber) where T : IEvent
         {
             if (subscriber == null) throw new ArgumentNullException("subscriber");
-            return SubscribeToEvent<T>(subscriber.Handle);
+            return AddSubscription(subscriber, typeof (T));
         }
 
         public IDisposable SubscribeToError<T>(Action<T> handler) where T : AbstractErrorMessage
         {
             if (handler == null) throw new ArgumentNullException("handler");
-            return AddSubscription(handler);
+            var w = new HandlerWrapper();
+            w.Wrap(handler);
+            return AddSubscription(w,typeof(T));
+        }
+        
+        public IDisposable SubscribeToError<T>(IHandleError<T> handler) where T : AbstractErrorMessage
+        {
+            if (handler == null) throw new ArgumentNullException("handler");
+            return AddSubscription(handler,typeof(T));
         }
 
         public bool ThrowOnUnhandledExceptions
@@ -87,7 +120,7 @@ namespace CavemanTools.Infrastructure
             SendMessage(evnt,raise);
         }
 
-        void SendMessage(IMessage msg,IEnumerable<ISubscription> subs)
+        void SendMessage(IMessage msg,IEnumerable<Subscription> subs)
         {
           
                 foreach (var sub in subs)
@@ -121,7 +154,7 @@ namespace CavemanTools.Infrastructure
                 
             }
             var tp = msg.GetType();
-            IEnumerable<ISubscription> subs;
+            IEnumerable<Subscription> subs;
             lock (_sync)
             {
                 if (raise == HandlingType.Specific)
@@ -201,7 +234,7 @@ namespace CavemanTools.Infrastructure
             }
         }
 
-        void IRemoveHandler.Unsubscribe(ISubscription s)
+        void IRemoveHandler.Unsubscribe(Subscription s)
         {
             lock (_sync)
             {
