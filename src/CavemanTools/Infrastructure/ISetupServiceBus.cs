@@ -47,5 +47,14 @@ namespace CavemanTools.Infrastructure
         /// </summary>
         bool IgnoreLackOfSubscribers { get; set; }
 
+        /// <summary>
+        /// Register a handler for a message
+        /// </summary>
+        /// <param name="msgType"></param>
+        /// <param name="handler"></param>
+        /// <returns></returns>
+        IDisposable RegisterHandler(Type msgType,object handler);
+
+        IDisposable SubscribeToError<T>(IHandleError<T> handler) where T : AbstractErrorMessage;
     }
 }

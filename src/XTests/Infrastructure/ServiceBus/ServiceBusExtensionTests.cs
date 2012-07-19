@@ -33,6 +33,7 @@ namespace XTests.Infrastructure.ServiceBus
        {
            MeC = true;
        }
+      
    }
     public class ServiceBusExtensionTests
     {
@@ -61,7 +62,7 @@ namespace XTests.Infrastructure.ServiceBus
         [Fact]
         public void register_events()
         {
-            _bus.RegisterSubscribersFromAssemblyOf<ServiceBusExtensionTests>(Create);
+            _bus.RegisterHandlersFromAssemblyOf<ServiceBusExtensionTests>(Create);
             Assert.False(_myhandlers.Me);
             Assert.False(_myhandlers.MeC);
             _bus.Publish(new MyEvent());
@@ -74,6 +75,7 @@ namespace XTests.Infrastructure.ServiceBus
         {
             return _myhandlers;
         }
+
 
         private void Write(string format, params object[] param)
         {
