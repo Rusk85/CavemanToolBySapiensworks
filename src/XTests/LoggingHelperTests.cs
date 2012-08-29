@@ -5,6 +5,16 @@ using System.Diagnostics;
 
 namespace XTests
 {
+    public static class LogSetup
+    {
+        
+    public static void ToConsole()
+    {
+        
+        LogHelper.Register(new DeveloperLogger(Console.WriteLine),"devel");
+    }
+}
+   
     public class LoggingHelperTests
     {
         private Stopwatch _t = new Stopwatch();
