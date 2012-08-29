@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
+using System.Collections.Generic;
 
 namespace System.Reflection
 {
@@ -16,9 +18,21 @@ namespace System.Reflection
 		/// <returns></returns>
 		public static bool Implements<T>(this Type type)
 		{
-			return (typeof(T)).IsAssignableFrom(type);
+			type.MustNotBeNull();
+            return (typeof(T)).IsAssignableFrom(type);
 		}
 
+        /// <summary>
+        /// Used for checking if a class implements an interface
+        /// </summary>
+        /// <param name="type">Class Implementing the interface</param>
+        /// <returns></returns>
+        public static bool Implements(this Type type,Type other)
+        {
+            type.MustNotBeNull();
+            other.MustNotBeNull();
+            return other.IsAssignableFrom(type);
+        }
        
 		/// <summary>
 		/// Returns true if object is specifically of type. 
@@ -32,6 +46,20 @@ namespace System.Reflection
 		{
 			return (o.GetType() == typeof(T));
 		}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="interfaceName">The intuitive interface name</param>
+        /// <param name="genericType">Interface's generic arguments types</param>
+        /// <returns></returns>
+        public static bool ImplementsGenericInterface(this object o,string interfaceName,params Type[] genericType)
+        {
+            var tp = o.GetType();
+            return tp.GetInterfaces().Where(i => i.IsGenericType && i.Name.StartsWith(interfaceName)).Any(
+                i => i.GetGenericArguments().HasTheSameElementsAs(genericType));
+        }
 
 		/// <summary>
 		/// Used for resource localizing

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 
 namespace System.Linq
@@ -22,5 +23,17 @@ namespace System.Linq
 				action(b);
 			}
 		}
+
+        public static IEnumerable<T> CastSilently<T>(this IEnumerable source) where T:class
+        {
+            T res = null;
+            foreach(var item in source)
+            {
+                res = item as T;
+                if (res == null) continue;
+                yield return res;
+            }
+            
+        }
 	}
 }
