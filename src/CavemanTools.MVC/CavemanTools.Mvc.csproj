@@ -100,6 +100,7 @@
     <Compile Include="Extensions\Authentication.cs" />
     <Compile Include="Security\DemandRight.cs" />
     <Compile Include="Controllers\SmartController.cs" />
+    <Compile Include="SetupBusFromHandlerAttribute.cs" />
     <Compile Include="ThemeAttribute.cs" />
     <Compile Include="UnitTesting\FakeController.cs" />
     <Compile Include="ViewEngines\BuildManagerWrapper.cs" />
