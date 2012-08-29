@@ -27,4 +27,11 @@ namespace CavemanTools.Logging
             _writer(DateTime.Now.ToString() + " - " + level.ToString() + ": " + string.Format(message,args));            
         }
     }
+
+    public class ConsoleLogger:DeveloperLogger
+    {
+        public ConsoleLogger() : base(Console.WriteLine)
+        {
+        }
+    }
 }

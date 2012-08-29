@@ -22,5 +22,9 @@ namespace CavemanTools.Web
             return HttpContext.Current.Get(key, defaultValue);
         }
      
+        public static void Remove(string key)
+        {
+            HttpContext.Current.Items.Remove(key);
+        }
     }
 }

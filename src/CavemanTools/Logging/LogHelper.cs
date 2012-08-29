@@ -22,6 +22,11 @@ namespace CavemanTools.Logging
              _logs.Add(t);
          }
 
+        public static void Remove(string name)
+        {
+            _logs.RemoveAll(l => l.Item1 == name);
+        }
+
         static List<Tuple<string,ILogWriter,bool>> _logs= new List<Tuple<string, ILogWriter, bool>>(2);
         /// <summary>
         /// Returns the log matching the name

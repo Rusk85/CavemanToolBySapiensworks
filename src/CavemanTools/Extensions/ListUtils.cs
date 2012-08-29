@@ -5,6 +5,26 @@ namespace System.Collections.Generic
 	public static class ListUtils
 	{
 		/// <summary>
+		/// Checks if 2 enumerables have the same elements in the same order
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="first"></param>
+		/// <param name="second"></param>
+		/// <returns></returns>
+        public static bool HasTheSameElementsAs<T>(this IEnumerable<T> first,IEnumerable<T> second)
+		{
+		    var cnt1 = first.Count();
+		    T item1 = default(T);
+		    T item2 = default(T);
+            for(int i=0;i<cnt1;i++)
+            {
+                item1 = first.Skip(i).Take(1).First();
+                item2 = second.Skip(i).Take(1).First();
+                if (!item1.Equals(item2)) return false;
+            }
+		    return true;
+		}
+        /// <summary>
 		/// Compares two sequences and returns the added or removed items.
 		/// </summary>
 		/// <typeparam name="T">Implements IEquatable</typeparam>
