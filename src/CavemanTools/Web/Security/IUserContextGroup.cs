@@ -16,6 +16,9 @@ namespace CavemanTools.Web.Security
 
         bool ContainsRights(params ushort[] right);
 
+        /// <summary>
+        /// Gets group scope if any
+        /// </summary>
         AuthorizationScopeId ScopeId { get; }
     }
 }
