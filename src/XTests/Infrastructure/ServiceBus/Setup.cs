@@ -1,4 +1,5 @@
 ﻿using CavemanTools.Infrastructure;
+using CavemanTools.Infrastructure.MessagesBus;
 
 namespace XTests.Infrastructure.ServiceBus
 {
@@ -7,9 +8,9 @@ namespace XTests.Infrastructure.ServiceBus
          
     }
 
-    public class MyCommand:ICommand
+    public class MyCommand:AbstractCommand
     {
-        
+        public int Test { get; set; }
     }
 
     public class MyChildCommand:MyCommand
@@ -17,9 +18,9 @@ namespace XTests.Infrastructure.ServiceBus
         
     }
 
-    public class MyEvent:IEvent
+    public class MyEvent:AbstractEvent
     {
-        
+        public int Test { get; set; }
     }
 
     public class MyChildEvent:MyEvent
