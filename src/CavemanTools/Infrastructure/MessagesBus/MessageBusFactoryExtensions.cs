@@ -7,8 +7,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
     {
         public static IConfigureMessageBusFactory UseInMemoryPersistence(this IConfigureMessageBusFactory config)
         {
-            //config.WithStorage(new )
-            return config;
+            return config.WithStorage(new InMemoryBusStorage());            
         }
 
         /// <summary>
