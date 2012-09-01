@@ -1,4 +1,5 @@
 using System;
+using CavemanTools.Infrastructure.MessagesBus.Internals;
 
 namespace CavemanTools.Infrastructure.MessagesBus
 {
@@ -26,6 +27,15 @@ namespace CavemanTools.Infrastructure.MessagesBus
         {
             config.UseHandlersFrom(typeof (T));
             return config;
+        }
+        /// <summary>
+        /// The bus will work faster but you'll lose the recovery feature
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public static IConfigureMessageBusFactory WithNoPersistence(this IConfigureMessageBusFactory config)
+        {
+            return config.WithStorage(new NullStorage());
         }
     }
 }
