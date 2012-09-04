@@ -11,6 +11,10 @@ namespace XTests.Infrastructure.ServiceBus
     public class MyCommand:AbstractCommand
     {
         public int Test { get; set; }
+        public override string ToString()
+        {
+            return base.ToString()+" Test: "+Test;
+        }
     }
 
     public class MyChildCommand:MyCommand
