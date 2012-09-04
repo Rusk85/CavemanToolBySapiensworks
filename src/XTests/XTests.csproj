@@ -53,6 +53,7 @@
     <Compile Include="Cookies\ExtensionTests.cs" />
     <Compile Include="General.cs" />
     <Compile Include="Infrastructure\AggregateRoot\IdempotencyTests.cs" />
+    <Compile Include="Infrastructure\Queue\CommandQueueTests.cs" />
     <Compile Include="Infrastructure\ServiceBus\MemoryStorageTests.cs" />
     <Compile Include="Infrastructure\ServiceBus\MesageBusTests.cs" />
     <Compile Include="Infrastructure\ServiceBus\MessageBusFactoryTests.cs" />
