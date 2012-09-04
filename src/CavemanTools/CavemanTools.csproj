@@ -59,6 +59,9 @@
     <Compile Include="Extensions\Images.cs" />
     <Compile Include="Extensions\LCGUtils.cs" />
     <Compile Include="Extensions\TypeFactory.cs" />
+    <Compile Include="Infrastructure\CommandsQueue.cs" />
+    <Compile Include="Infrastructure\IQueueCommands.cs" />
+    <Compile Include="Infrastructure\ISaveQueueState.cs" />
     <Compile Include="Infrastructure\MessagesBus\AbstractCommand.cs" />
     <Compile Include="Infrastructure\MessagesBus\AbstractErrorMessage.cs" />
     <Compile Include="Infrastructure\MessagesBus\AbstractEvent.cs" />
@@ -68,10 +71,12 @@
     <Compile Include="Infrastructure\MessagesBus\DuplicateMessageException.cs" />
     <Compile Include="Infrastructure\MessagesBus\DuplicateOperationException.cs" />
     <Compile Include="Infrastructure\MessagesBus\IConfigureMessageBusFactory.cs" />
+    <Compile Include="Infrastructure\MessagesBus\IDispatchCommands.cs" />
     <Compile Include="Infrastructure\MessagesBus\IExecuteRequest.cs" />
     <Compile Include="Infrastructure\MessagesBus\IMessageBus.cs" />
     <Compile Include="Infrastructure\MessagesBus\IMessageBusFactory.cs" />
     <Compile Include="Infrastructure\MessagesBus\InMemoryBusStorage.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\NullStorage.cs" />
     <Compile Include="Infrastructure\MessagesBus\MessageBusFactory.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\RequestExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\TypeWithHandlers.cs" />
@@ -96,6 +101,7 @@
     <Compile Include="Infrastructure\MessagesBus\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\HandlerWrapper.cs" />
     <Compile Include="Infrastructure\MessagesBus\MissingCommandHandlerException.cs" />
+    <Compile Include="Infrastructure\QueueItem.cs" />
     <Compile Include="Infrastructure\Subscriptions.cs" />
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
