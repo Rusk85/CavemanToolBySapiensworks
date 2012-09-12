@@ -1,5 +1,6 @@
 ﻿using CavemanTools.Infrastructure;
 using CavemanTools.Infrastructure.MessagesBus;
+using CavemanTools.Infrastructure.MessagesBus.Saga;
 using CavemanTools.Logging;
 using Moq;
 using Xunit;
@@ -9,7 +10,7 @@ using System.Diagnostics;
 namespace XTests.Infrastructure.ServiceBus
 {
     public class MessageBusTests:IExecuteCommand<MyCommand>,IHandleEvent<MyEvent>
-        ,IExecuteRequest<MyChildCommand,int>
+        ,IExecuteRequest<MyChildCommand,int>        
     {
         private Stopwatch _t = new Stopwatch();
         protected LocalMessageBus _bus;
@@ -19,7 +20,8 @@ namespace XTests.Infrastructure.ServiceBus
         {
             LogSetup.ToConsole();
             _storage = new Mock<IStoreMessageBusState>();
-            _bus = new LocalMessageBus(_storage.Object, LogHelper.DefaultLogger);
+            var resolver = new Mock<IResolveSagaRepositories>();
+            _bus = new LocalMessageBus(_storage.Object, LogHelper.DefaultLogger,resolver.Object);
             SetupBus();
            
            
@@ -64,16 +66,16 @@ namespace XTests.Infrastructure.ServiceBus
         [Fact]
         public void missing_command_handler_throws_by_default()
         {
-            var l = new LocalMessageBus(_storage.Object, LogHelper.DefaultLogger);
-            Assert.Throws<MissingCommandHandlerException>(() => l.Send(new MyCommand()));
+            _bus.Subscriptions.Clear();
+            Assert.Throws<MissingCommandHandlerException>(() => _bus.Send(new MyCommand()));
         }
 
         [Fact]
         public void missing_command_handler_is_ignored()
         {
-            var l = new LocalMessageBus(_storage.Object, LogHelper.DefaultLogger);
-            l.IgnoreMissingCommandHandler = true;
-            Assert.DoesNotThrow(() => l.Send(new MyCommand()));
+            _bus.Subscriptions.Clear();
+            _bus.IgnoreMissingCommandHandler = true;
+            Assert.DoesNotThrow(() => _bus.Send(new MyCommand()));
         }
 
         [Fact]

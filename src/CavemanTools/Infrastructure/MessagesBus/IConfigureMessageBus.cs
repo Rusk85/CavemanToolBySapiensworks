@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CavemanTools.Infrastructure.MessagesBus
 {
@@ -6,7 +7,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
     {
         //bool ThrowOnUnhandledExceptions { get; set; }
         bool IgnoreMissingCommandHandler { get; set; }
-        IDisposable RegisterHandler(Type msgType,object handler);
+        IDisposable RegisterHandler(Type msgType, object handler);
         IDisposable RegisterHandler<T>(IHandleEvent<T> handler) where T:IEvent;
         IDisposable RegisterHandler<T>(IExecuteCommand<T> handler) where T:ICommand;
         IDisposable SetupCommandHandler<T>(Action<T> handler) where T:ICommand;

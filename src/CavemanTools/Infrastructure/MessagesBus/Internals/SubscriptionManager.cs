@@ -67,5 +67,10 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
         {
             get { return _list.Count; }
         }
+
+        public void Clear()
+        {
+            _list.Clear();
+        }
     }
 }

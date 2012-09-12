@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CavemanTools.Infrastructure.MessagesBus.Saga;
 
 namespace CavemanTools.Infrastructure.MessagesBus.Internals
 {
@@ -43,6 +44,12 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
         {
             var sub = new DisposableSubscriber(this, handler);
             return sub;
+        }
+
+        public IDisposable AddSagaHandler(object handler,IResolveSagaRepositories resolver)
+        {
+            var saga = new SagaExecutor(handler, resolver);
+            return AddSubscriber(saga);
         }
 
         public override void Handle(IMessage msg)
