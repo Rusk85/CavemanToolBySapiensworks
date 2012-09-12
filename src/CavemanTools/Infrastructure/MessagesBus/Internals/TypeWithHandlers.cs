@@ -28,13 +28,13 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
 
         public static TypeWithHandlers TryCreateFrom(Type t)
         {
-            var alli =
-                t.GetInterfaces().Where(
-                    i =>
-                    i.IsGenericType && LocalMessageBus.InterfaceNames.Any(n => i.Name.StartsWith(n)) &&
-                    LocalMessageBus.MessageTypes.Any(m => i.GetGenericArguments()[0].Implements(m)))
-                    .Select(i=> i.GetGenericArguments()[0])
-                    .ToArray();
+            var alli = MessageHandlerDiscoverer.GetImplementedInterfaces(t).Select(i => i.GetGenericArguments()[0]).ToArray();
+                //t.GetInterfaces().Where(
+                //    i =>
+                //    i.IsGenericType && MessageHandlerDiscoverer.InterfaceNames.Any(n => i.Name.StartsWith(n)) &&
+                //    MessageHandlerDiscoverer.MessageTypes.Any(m => i.GetGenericArguments()[0].Implements(m)))
+                //    .Select(i=> i.GetGenericArguments()[0])
+                //    .ToArray();
             if (alli.Length==0)
             {
                 return null;

@@ -59,6 +59,7 @@
     <Compile Include="Infrastructure\ServiceBus\MessageBusFactoryTests.cs" />
     <Compile Include="Infrastructure\ServiceBus\MessageBusSetupFromObject.cs" />
     <Compile Include="Infrastructure\ServiceBus\MyCommandFactoryHandler.cs" />
+    <Compile Include="Infrastructure\ServiceBus\SagaTests.cs" />
     <Compile Include="Infrastructure\ServiceBus\ServiceBusExtensionTests.cs" />
     <Compile Include="Infrastructure\ServiceBus\MessageBusSubscriptionTests.cs" />
     <Compile Include="Infrastructure\ServiceBus\Setup.cs" />

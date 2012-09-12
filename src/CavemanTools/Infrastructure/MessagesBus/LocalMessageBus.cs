@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using CavemanTools.Infrastructure.MessagesBus.Internals;
+using CavemanTools.Infrastructure.MessagesBus.Saga;
 using CavemanTools.Logging;
 
 namespace CavemanTools.Infrastructure.MessagesBus
@@ -12,11 +13,16 @@ namespace CavemanTools.Infrastructure.MessagesBus
     {
         private IStoreMessageBusState _storage;
         private readonly ILogWriter _log;
+        private readonly IResolveSagaRepositories _sagaResolver;
 
-        public LocalMessageBus(IStoreMessageBusState storage,ILogWriter log)
+        public LocalMessageBus(IStoreMessageBusState storage, ILogWriter log, IResolveSagaRepositories sagaResolver)
         {
+            storage.MustNotBeNull("storage");
+            log.MustNotBeNull("log");
+            sagaResolver.MustNotBeNull("sagaResolver");
             _storage = storage;
             _log = log;
+            _sagaResolver = sagaResolver;
             ThrowOnUnhandledExceptions = true;
             IgnoreMissingCommandHandler = false;
             RecoveryMode = false;
@@ -35,51 +41,76 @@ namespace CavemanTools.Infrastructure.MessagesBus
             get { return _subs; }
         }
 
-        //internal static Type[] GetMessagesInterfaceTypes(Type msgType,object instance)
-        //{
-        //    var alli =
-        //        instance.GetType().GetInterfaces().Where(
-        //            i => i.IsGenericType && i.GetGenericArguments()[0].IsAssignableFrom(msgType) && interfaceNames.Any(n => i.Name.StartsWith(n))).ToArray();
-        //    if (alli.Length == 0) throw new ArgumentException("Provided object is not a suitable handler");
-        //}
+        #region Handler from instance registration
 
-        internal static string[] InterfaceNames = new[] {"IExecuteCommand", "IExecuteRequest", "IHandleEvent"};
-        internal static Type[] MessageTypes = new[] {typeof(ICommand),typeof(IEvent)};
+        IDisposable RegisterCommands(Type[] interfaces,object handler,Type msgType)
+        {
+            MessageHandlerExecutor exec = null;
+            if (interfaces.CanExecuteRequest())
+            {
+                exec = new RequestExecutor(msgType, handler);
+            }
+            else
+            {
+                if (interfaces.CanExecuteCommand())
+                {
+                    exec = new CommandExecutor(msgType, handler);
+                }
+            }
+            
+            
+            if (exec != null)
+            {
+                return _subs.Add(exec);
+            }
+            return null;
+        }
 
-        public IDisposable RegisterHandler(Type msgType,object handler)
+       IDisposable RegisterEvents(Type[] interfaces, object handler, Type msgType)
+        {
+            var sub = _subs.GetOrCreate(msgType);
+            if (interfaces.CanStartSaga())
+            {
+                return sub.AddSagaHandler(handler, _sagaResolver);
+            } 
+
+           if (interfaces.CanHandleEvent())
+            {
+                return sub.AddSubscriber(handler);
+            }
+                        
+            return null;
+        }
+
+        public IDisposable RegisterHandler(Type msgType, object handler)
         {
             if (!msgType.Implements<IMessage>()) throw new ArgumentException("Message must implement IMessage");
             handler.MustNotBeNull();
             var tp = handler.GetType();
-            var alli =
-                tp.GetInterfaces().Where(
-                    i => i.IsGenericType && i.GetGenericArguments()[0].IsAssignableFrom(msgType) && InterfaceNames.Any(n=>i.Name.StartsWith(n))).ToArray();
-            if (alli.Length==0) throw new ArgumentException("Provided object is not a suitable handler");
+
+            var interfaces = MessageHandlerDiscoverer.GetImplementedInterfaces(tp, msgType).ToArray();
+         
+            if (interfaces.Length == 0) throw new ArgumentException("The object provided doesn't contain valid messages handlers");
+
             IDisposable result = null;
+
             if (msgType.Implements<ICommand>())
             {
-                MessageHandlerExecutor exec = null;
-                if (alli.Any(i=>i.Name.StartsWith("IExecuteRequest")))
+                result=RegisterCommands(interfaces, handler, msgType);
+            }
+            else
+            {
+                if (msgType.Implements<IEvent>())
                 {
-                    exec= new RequestExecutor(msgType,handler);
+                    result = RegisterEvents(interfaces, handler, msgType);
                 }
-                else
-                {
-                    exec = new CommandExecutor(msgType, handler);
-                }
-                
-                result= _subs.Add(exec);
             }
             
-            if (msgType.Implements<IEvent>())
-            {
-                var sub = _subs.GetOrCreate(msgType);
-                result= sub.AddSubscriber(handler);
-            }
-            if (result==null) throw new ArgumentException("Message type is not an ICommand or IEvent");
-            _log.Info("Registered '{0}' as handler for '{1}'",handler,msgType);
+            if (result == null) throw new ArgumentException("Message type is not an ICommand or IEvent");
+            _log.Info("Registered '{0}' as handler for '{1}'", handler, msgType);
             return result;
-        }
+        } 
+        #endregion
 
         public IDisposable RegisterHandler<T>(IHandleEvent<T> handler) where T:IEvent
         {

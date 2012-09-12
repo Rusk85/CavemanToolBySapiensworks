@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using CavemanTools.Infrastructure.MessagesBus.Internals;
+using CavemanTools.Infrastructure.MessagesBus.Saga;
 using CavemanTools.Logging;
 
 namespace CavemanTools.Infrastructure.MessagesBus
@@ -44,7 +45,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         public IMessageBus CreateBus()
         {
-            var bus = new LocalMessageBus(_storage, _logger);
+            var bus = new LocalMessageBus(_storage, _logger,new SagaDependecyResolver(_resolver));
             foreach(var handlerType in _handlers)
             {
                 var instance = _resolver.Resolve(handlerType.HandlerTypeName);

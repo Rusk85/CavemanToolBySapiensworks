@@ -1,6 +1,7 @@
 ﻿using CavemanTools.Infrastructure;
 using CavemanTools.Infrastructure.MessagesBus;
 using CavemanTools.Infrastructure.MessagesBus.Internals;
+using CavemanTools.Infrastructure.MessagesBus.Saga;
 using CavemanTools.Logging;
 using Moq;
 using Xunit;
@@ -21,7 +22,8 @@ namespace XTests.Infrastructure.ServiceBus
         {
             LogSetup.ToConsole();
             var store = new Mock<IStoreMessageBusState>();
-            _bus = new LocalMessageBus(store.Object, LogHelper.DefaultLogger);
+            var resolver = new Mock<IResolveSagaRepositories>();
+            _bus = new LocalMessageBus(store.Object, LogHelper.DefaultLogger, resolver.Object);
         }
 
         [Fact]

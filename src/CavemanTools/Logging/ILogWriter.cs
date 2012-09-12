@@ -41,4 +41,9 @@ namespace CavemanTools.Logging
 	    void Debug(string mesage);
 	    void Debug(string format, params object[] args);
 	}
+
+    public interface IWriteToLog:ILogWriter
+    {
+        
+    }
 }

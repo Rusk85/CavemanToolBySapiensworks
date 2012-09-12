@@ -49,8 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Dao.cs" />
-    <Compile Include="Data\JsonMessageStruct.cs" />
     <Compile Include="Data\JsonStatus.cs" />
     <Compile Include="Data\JsonStruct.cs" />
     <Compile Include="EventArgs.cs" />
@@ -76,7 +74,9 @@
     <Compile Include="Infrastructure\MessagesBus\IMessageBus.cs" />
     <Compile Include="Infrastructure\MessagesBus\IMessageBusFactory.cs" />
     <Compile Include="Infrastructure\MessagesBus\InMemoryBusStorage.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\MessageHandlerDiscoverer.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\NullStorage.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\SagaExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\MessageBusFactory.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\RequestExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\TypeWithHandlers.cs" />
@@ -97,6 +97,19 @@
     <Compile Include="Infrastructure\MessagesBus\IStoreMessageBusState.cs" />
     <Compile Include="Infrastructure\MessagesBus\LocalMessageBus.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\SubscriptionManager.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\IFindSaga.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\IGenericSagaRepository.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\IHoldSagaState.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\IIdentifySaga.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\ILocateSaga.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\InMemoryGenericSagaRepository.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\IResolveSagaRepositories.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\ISaga.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\ISagaStartedBy.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\ISaveSagaState.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\Saga.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\SagaDependecyResolver.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\SagaExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\UnhandledMessageException.cs" />
     <Compile Include="Infrastructure\MessagesBus\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\HandlerWrapper.cs" />
