@@ -178,7 +178,15 @@ namespace System
 			return builder.ToString();
 
 		}
+        
+            
+	}
+}
 
+namespace System.Text
+{
+    public static class TextUtils
+    {
         /// <summary>
         /// Removes last character from builder
         /// </summary>
@@ -189,6 +197,6 @@ namespace System
             sb.MustNotBeNull();
             return sb.Remove(sb.Length - 1, 1);
         }
-            
-	}
+    }
+
 }
