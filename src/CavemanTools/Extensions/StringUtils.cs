@@ -88,17 +88,22 @@ namespace System
 			var l = value.Length > length ? length : value.Length;
 			return value.Substring(0, l);
 		}
-		
-        ///// <summary>
-        ///// Returns true if the string is empty or contains only blancs
-        ///// </summary>
-        ///// <param name="data"></param>
-        ///// <returns></returns>
-        //public static bool IsTrimmedNullOrEmpty(this string data)
-        //{
-        //    if (data == null) return true;
-        //    return String.IsNullOrEmpty(data.Trim());
-        //}
+
+        /// <summary>
+        /// Returns true if the string is empty 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="checkBlancs">trim blancs</param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty(this string data,bool checkBlancs=false)
+        {
+            if (data == null) return true;
+            if (checkBlancs)
+            {
+                data = data.Trim();
+            }
+            return String.IsNullOrEmpty(data);
+        }
 
 		/// <summary>
 		/// Converts strings form unicode to specified encoding
