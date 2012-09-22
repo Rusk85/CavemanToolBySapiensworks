@@ -202,6 +202,23 @@ namespace System.Text
             sb.MustNotBeNull();
             return sb.Remove(sb.Length - 1, 1);
         }
+
+        /// <summary>
+        /// Remove last char if matches the provided value
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="value">value to check</param>
+        /// <returns></returns>
+        public static StringBuilder RemoveLastIfEquals(this StringBuilder sb,char value)
+        {
+            var last = sb[sb.Length - 1];
+            if (value==last)
+            {
+                sb.RemoveLast();
+            }
+            return sb;
+        }               
+            
     }
 
 }
