@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace System
 {
@@ -19,5 +20,9 @@ namespace System
             if (list==null || list.Count==0) throw new ArgumentException("The collection must contain at least one element",paramName??"");
         }
             
+        public static void MustMatch(this string source,string regex,RegexOptions options=RegexOptions.None)
+        {
+            if (source.IsNullOrEmpty() || !Regex.IsMatch(source,regex,options)) throw new FormatException(string.Format("Argument doesn't match expression '{0}'",regex));
+        }
     }
 }
