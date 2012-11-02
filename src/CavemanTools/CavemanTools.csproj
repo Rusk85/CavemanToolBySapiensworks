@@ -158,6 +158,7 @@
     <Compile Include="SingletonsRegistry.cs" />
     <Compile Include="Testing\BenchmarkResult.cs" />
     <Compile Include="Testing\BenchmarkUnit.cs" />
+    <Compile Include="SemanticVersion.cs" />
     <Compile Include="Web\ContextInstance.cs" />
     <Compile Include="Web\HttpContextRegistry.cs" />
     <Compile Include="Web\RequestMetricsModule.cs" />
