@@ -90,6 +90,7 @@
     <Compile Include="Security\ValidateCredentialsFactoryTests.cs" />
     <Compile Include="Security\UserRightsContextTests.cs" />
     <Compile Include="SemVersionTests.cs" />
+    <Compile Include="Strings\StringBuilderExtensionsTests.cs" />
     <Compile Include="Strings\StringParsersTests.cs" />
     <Compile Include="Validation\ValidationHelperTests.cs" />
     <Compile Include="Web\MiscTests.cs" />

@@ -217,7 +217,34 @@ namespace System.Text
                 sb.RemoveLast();
             }
             return sb;
-        }               
+        }
+
+        /// <summary>
+        /// Remove last char if matches the provided value
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="value">value to check</param>
+        /// <returns></returns>
+        public static StringBuilder RemoveLastIfEquals(this StringBuilder sb, string value)
+        {
+            if (value.IsNullOrEmpty()) return sb;
+            bool eq = true;
+            int pos = sb.Length - value.Length;
+            if (pos < 0) return sb;
+            foreach(var ch in value)
+            {
+                if (sb[pos]!=ch)
+                {
+                    eq = false;
+                    break;
+                }
+                pos++;
+            }
+            if (!eq) return sb;
+
+            sb.Remove(sb.Length - value.Length, value.Length);            
+            return sb;
+        }           
             
     }
 
