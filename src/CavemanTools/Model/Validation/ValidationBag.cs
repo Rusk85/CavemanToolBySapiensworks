@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CavemanTools.Model.Validation
 {
@@ -47,5 +48,11 @@ namespace CavemanTools.Model.Validation
 				return _values.TrueForAll(d => d);
 			}
 		}
+
+        public bool AtLeastOneIs(bool value)
+        {
+            return _values.Any(d => d == value);
+        }
+
 	}
 }
