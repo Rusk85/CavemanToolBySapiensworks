@@ -19,7 +19,7 @@ namespace CavemanTools.Model
 	        Items = new T[0];
 	    }
 
-		public IEnumerable<T> Items
+	    public IEnumerable<T> Items
 		{
 			get; set;
 		}

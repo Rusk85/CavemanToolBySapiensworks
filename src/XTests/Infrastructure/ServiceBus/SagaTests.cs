@@ -75,7 +75,7 @@ namespace XTests.Infrastructure.ServiceBus
         private MyTestSagaData _data= new MyTestSagaData();
         private Mock<IGenericSagaRepository> _sagaStore;
 
-        public class Inner:IHandleEvent<MySagaEvent>,IFindSaga<MyTestSagaData>.Using<MySagaEvent>,ISaveSagaState<MyTestSagaData>
+        public class Inner:ISubscribeToEvent<MySagaEvent>,IFindSaga<MyTestSagaData>.Using<MySagaEvent>,ISaveSagaState<MyTestSagaData>
         {
             private readonly SagaTests _parent;
 

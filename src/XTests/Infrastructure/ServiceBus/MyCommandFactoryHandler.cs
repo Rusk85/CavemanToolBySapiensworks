@@ -3,7 +3,7 @@ using CavemanTools.Infrastructure.MessagesBus;
 
 namespace XTests.Infrastructure.ServiceBus
 {
-    public class MyCommandFactoryHandler:IExecuteCommand<MyCommand>,IHandleEvent<MyEvent>
+    public class MyCommandFactoryHandler:IExecuteCommand<MyCommand>,ISubscribeToEvent<MyEvent>
     {
         public void Execute(MyCommand cmd)
         {

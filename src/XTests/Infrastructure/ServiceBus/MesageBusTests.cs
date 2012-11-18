@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace XTests.Infrastructure.ServiceBus
 {
-    public class MessageBusTests:IExecuteCommand<MyCommand>,IHandleEvent<MyEvent>
+    public class MessageBusTests:IExecuteCommand<MyCommand>,ISubscribeToEvent<MyEvent>
         ,IExecuteRequest<MyChildCommand,int>        
     {
         private Stopwatch _t = new Stopwatch();
