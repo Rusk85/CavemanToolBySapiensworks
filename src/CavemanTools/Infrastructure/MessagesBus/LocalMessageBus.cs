@@ -112,7 +112,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
         } 
         #endregion
 
-        public IDisposable RegisterHandler<T>(IHandleEvent<T> handler) where T:IEvent
+        public IDisposable RegisterHandler<T>(ISubscribeToEvent<T> handler) where T:IEvent
         {
             _log.Debug("Tyring to register handler '{0}' for event '{1}'",handler.ToString(),typeof(T));
             var exec = _subs.GetOrCreate(typeof (T));

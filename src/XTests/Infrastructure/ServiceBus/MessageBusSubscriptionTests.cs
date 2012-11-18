@@ -12,7 +12,7 @@ namespace XTests.Infrastructure.ServiceBus
 {
     public class MessageBusSubscriptionTests:
         IExecuteCommand<MyCommand>
-        ,IHandleEvent<MyEvent>
+        ,ISubscribeToEvent<MyEvent>
     {
         private Stopwatch _t = new Stopwatch();
         private LocalMessageBus _bus;

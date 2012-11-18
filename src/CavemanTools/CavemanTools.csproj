@@ -87,7 +87,7 @@
     <Compile Include="Infrastructure\MessagesBus\IEvent.cs" />
     <Compile Include="Infrastructure\MessagesBus\IExecuteCommand.cs" />
     <Compile Include="Infrastructure\MessagesBus\IHandleError.cs" />
-    <Compile Include="Infrastructure\MessagesBus\IHandleEvent.cs" />
+    <Compile Include="Infrastructure\MessagesBus\ISubscribeToEvent.cs" />
     <Compile Include="Infrastructure\MessagesBus\IMessage.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\CommandExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\EventExecutor.cs" />
