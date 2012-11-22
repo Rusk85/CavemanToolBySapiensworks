@@ -1,7 +1,6 @@
 using System;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
 
 namespace CavemanTools.Mvc.Extensions
 {
@@ -35,7 +34,9 @@ namespace CavemanTools.Mvc.Extensions
         /// Gets the client url for the theme 
         /// </summary>
         public string BaseUrl { get; private set; }
-
+        /// <summary>
+        /// Relative path of the views directory
+        /// </summary>
         public string ViewsPath { get; private set; }
     }
 }
