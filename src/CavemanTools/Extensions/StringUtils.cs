@@ -228,21 +228,26 @@ namespace System.Text
         public static StringBuilder RemoveLastIfEquals(this StringBuilder sb, string value)
         {
             if (value.IsNullOrEmpty()) return sb;
-            bool eq = true;
-            int pos = sb.Length - value.Length;
-            if (pos < 0) return sb;
-            foreach(var ch in value)
+            if (sb.ToString().EndsWith(value))
             {
-                if (sb[pos]!=ch)
-                {
-                    eq = false;
-                    break;
-                }
-                pos++;
+                sb.Remove(sb.Length - value.Length, value.Length);
             }
-            if (!eq) return sb;
+            //this is probably more efficient but too much code
+            //bool eq = true;
+            //int pos = sb.Length - value.Length;
+            //if (pos < 0) return sb;
+            //foreach(var ch in value)
+            //{
+            //    if (sb[pos]!=ch)
+            //    {
+            //        eq = false;
+            //        break;
+            //    }
+            //    pos++;
+            //}
+            //if (!eq) return sb;
 
-            sb.Remove(sb.Length - value.Length, value.Length);            
+            //sb.Remove(sb.Length - value.Length, value.Length);            
             return sb;
         }           
             
