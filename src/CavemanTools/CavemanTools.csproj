@@ -120,12 +120,14 @@
     <Compile Include="Lists\ModifiedItem.cs" />
     <Compile Include="Extensions\LoggingUtility.cs" />
     <Compile Include="Lists\TrackedListItem.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\DeveloperLogger.cs" />
     <Compile Include="Logging\LogHelper.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Lists\IModifiedSet.cs" />
     <Compile Include="Extensions\ListUtils.cs" />
     <Compile Include="Logging\LogWriterBase.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Model\ValueObjects\AbstractValueObject.cs" />
     <Compile Include="Model\ValueObjects\Email.cs" />
     <Compile Include="Model\IdName.cs" />

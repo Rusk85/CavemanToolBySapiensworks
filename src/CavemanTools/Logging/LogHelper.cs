@@ -41,7 +41,8 @@ namespace CavemanTools.Logging
         }
 
         /// <summary>
-        /// Gets the default registered log or the first registered log
+        /// Gets the default registered log or the first registered log.
+        /// If no logger is defined, a null logger is returned
         /// </summary>
         public static ILogWriter DefaultLogger
         {
@@ -60,26 +61,10 @@ namespace CavemanTools.Logging
                     }
 
                 }
-                return new NullLogger();
+                return NullLogger.Instance;
             }
         }
 
-        class NullLogger:LogWriterBase
-        {
-            public override T GetLogger<T>()
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void Log(LogLevel level, string text)
-            {
-                
-            }
-
-            public override void Log(LogLevel level, string message, params object[] args)
-            {
-                
-            }
-        }
+      
     }
 }
