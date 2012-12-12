@@ -53,7 +53,7 @@ namespace XTests.Infrastructure.Queue
             _storage.Verify(d=>d.ItemWasExecuted(item.Id));
         }
 
-        [Fact]
+        [Fact(Skip = "Run this test alone")]
         public void items_are_not_executed_before_their_time()
         {
             var item = new QueueItem(new MyCommand()){ExecuteAt = DateTime.UtcNow.Add(TimeSpan.FromDays(1))};
@@ -124,7 +124,7 @@ namespace XTests.Infrastructure.Queue
             _dispacther.Verify(d=>d.Send(It.IsAny<ICommand>()),Times.Exactly(2));
         }
 
-        [Fact]
+        [Fact(Skip = "Run this test alone")]
         public void paused_queue_doesnt_process_anything()
         {
             _q.Stop();
