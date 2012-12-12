@@ -1,3 +1,5 @@
+using System;
+
 namespace CavemanTools.Logging
 {
 	/// <summary>
@@ -42,8 +44,13 @@ namespace CavemanTools.Logging
 	    void Debug(string format, params object[] args);
 	}
 
+    /// <summary>
+    /// New name for an old interface
+    /// </summary>
     public interface IWriteToLog:ILogWriter
     {
         
     }
+
+ 
 }
