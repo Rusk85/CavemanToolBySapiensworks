@@ -59,7 +59,7 @@ namespace XTests.Reflection
 
         private const int Iterations = 1000000;
 
-        [Fact]
+      //  [Fact]
         public void fast_setter_benchmark()
         {
             //warmup
@@ -84,7 +84,7 @@ namespace XTests.Reflection
         }
 
         
-        [Fact]
+     //   [Fact]
         public void fast_getter_benchmark()
         {
             //warmup
@@ -109,7 +109,7 @@ namespace XTests.Reflection
         }
 
 
-        [Fact]
+       // [Fact]
         public void fast_instantiate_benchamrk()
         {
             _t.Start();
