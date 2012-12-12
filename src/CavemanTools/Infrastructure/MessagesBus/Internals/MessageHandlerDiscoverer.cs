@@ -9,10 +9,10 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
     {
         private const string CommandHandlerInterfaceName = "IExecuteCommand";
         private const string RequestHandlerInterfaceName = "IExecuteRequest";
-        private const string EventHandlerInterfaceName = "IHandleEvent";
+        private const string EventHandlerInterfaceName = "ISubscribeToEvent";
         private const string StartsSagaInterfaceName = "ISagaStartedBy";
         private static string[] InterfaceNames = new[] {CommandHandlerInterfaceName,RequestHandlerInterfaceName,EventHandlerInterfaceName,StartsSagaInterfaceName};
-        //private static string[] InterfaceNames = new[] {"IExecuteCommand", "IExecuteRequest", "IHandleEvent","ISagaStartedBy"};
+      
         private static Type[] MessageTypes = new[] {typeof(ICommand),typeof(IEvent)};
 
         /// <summary>

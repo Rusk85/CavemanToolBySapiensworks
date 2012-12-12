@@ -19,7 +19,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
             return new MessageBusFactory();
         }
 
-        private ILogWriter _logger;
+        private ILogWriter _logger= NullLogger.Instance;
         private IStoreMessageBusState _storage;
         private IResolveDependencies _resolver;
 
@@ -79,7 +79,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
         }
 
         private List<TypeWithHandlers> _handlers = new List<TypeWithHandlers>();
-
+       
         public IConfigureMessageBusFactory ScanForHandlers(params Assembly[] assemblies)
         {
             foreach(var asm in assemblies)

@@ -36,5 +36,6 @@ namespace CavemanTools.Infrastructure.MessagesBus
         {
             return config.WithStorage(new NullStorage());
         }
+        
     }
 }
