@@ -11,13 +11,13 @@ namespace CavemanTools.Infrastructure
     {
         private readonly ISaveQueueState _storage;
         private readonly IDispatchCommands _dispatcher;
-        private readonly ILogWriter _debug;
+        private readonly ILogWriter _logger;
 
-        public CommandsQueue(ISaveQueueState storage,IDispatchCommands dispatcher,ILogWriter debug)
+        public CommandsQueue(ISaveQueueState storage,IDispatchCommands dispatcher,ILogWriter logger=null)
         {
             _storage = storage;
             _dispatcher = dispatcher;
-            _debug = debug;
+            _logger = logger??NullLogger.Instance;
             IsPaused = true;
             SetupTimer();
             PollingInterval = TimeSpan.FromSeconds(1);
@@ -38,7 +38,7 @@ namespace CavemanTools.Infrastructure
                if (item.ShouldBeExecuted)
                {
                    _q.Add(item);
-                   _debug.Debug("[Caveman Queue] Added command '{0}' to be executed at {1}", item.Command,item.ExecuteAt);
+                   _logger.Debug("[Caveman Queue] Added command '{0}' to be executed at {1}", item.Command,item.ExecuteAt);
                }
             }
             
@@ -79,7 +79,7 @@ namespace CavemanTools.Infrastructure
             command.MustNotBeNull("command");
             var item = new QueueItem(command) {ExecuteAt = when};
             _storage.Save(item);
-            _debug.Debug("[Caveman Queue] Command '{0}' saved",command);
+            _logger.Debug("[Caveman Queue] Command '{0}' saved",command);
         }
 
      
@@ -89,7 +89,7 @@ namespace CavemanTools.Infrastructure
             _timer.Start();
             _worker = Task.Factory.StartNew(() =>
             {
-                _debug.Info("[Caveman Queue] Worker thread started");
+                _logger.Info("[Caveman Queue] Worker thread started");
 
                 while (!IsPaused)
                 {
@@ -108,18 +108,18 @@ namespace CavemanTools.Infrastructure
                         //underlying collection was modified, we can live with that
                     }
                 }
-                _debug.Info("[Caveman Queue] Worker thread finished");
+                _logger.Info("[Caveman Queue] Worker thread finished");
             });
-            _debug.Info("[Caveman Queue] Started.");
+            _logger.Info("[Caveman Queue] Started.");
         }
 
         private void ProcessItem(QueueItem tsk)
         {
-            if (!tsk.ShouldBeExecuted) throw new Exception();
-            _debug.Debug("[Caveman Queue] Executing command '{0}'",tsk.Command.ToString());
+            if (!tsk.ShouldBeExecuted) throw new Exception("Bug");
+            _logger.Debug("[Caveman Queue] Executing command '{0}'",tsk.Command.ToString());
             _dispatcher.Send(tsk.Command);
             _storage.ItemWasExecuted(tsk.Id);
-            _debug.Debug("[Caveman Queue] Command '{0}' completed", tsk.Command.ToString());
+            _logger.Debug("[Caveman Queue] Command '{0}' completed", tsk.Command.ToString());
         }
 
         private Task _worker;
@@ -133,7 +133,7 @@ namespace CavemanTools.Infrastructure
             IsPaused = true;
             _timer.Stop();
             EndWorker();
-            _debug.Info("[Caveman Queue] Stopped.");
+            _logger.Info("[Caveman Queue] Stopped.");
         }
 
         void EndWorker()
@@ -146,7 +146,7 @@ namespace CavemanTools.Infrastructure
                 }
                catch(AggregateException ex)
                {
-                   _debug.Error(ex.Flatten().ToString());
+                   _logger.Error(ex.Flatten().ToString());
                }
                
                 finally
@@ -164,7 +164,7 @@ namespace CavemanTools.Infrastructure
             _timer.Dispose();
             _q.CompleteAdding();
             _q.Dispose();
-            _debug.Debug("[Caveman Queue] Disposed");
+            _logger.Debug("[Caveman Queue] Disposed");
         }
     }
 }
