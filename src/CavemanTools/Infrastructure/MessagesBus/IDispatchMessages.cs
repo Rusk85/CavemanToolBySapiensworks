@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 
 namespace CavemanTools.Infrastructure.MessagesBus
 {
-    public interface IDispatchMessages : IDispatchCommands
+    public interface IDispatchMessages : IDispatchCommands,IDispatchCommandsAsync
     {
         /// <summary>
-        /// Publishes asynchronously the events
+        /// Publishes asynchronously the events.
+        /// All events are published on the same thread
         /// </summary>
         /// <param name="events"></param>
         Task PublishAsync(params IEvent[] events);

@@ -19,18 +19,19 @@ namespace CavemanTools.Infrastructure.MessagesBus
         {
             storage.MustNotBeNull("storage");
             log.MustNotBeNull("log");
-            sagaResolver.MustNotBeNull("sagaResolver");
+            sagaResolver.MustNotBeNull("sagaResolver");        
             _storage = storage;
             _log = log;
-            _sagaResolver = sagaResolver;
+            _sagaResolver = sagaResolver;        
             ThrowOnUnhandledExceptions = true;
             IgnoreMissingCommandHandler = false;
-            RecoveryMode = false;
+            RecoveryMode = false;            
         }
 
         internal bool RecoveryMode { get; set; }
 
        SubscriptionManager _subs= new SubscriptionManager();
+        
 
         private bool ThrowOnUnhandledExceptions
         { get; set; }
@@ -81,6 +82,8 @@ namespace CavemanTools.Infrastructure.MessagesBus
                         
             return null;
         }
+
+      
 
         public IDisposable RegisterHandler(Type msgType, object handler)
         {
@@ -178,6 +181,8 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         public bool IgnoreMissingCommandHandler { get; set; }
 
+      
+
         #region Request
         public R Request<R>(ICommand cmd)
         {
@@ -245,7 +250,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         public Task SendAsync(ICommand cmd)
         {
-            _log.Debug("Sending async command '{0}'", cmd.GetType());
+           _log.Debug("Sending async command '{0}'", cmd.GetType());
             return Task.Factory.StartNew(() => ExecuteCommand(cmd));
         }
 
@@ -255,6 +260,8 @@ namespace CavemanTools.Infrastructure.MessagesBus
             constructor(cmd);
             return SendAsync(cmd);
         }
+
+      
 
         #region ExecuteCommand
         MessageHandlerExecutor GetHandlerForCommand(ICommand cmd)
@@ -391,6 +398,8 @@ namespace CavemanTools.Infrastructure.MessagesBus
             //   SendMessage(ex);
         } 
         #endregion
+
+     
     }
 
     
