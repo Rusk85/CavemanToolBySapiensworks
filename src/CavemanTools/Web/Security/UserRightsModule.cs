@@ -49,7 +49,7 @@ namespace CavemanTools.Web.Security
             }
             
             //get group
-            var grp = repo.GetGroupsById(authData.Groups);
+            var grp = repo.GetGroupsById(authData.Groups,authData.UserId);
             var usr = new UserRightsContext(authData.UserId, grp);
             usr.Name = fi.Name;
             SetScope(usr);

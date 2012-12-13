@@ -18,11 +18,18 @@ namespace CavemanTools.Model.Validation.Attributes
 		/// </summary>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <param name="words">Separate by comma</param>
+		[Obsolete("Use the other constructor",true)]
 		public ForbidWordsAttribute(string words)
 		{
 			if (string.IsNullOrEmpty(words)) throw new ArgumentNullException("words");
 			Forbidden = words.Split(',').Select(d=>d.Trim());
 		}
+
+	    public ForbidWordsAttribute(params string[]words)
+	    {
+	        words.MustNotBeEmpty();
+            Forbidden = words;
+	    }
 
 		/// <summary>
 		///  Gets the forbidden words list

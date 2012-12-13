@@ -8,13 +8,11 @@
     <licenseUrl>http://cavemantools.codeplex.com/license</licenseUrl>
     <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/CTools</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Straight forward generic toolkit for faster asp.net development with less code, written in C# on .Net 4.0. 
-	It features extension methods (includes Reflection.Emit helpers) and helper classes for specific tasks. Includes authorization tools for multi tenant webaplications, a local service bus for implementing message driven architecture and a local message queue.</description>
+    <description>Evolved toolkit for developing applications faster and with less code, written in C# on .Net 4.0 using best practices.  Provides ready to use sub-systems such as: Common Logging, Common DI support, Local Message Bus  for  message driven architecture, Local Commands Queue,  Right-Based Authorization tools for multi tenant web applications. Includes general purpose extension methods, assertions, predefined value objects (Email, Percentage etc) and specialized helper classes for specific tasks. </description>
+	<summary>
+		Evolved toolkit for developing applications faster and with less code, written in C# on .Net 4.0 using best practices. Includes general purpose extension methods and provides ready to use sub-systems such as: Common Logging,  Local Message Bus , Local Commands Queue,  Right-Based Authorization tools for multi tenant web applications. 
+	</summary>
     <language>en-US</language>
-    <tags>toolkit, extension, methods, library, tools, utility, lcg, reflection, multi-tenant, tenant, authorization, bus, message-driven-architecture</tags>
-  </metadata>
-  <files>
-    <file src="lib\net40\CavemanTools.dll" target="lib\net40\CavemanTools.dll" />
-    <file src="lib\net40\CavemanTools.XML" target="lib\net40\CavemanTools.XML" />
-  </files>
+    <tags>toolkit, library, tools, utility, lcg, reflection, multi-tenant, tenant, authorization, bus, messages, architecture, assert, contracts, queue, helper</tags>
+  </metadata>  
 </package>
