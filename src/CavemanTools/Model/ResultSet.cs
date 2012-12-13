@@ -1,13 +1,15 @@
+using System;
 using System.Collections.Generic;
 
 namespace CavemanTools.Model
 {
-	/// <summary>
+	
+    /// <summary>
 	/// Holds limited result set and total number of items from a query.
 	/// Used for pagination.
 	/// </summary>
 	/// <typeparam name="T">Type of item</typeparam>
-	public class ResultSet<T>:IResultSet<T>
+    public class ResultSet<T>:IResultSet<T>
 	{
 		public int Count
 		{
@@ -24,4 +26,6 @@ namespace CavemanTools.Model
 			get; set;
 		}
 	}
+
+    
 }

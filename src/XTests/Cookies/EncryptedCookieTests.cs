@@ -11,8 +11,8 @@ namespace XTests.Cookies
 
 		}
 
-		[Fact]
-		public void DEfaulkt_Ecnription()
+		//[Fact]
+		public void Default_Encription()
 		{
 			//var text = "a whatever value text";
 			//var def = new DefaultCookieEncryption();
@@ -44,7 +44,7 @@ namespace XTests.Cookies
 			Assert.Equal("admin", en2["role"]);
 		}
 
-		[Fact]
+	//	[Fact]
 		public void Usage_Empty()
 		{
 			var encr = new EncryptedCookie("est", "12345678");

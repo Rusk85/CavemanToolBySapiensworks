@@ -35,7 +35,7 @@ namespace CavemanTools.Mvc.Extensions
         /// </summary>
         public string BaseUrl { get; private set; }
         /// <summary>
-        /// Relative path of the views directory
+        /// Relative path of the views directory. Ex: ~/themes/default/views
         /// </summary>
         public string ViewsPath { get; private set; }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace CavemanTools.Model
 {
 	/// <summary>
-	/// Holds limited result set and total number of items from a query.
+	/// Paginated result set with the total number of items from a query.
 	/// Used for pagination.
 	/// </summary>
 	/// <typeparam name="T">Type of item</typeparam>
