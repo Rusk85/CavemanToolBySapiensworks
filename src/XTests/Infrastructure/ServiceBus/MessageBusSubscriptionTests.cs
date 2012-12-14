@@ -54,7 +54,7 @@ namespace XTests.Infrastructure.ServiceBus
 
             var ev2 = new MyEvent();
             cmd.Enrol(ev2);
-            Assert.Equal(cmd.Id,ev2.SourceId);
+            Assert.Equal(cmd.Id,ev2.SourceId.Value);
         }
 
         [Fact]
