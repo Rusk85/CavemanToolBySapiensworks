@@ -4,6 +4,8 @@ namespace CavemanTools.Infrastructure.MessagesBus
 {
     public abstract class AbstractEvent:IEvent
     {
+        private Guid? _sourceId;
+
         public AbstractEvent()
         {
             Id = Guid.NewGuid();
@@ -13,7 +15,14 @@ namespace CavemanTools.Infrastructure.MessagesBus
         public DateTime TimeStamp { get;set; }
 
         public Guid? SourceId
-        { get; set; }
+        {
+            get { return _sourceId; }
+            set
+            {
+                if (value == null) throw new ArgumentNullException("value", "SourceId must always have a value");
+                _sourceId = value;
+            }
+        }
 
         public T CreateCommand<T>(Action<T> constructor) where T : ICommand, new()
         {
