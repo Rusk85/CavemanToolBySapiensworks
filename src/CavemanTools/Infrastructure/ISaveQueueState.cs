@@ -6,12 +6,14 @@ namespace CavemanTools.Infrastructure
     public interface ISaveQueueState
     {
         void Save(QueueItem item);
-        void ItemWasExecuted(Guid id);
+        void MarkItemAsExecuted(Guid id);
+
         /// <summary>
         /// Gets items with execution date older than date
         /// </summary>
         /// <param name="date"></param>
+        /// <param name="maxItems"></param>
         /// <returns></returns>
-        IEnumerable<QueueItem> GetItems(DateTime date);
+        IEnumerable<QueueItem> GetItems(DateTime date, int maxItems);
     }
 }

@@ -46,9 +46,9 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
             return sub;
         }
 
-        public IDisposable AddSagaHandler(object handler,IResolveSagaRepositories resolver)
+        public IDisposable AddSagaHandler(object handler,IResolveSagaRepositories resolver,IDispatchCommands bus)
         {
-            var saga = new SagaExecutor(handler, resolver);
+            var saga = new SagaExecutor(handler, resolver,bus);
             return AddSubscriber(saga);
         }
 

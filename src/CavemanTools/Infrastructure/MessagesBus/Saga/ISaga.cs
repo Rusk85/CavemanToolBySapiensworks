@@ -4,8 +4,8 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
     //{
     //    IHoldSagaState SagaData { get; set; }
     //}
-    public interface ISaga<T> where T:IHoldSagaState
+    public interface ISaga<T> where T:ISagaState
     {
-        T SagaState { get; set; }
+        T Data { get; set; }
     }
 }

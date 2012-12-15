@@ -7,11 +7,12 @@ namespace CavemanTools.Infrastructure.MessagesBus
     {
         void Send(ICommand cmd);
         void Send<T>(Action<T> constructor) where T:ICommand,new();
-    }
-
-    public interface IDispatchCommandsAsync
-    {
         Task SendAsync(ICommand cmd);
         Task SendAsync<T>(Action<T> constructor) where T : ICommand, new();
     }
+
+    //public interface IDispatchCommandsAsync
+    //{
+        
+    //}
 }

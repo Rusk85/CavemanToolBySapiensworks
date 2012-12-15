@@ -45,12 +45,12 @@ namespace XTests.Infrastructure.Queue
         public void queued_item_from_storage_is_executed()
         {
             var item = new QueueItem(new MyCommand());
-            _storage.Setup(d => d.GetItems(It.IsAny<DateTime>())).Returns(new[] {item});
+            _storage.Setup(d => d.GetItems(It.IsAny<DateTime>(), 50)).Returns(new[] {item});
             _q.PollingInterval = TimeSpan.FromMilliseconds(400);
             _q.Start();
             Thread.Sleep(TimeSpan.FromSeconds(.5));
             _dispacther.Verify(d => d.Send(It.IsAny<ICommand>()), Times.Once());
-            _storage.Verify(d=>d.ItemWasExecuted(item.Id));
+            _storage.Verify(d=>d.MarkItemAsExecuted(item.Id));
         }
 
         [Fact(Skip = "Run this test alone")]
@@ -58,12 +58,12 @@ namespace XTests.Infrastructure.Queue
         {
             var item = new QueueItem(new MyCommand()){ExecuteAt = DateTime.UtcNow.Add(TimeSpan.FromDays(1))};
             var item2 = new QueueItem(new MyCommand());
-            _storage.Setup(d => d.GetItems(It.IsAny<DateTime>())).Returns(new[] { item,item2 });
+            _storage.Setup(d => d.GetItems(It.IsAny<DateTime>(), 50)).Returns(new[] { item,item2 });
             _q.PollingInterval = TimeSpan.FromMilliseconds(400);
             _q.Start();
             Thread.Sleep(TimeSpan.FromSeconds(.5));
             _dispacther.Verify(d => d.Send(It.IsAny<ICommand>()), Times.Once());
-            _storage.Verify(d => d.ItemWasExecuted(item2.Id),Times.Once());
+            _storage.Verify(d => d.MarkItemAsExecuted(item2.Id),Times.Once());
         }
 
 
@@ -81,7 +81,7 @@ namespace XTests.Infrastructure.Queue
                 
             }
 
-            public void ItemWasExecuted(Guid id)
+            public void MarkItemAsExecuted(Guid id)
             {
                 lock (_sync)
                 {
@@ -90,7 +90,7 @@ namespace XTests.Infrastructure.Queue
                 
             }
 
-            public IEnumerable<QueueItem> GetItems(DateTime date)
+            public IEnumerable<QueueItem> GetItems(DateTime date, int maxItems)
             {
                 lock (_sync)
                 {
@@ -132,10 +132,10 @@ namespace XTests.Infrastructure.Queue
             _q.Queue(new MyCommand());
             Thread.Sleep(100);
             _storage.Verify(d => d.Save(It.IsAny<QueueItem>()),Times.Once());
-            _storage.Verify(d=>d.GetItems(It.IsAny<DateTime>()),Times.Never());
+            _storage.Verify(d=>d.GetItems(It.IsAny<DateTime>(), 50),Times.Never());
             _q.Start();
             Thread.Sleep(15);
-            _storage.Verify(d => d.GetItems(It.IsAny<DateTime>()), Times.AtLeastOnce());
+            _storage.Verify(d => d.GetItems(It.IsAny<DateTime>(), 50), Times.AtLeastOnce());
         }
 
         private void Write(string format, params object[] param)

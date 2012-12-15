@@ -9,12 +9,14 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
         //private readonly Type _message;
         private dynamic _handler;
         private readonly IResolveSagaRepositories _resolver;
+        private readonly IDispatchCommands _bus;
         private Type _sagaType;
-        public SagaExecutor(object handler,IResolveSagaRepositories resolver)
+        public SagaExecutor(object handler,IResolveSagaRepositories resolver,IDispatchCommands bus)
         {
            // _message = message;
             _handler = handler;
             _resolver = resolver;
+            _bus = bus;
             ExtractSagaType();
         }
 
@@ -66,7 +68,8 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
         {
             var data = GetSaga(msg as IEvent);
             if (data.IsCompleted) return;
-            _handler.SagaState = data;
+            _handler.Data = data;
+            _handler.SetBus(_bus);
             _handler.Handle((dynamic) msg);
             SaveSaga(data);
         }

@@ -72,7 +72,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
             var sub = _subs.GetOrCreate(msgType);
             if (interfaces.CanStartSaga())
             {
-                return sub.AddSagaHandler(handler, _sagaResolver);
+                return sub.AddSagaHandler(handler, _sagaResolver,this);
             } 
 
            if (interfaces.CanHandleEvent())

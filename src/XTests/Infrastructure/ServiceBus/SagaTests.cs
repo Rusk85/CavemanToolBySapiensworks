@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace XTests.Infrastructure.ServiceBus
 {
-    public class MyTestSagaData:IHoldSagaState,IIdentifySaga
+    public class MyTestSagaData:ISagaState,IIdentifySaga
     {
         public Guid Id { get; set; }
         public bool IsCompleted { get; set; }
@@ -47,7 +47,7 @@ namespace XTests.Infrastructure.ServiceBus
 
     public class SagaTests:Saga<MyTestSagaData>
         ,ISagaStartedBy<MySagaEvent>
-        ,ISagaStartedBy<MySagaOtherEvent>
+        ,ISagaStartedBy<MySagaOtherEvent>,IExecuteCommand<MyCommand>
     {
         private Stopwatch _t = new Stopwatch();
         private Mock<IStoreMessageBusState> _storage;
@@ -74,6 +74,7 @@ namespace XTests.Infrastructure.ServiceBus
 
         private MyTestSagaData _data= new MyTestSagaData();
         private Mock<IGenericSagaRepository> _sagaStore;
+        private bool _cmdExecuted;
 
         public class Inner:ISubscribeToEvent<MySagaEvent>,IFindSaga<MyTestSagaData>.Using<MySagaEvent>,ISaveSagaState<MyTestSagaData>
         {
@@ -108,17 +109,25 @@ namespace XTests.Infrastructure.ServiceBus
             _bus.RegisterHandler(typeof (MySagaEvent), this);
             _bus.RegisterHandler(typeof (MySagaEvent),_child);
             _bus.RegisterHandler(typeof (MySagaOtherEvent), this);
+            _bus.RegisterHandler(typeof (MyCommand), this);
 
             _sagaStore.Setup(r => r.GetSaga("test", It.IsAny<Type>())).Returns(_data);
             _sagaStore.Setup(r => r.GetSaga(null, It.IsAny<Type>())).Returns(new MyTestSagaData());
             
-            _sagaStore.Setup(r => r.Save(It.IsAny<IIdentifySaga>()));
+            _sagaStore.Setup(r => r.Save(It.IsAny<ISagaState>()));
         }
 
         void UseCustomPersister()
         {
             _resolver.Setup(r => r.GetSagaLocator(typeof(MyTestSagaData), typeof(MySagaEvent))).Returns(_child);
             _resolver.Setup(r => r.GetSagaPersister(typeof(MyTestSagaData))).Returns(_child);
+        }
+
+        [Fact]
+        public void bus_is_injected_into_saga_before_event_handling()
+        {
+            _bus.Publish(new MySagaEvent());
+            Assert.NotNull(this.Bus);
         }
 
         [Fact]
@@ -167,6 +176,7 @@ namespace XTests.Infrastructure.ServiceBus
             Assert.True(_data.IsCompleted);
             Assert.True(_data.Event1);
             Assert.True(_data.Event2);
+            Assert.True(_cmdExecuted);
         }
 
         [Fact]
@@ -195,21 +205,30 @@ namespace XTests.Infrastructure.ServiceBus
 
         public void Handle(MySagaEvent evnt)
         {
-            SagaState.Event1 = true;
-            SagaState.SagaCorrelationId = "test";
+            Data.Event1 = true;
+            Data.SagaCorrelationId = "test";
             TryToComplete();
         }
 
         public void Handle(MySagaOtherEvent evnt)
         {
-            SagaState.Event2 = true;
-            SagaState.SagaCorrelationId = "test";
+            Data.Event2 = true;
+            Data.SagaCorrelationId = "test";
             TryToComplete();
         }
 
         void TryToComplete()
         {
-            if (SagaState.Event1 && SagaState.Event2) MarkAsComplete();
+            if (Data.Event1 && Data.Event2)
+            {
+                this.Bus.Send(new MyCommand());
+                MarkAsComplete();
+            }
+        }
+
+        public void Execute(MyCommand cmd)
+        {
+            _cmdExecuted = true;
         }
     }
 }
