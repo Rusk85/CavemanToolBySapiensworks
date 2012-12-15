@@ -31,9 +31,10 @@ namespace CavemanTools.Infrastructure
             _timer.AutoReset = true;
         }
 
+        private int MaxItemsFromStorage = 50;
         void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            foreach(var item in _storage.GetItems(DateTime.UtcNow))
+            foreach(var item in _storage.GetItems(DateTime.UtcNow, MaxItemsFromStorage))
             {
                if (item.ShouldBeExecuted)
                {
@@ -118,7 +119,7 @@ namespace CavemanTools.Infrastructure
             if (!tsk.ShouldBeExecuted) throw new Exception("Bug");
             _logger.Debug("[Caveman Queue] Executing command '{0}'",tsk.Command.ToString());
             _dispatcher.Send(tsk.Command);
-            _storage.ItemWasExecuted(tsk.Id);
+            _storage.MarkItemAsExecuted(tsk.Id);
             _logger.Debug("[Caveman Queue] Command '{0}' completed", tsk.Command.ToString());
         }
 

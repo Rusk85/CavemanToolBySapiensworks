@@ -1,13 +1,29 @@
+
+using System;
+
 namespace CavemanTools.Infrastructure.MessagesBus.Saga
 {
-    public abstract class Saga<T>:ISaga<T> where T : IHoldSagaState
+    public abstract class Saga<T>:ISaga<T> where T : ISagaState
     {
-        public T SagaState
-        { get; set; }
+        /// <summary>
+        /// Gets or sets the saga state
+        /// </summary>
+        public T Data{ get; set; }
 
        protected void MarkAsComplete()
         {
-            SagaState.IsCompleted = true;
+            Data.IsCompleted = true;
         }
+
+        internal void SetBus(IDispatchCommands bus)
+        {
+            bus.MustNotBeNull();
+            Bus = bus;
+        }
+
+        /// <summary>
+        /// Bus for sending commands
+        /// </summary>
+        protected IDispatchCommands Bus { get; set; }
     }
 }

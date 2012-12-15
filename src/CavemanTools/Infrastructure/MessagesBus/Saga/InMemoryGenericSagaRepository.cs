@@ -5,27 +5,27 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
 {
     public class InMemoryGenericSagaRepository:IGenericSagaRepository
     {
-        private Dictionary<Tuple<string, Type>, IHoldSagaState> _list;
+        private Dictionary<Tuple<string, Type>, ISagaState> _list;
 
         public InMemoryGenericSagaRepository()
         {
-            _list = new Dictionary<Tuple<string, Type>, IHoldSagaState>();
+            _list = new Dictionary<Tuple<string, Type>, ISagaState>();
         }
-        public void Save(IIdentifySaga state)
+        public void Save(ISagaState state)
         {
+            state.MustNotBeNull();
             var key = new Tuple<string, Type>(state.SagaCorrelationId, state.GetType());
-            if (!(state is IHoldSagaState)) throw new ArgumentException("saga state must implement IHoldSageState");
-            _list[key] = state as IHoldSagaState;
+            _list[key] = state;
         }
 
-        public IHoldSagaState GetSaga(string correlationId, Type sagaType)
+        public ISagaState GetSaga(string correlationId, Type sagaType)
         {
             var key=new Tuple<string, Type>(correlationId,sagaType);
             if (_list.ContainsKey(key))
             {
                 return _list[key];
             }
-            return (IHoldSagaState) Activator.CreateInstance(sagaType);
+            return (ISagaState) Activator.CreateInstance(sagaType);
         }
     }
 }

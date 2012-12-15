@@ -58,6 +58,7 @@
     <Compile Include="Extensions\Images.cs" />
     <Compile Include="Extensions\LCGUtils.cs" />
     <Compile Include="Extensions\TypeFactory.cs" />
+    <Compile Include="Infrastructure\ActivatorContainer.cs" />
     <Compile Include="Infrastructure\CommandsQueue.cs" />
     <Compile Include="Infrastructure\IQueueCommands.cs" />
     <Compile Include="Infrastructure\ISaveQueueState.cs" />
@@ -77,7 +78,6 @@
     <Compile Include="Infrastructure\MessagesBus\InMemoryBusStorage.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\MessageHandlerDiscoverer.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\NullStorage.cs" />
-    <Compile Include="Infrastructure\MessagesBus\Internals\SagaExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\MessageBusFactory.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\RequestExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\TypeWithHandlers.cs" />
@@ -100,9 +100,8 @@
     <Compile Include="Infrastructure\MessagesBus\Internals\SubscriptionManager.cs" />
     <Compile Include="Infrastructure\MessagesBus\Saga\IFindSaga.cs" />
     <Compile Include="Infrastructure\MessagesBus\Saga\IGenericSagaRepository.cs" />
-    <Compile Include="Infrastructure\MessagesBus\Saga\IHoldSagaState.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Saga\ISagaState.cs" />
     <Compile Include="Infrastructure\MessagesBus\Saga\IIdentifySaga.cs" />
-    <Compile Include="Infrastructure\MessagesBus\Saga\ILocateSaga.cs" />
     <Compile Include="Infrastructure\MessagesBus\Saga\InMemoryGenericSagaRepository.cs" />
     <Compile Include="Infrastructure\MessagesBus\Saga\IResolveSagaRepositories.cs" />
     <Compile Include="Infrastructure\MessagesBus\Saga\ISaga.cs" />

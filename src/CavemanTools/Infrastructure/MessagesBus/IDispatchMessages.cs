@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace CavemanTools.Infrastructure.MessagesBus
 {
-    public interface IDispatchMessages : IDispatchCommands,IDispatchCommandsAsync
+    public interface IDispatchMessages : IDispatchCommands
     {
         /// <summary>
         /// Publishes asynchronously the events.

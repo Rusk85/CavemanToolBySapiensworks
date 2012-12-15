@@ -241,7 +241,7 @@ namespace System.Reflection
             return Assembly.GetAssembly(tp).Version();
         }
         /// <summary>
-        /// Returns the full name of type, including assembly, i.e: namespace.type, assembly
+        /// Returns the full name of type, including assembly but not version, public key etc, i.e: namespace.type, assembly
         /// </summary>
         /// <param name="t">Type</param>
         /// <returns></returns>
