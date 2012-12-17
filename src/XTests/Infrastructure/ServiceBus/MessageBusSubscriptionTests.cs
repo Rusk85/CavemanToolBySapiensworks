@@ -10,6 +10,14 @@ using System.Diagnostics;
 
 namespace XTests.Infrastructure.ServiceBus
 {
+   class MyHandler1:IExecuteCommand<MyCommand>
+   {
+       public void Execute(MyCommand cmd)
+       {
+           Console.WriteLine(cmd.Test);
+       }
+   }
+
     public class MessageBusSubscriptionTests:
         IExecuteCommand<MyCommand>
         ,ISubscribeToEvent<MyEvent>
@@ -23,7 +31,14 @@ namespace XTests.Infrastructure.ServiceBus
             LogSetup.ToConsole();
             var store = new Mock<IStoreMessageBusState>();
             var resolver = new Mock<IResolveSagaRepositories>();
-            _bus = new LocalMessageBus(store.Object, LogHelper.DefaultLogger, resolver.Object);
+            var container = ActivatorContainer.Instance;
+            _bus = new LocalMessageBus(store.Object, container, resolver.Object, LogHelper.DefaultLogger);
+        }
+
+        [Fact]
+        public void registering_handler_by_type_needs_public_class()
+        {
+            Assert.Throws<ArgumentException>(() => _bus.RegisterHandlerType(typeof(MyCommand), typeof(MyHandler1)));                        
         }
 
         [Fact]

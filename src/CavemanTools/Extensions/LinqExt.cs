@@ -24,7 +24,7 @@ namespace System.Linq
 			}
 		}
 
-        public static IEnumerable<T> CastSilently<T>(this IEnumerable source) where T:class
+        public static IEnumerable<T> CastSilentlyTo<T>(this IEnumerable source) where T:class
         {
             T res = null;
             foreach(var item in source)

@@ -7,4 +7,9 @@ namespace CavemanTools.Infrastructure
         object Resolve(Type type);
         T Resolve<T>();
     }
+
+    public interface IContainerScope:IResolveDependencies,IDisposable
+    {
+        IContainerScope BeginLifetimeScope();
+    }
 }

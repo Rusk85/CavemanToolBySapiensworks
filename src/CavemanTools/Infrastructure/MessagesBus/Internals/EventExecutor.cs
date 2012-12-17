@@ -9,9 +9,9 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
         class DisposableSubscriber:IDisposable
         {
             private EventExecutor _parent;
-            private object _handler;
+            private IExecuteMessageHandler _handler;
 
-            public DisposableSubscriber(EventExecutor parent,object handler)
+            public DisposableSubscriber(EventExecutor parent,IExecuteMessageHandler handler)
             {
                 _parent = parent;
                 _parent.Subs.Add(handler);
@@ -29,34 +29,49 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
             }
         }
 
-        private List<object> _subs= new List<object>();
+        private List<IExecuteMessageHandler> _subs= new List<IExecuteMessageHandler>();
 
         public EventExecutor(Type messageType) : base(messageType)
         {
         }
 
-        internal List<object> Subs
+        internal List<IExecuteMessageHandler> Subs
         {
             get { return _subs; }
         }
 
-        public IDisposable AddSubscriber(object handler)
+        public IDisposable AddSubscriber(Func<IInvokeMessageHandler> handler)
         {
-            var sub = new DisposableSubscriber(this, handler);
+            var sub = new DisposableSubscriber(this, new SimpleEventExecutor(handler));
             return sub;
         }
 
-        public IDisposable AddSagaHandler(object handler,IResolveSagaRepositories resolver,IDispatchCommands bus)
+        public IDisposable AddSagaHandler(Func<IInvokeMessageHandler> handler,IResolveSagaRepositories resolver,IDispatchCommands bus)
         {
             var saga = new SagaExecutor(handler, resolver,bus);
-            return AddSubscriber(saga);
+            return new DisposableSubscriber(this, saga);
         }
 
         public override void Handle(IMessage msg)
         {
-            foreach(dynamic handler in Subs)
+            foreach(var handler in Subs)
             {
-                handler.Handle((dynamic) msg);
+                handler.Handle(msg);
+            }
+        }
+
+        class SimpleEventExecutor:IExecuteMessageHandler
+        {
+            private readonly Func<IInvokeMessageHandler> _invoker;
+
+            public SimpleEventExecutor(Func<IInvokeMessageHandler> invoker)
+            {
+                _invoker = invoker;
+            }
+
+            public void Handle(IMessage msg)
+            {
+                _invoker().Publish(msg as IEvent);
             }
         }
     }

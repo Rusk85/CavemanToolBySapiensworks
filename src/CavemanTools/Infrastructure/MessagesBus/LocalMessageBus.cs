@@ -12,15 +12,18 @@ namespace CavemanTools.Infrastructure.MessagesBus
     public class LocalMessageBus : IMessageBus
     {
         private IStoreMessageBusState _storage;
+        private readonly IContainerScope _resolver;
         private readonly ILogWriter _log;
         private readonly IResolveSagaRepositories _sagaResolver;
 
-        public LocalMessageBus(IStoreMessageBusState storage, ILogWriter log, IResolveSagaRepositories sagaResolver)
+        public LocalMessageBus(IStoreMessageBusState storage, IContainerScope resolver, IResolveSagaRepositories sagaResolver, ILogWriter log)
         {
             storage.MustNotBeNull("storage");
             log.MustNotBeNull("log");
             sagaResolver.MustNotBeNull("sagaResolver");        
+            resolver.MustNotBeNull();
             _storage = storage;
+            _resolver = resolver;
             _log = log;
             _sagaResolver = sagaResolver;        
             ThrowOnUnhandledExceptions = true;
@@ -44,7 +47,8 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         #region Handler from instance registration
 
-        IDisposable RegisterCommands(Type[] interfaces,object handler,Type msgType)
+     
+        IDisposable RegisterCommands(Type[] interfaces,Func<IInvokeMessageHandler> handler,Type msgType)
         {
             MessageHandlerExecutor exec = null;
             if (interfaces.CanExecuteRequest())
@@ -67,9 +71,9 @@ namespace CavemanTools.Infrastructure.MessagesBus
             return null;
         }
 
-       IDisposable RegisterEvents(Type[] interfaces, object handler, Type msgType)
+       IDisposable RegisterEvents(Type[] interfaces, Func<IInvokeMessageHandler> handler, Type msgType)
         {
-            var sub = _subs.GetOrCreate(msgType);
+            var sub = _subs.GetEventExecutor(msgType);
             if (interfaces.CanStartSaga())
             {
                 return sub.AddSagaHandler(handler, _sagaResolver,this);
@@ -84,22 +88,29 @@ namespace CavemanTools.Infrastructure.MessagesBus
         }
 
       
+       
 
-        public IDisposable RegisterHandler(Type msgType, object handler)
+        static Type[] InterfacesFromType(Type msgType, Type handlerType)
         {
             if (!msgType.Implements<IMessage>()) throw new ArgumentException("Message must implement IMessage");
-            handler.MustNotBeNull();
-            var tp = handler.GetType();
+            
+            var interfaces = MessageHandlerDiscoverer.GetImplementedInterfaces(handlerType, msgType).ToArray();
 
-            var interfaces = MessageHandlerDiscoverer.GetImplementedInterfaces(tp, msgType).ToArray();
-         
             if (interfaces.Length == 0) throw new ArgumentException("The object provided doesn't contain valid messages handlers");
+            return interfaces;
+        }
 
+
+
+        private IDisposable Register(Type msgType, Func<IInvokeMessageHandler> handler,Type handlerType)
+        {
+            msgType.MustNotBeNull();
+            var interfaces = InterfacesFromType(msgType, handlerType);
             IDisposable result = null;
 
             if (msgType.Implements<ICommand>())
             {
-                result=RegisterCommands(interfaces, handler, msgType);
+                result = RegisterCommands(interfaces, handler, msgType);
             }
             else
             {
@@ -108,26 +119,41 @@ namespace CavemanTools.Infrastructure.MessagesBus
                     result = RegisterEvents(interfaces, handler, msgType);
                 }
             }
-            
+
             if (result == null) throw new ArgumentException("Message type is not an ICommand or IEvent");
-            _log.Info("Registered '{0}' as handler for '{1}'", handler, msgType);
+            _log.Info("Registered '{0}' as handler for '{1}'", handlerType, msgType);
             return result;
+        }
+
+        public IDisposable RegisterHandler(Type msgType, object handler)
+        {
+            handler.MustNotBeNull();
+            return Register(msgType, () => new HandlerInstanceInvoker(handler), handler.GetType());
         } 
         #endregion
 
+        public IDisposable RegisterHandlerType(Type msgType, Type handlerType)
+        {
+            handlerType.MustNotBeNull();
+            if (!handlerType.IsPublic) throw new ArgumentException("The handler class must be public");
+            return Register(msgType, () => new HandlerTypeInvoker(handlerType, _resolver), handlerType);
+        }
+
         public IDisposable RegisterHandler<T>(ISubscribeToEvent<T> handler) where T:IEvent
         {
+            handler.MustNotBeNull();
             _log.Debug("Tyring to register handler '{0}' for event '{1}'",handler.ToString(),typeof(T));
-            var exec = _subs.GetOrCreate(typeof (T));
-            var res= exec.AddSubscriber(handler);
+            var exec = _subs.GetEventExecutor(typeof (T));
+            var res= exec.AddSubscriber(()=> new HandlerInstanceInvoker(handler));
             _log.Info("Handler '{0}' was registered for event '{1}'", handler.ToString(), typeof(T));
             return res;
         }
 
         public IDisposable RegisterHandler<T>(IExecuteCommand<T> handler) where T:ICommand
         {
+            handler.MustNotBeNull();
             _log.Debug("Trying to register handler '{0}' for command '{1}'", handler.ToString(), typeof(T));
-            var exec = new CommandExecutor(typeof(T),handler);
+            var exec = new CommandExecutor(typeof(T),()=> new HandlerInstanceInvoker(handler));
             var res = AddCommandHandler(exec);
             _log.Info("Handler '{0}' was registered for command '{1}'", handler.ToString(), typeof(T));
             return res;
@@ -135,8 +161,9 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         public IDisposable RegisterHandler<T,R>(IExecuteRequest<T,R> handler) where T:ICommand
         {
+            handler.MustNotBeNull();
             _log.Debug("Trying to register handler '{0}' for command '{1}'", handler.ToString(), typeof(T));
-            var exec = new RequestExecutor(typeof(T), handler);
+            var exec = new RequestExecutor(typeof(T), ()=> new HandlerInstanceInvoker(handler));
             var res = AddCommandHandler(exec);
             _log.Info("Handler '{0}' was registered for command '{1}'", handler.ToString(), typeof(T));
             return res;
@@ -160,7 +187,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         public IDisposable SetupCommandHandler<T>(Action<T> handler) where T:ICommand
         {
-            _log.Debug("Trying lambda handler for command '{0}'", typeof(T));
+            _log.Debug("Trying to register lambda handler for command '{0}'", typeof(T));
             var exec = new HandlerWrapper(typeof (T));
             exec.Wrap(handler);
             var res = AddCommandHandler(exec);
@@ -171,10 +198,8 @@ namespace CavemanTools.Infrastructure.MessagesBus
         public IDisposable SetupEventHandler<T>(Action<T> handler) where T:IEvent
         {
             _log.Debug("Trying to register lambda handler for event '{0}'", typeof(T));
-            var sub = _subs.GetOrCreate(typeof (T));
-            var exec = new HandlerWrapper(typeof (T));
-            exec.Wrap(handler);
-            var res= sub.AddSubscriber(exec);
+            var sub = _subs.GetEventExecutor(typeof (T));
+            var res= sub.AddSubscriber(()=> new LambdaHandlerInvoker<T>(handler));
             _log.Info("Lambda handler registered for event '{0}'", typeof(T));
             return res;
         }

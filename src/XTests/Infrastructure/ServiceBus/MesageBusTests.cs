@@ -21,7 +21,8 @@ namespace XTests.Infrastructure.ServiceBus
             LogSetup.ToConsole();
             _storage = new Mock<IStoreMessageBusState>();
             var resolver = new Mock<IResolveSagaRepositories>();
-            _bus = new LocalMessageBus(_storage.Object, LogHelper.DefaultLogger,resolver.Object);
+            var container = new Mock<IContainerScope>();
+            _bus = new LocalMessageBus(_storage.Object, container.Object,resolver.Object, LogHelper.DefaultLogger);
             SetupBus();
            
            

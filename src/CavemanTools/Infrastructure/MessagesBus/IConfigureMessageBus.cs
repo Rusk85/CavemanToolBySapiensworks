@@ -22,5 +22,12 @@ namespace CavemanTools.Infrastructure.MessagesBus
         IDisposable SetupCommandHandler<T>(Action<T> handler) where T:ICommand;
         IDisposable SetupEventHandler<T>(Action<T> handler) where T:IEvent;
         IDisposable RegisterHandler<T,R>(IExecuteRequest<T,R> handler) where T:ICommand;
+        /// <summary>
+        /// The handler class must have public visibility
+        /// </summary>
+        /// <param name="msgType"></param>
+        /// <param name="handlerType"></param>
+        /// <returns></returns>
+        IDisposable RegisterHandlerType(Type msgType, Type handlerType);
     }
 }
