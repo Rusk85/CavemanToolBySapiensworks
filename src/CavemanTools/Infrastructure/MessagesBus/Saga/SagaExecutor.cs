@@ -7,14 +7,16 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
     internal class SagaExecutor:IExecuteMessageHandler
     {
         //private readonly Type _message;
-        private dynamic _handler;
+
+        private readonly Func<IInvokeMessageHandler> _handlerCreator;
         private readonly IResolveSagaRepositories _resolver;
         private readonly IDispatchCommands _bus;
         private Type _sagaType;
-        public SagaExecutor(object handler,IResolveSagaRepositories resolver,IDispatchCommands bus)
+        public SagaExecutor(Func<IInvokeMessageHandler> handlerCreator,IResolveSagaRepositories resolver,IDispatchCommands bus)
         {
            // _message = message;
-            _handler = handler;
+            _handlerCreator = handlerCreator;
+            _handlerCreator = handlerCreator;
             _resolver = resolver;
             _bus = bus;
             ExtractSagaType();
@@ -22,7 +24,7 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
 
         void ExtractSagaType()
         {
-            var o = (_handler as Object).GetType();
+            var o = _handlerCreator().HandlerType;
             var sagaInterface =
                 o.GetInterfaces().Where(i => i.IsGenericType && i.Name.StartsWith("ISaga")).FirstOrDefault();
             if (sagaInterface!=null)
@@ -68,9 +70,14 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
         {
             var data = GetSaga(msg as IEvent);
             if (data.IsCompleted) return;
-            _handler.Data = data;
-            _handler.SetBus(_bus);
-            _handler.Handle((dynamic) msg);
+            using (var h = _handlerCreator().GetInstance())
+            {
+                var handler = h.Object;
+                handler.Data = data;
+                handler.SetBus(_bus);
+                handler.Handle((dynamic)msg);
+            }
+            
             SaveSaga(data);
         }
     }

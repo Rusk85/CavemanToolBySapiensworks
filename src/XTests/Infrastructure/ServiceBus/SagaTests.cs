@@ -65,8 +65,8 @@ namespace XTests.Infrastructure.ServiceBus
             _sagaStore = new Mock<IGenericSagaRepository>();
 
             _resolver.Setup(r => r.GetGenericRepository()).Returns(_sagaStore.Object);
-          
-            _bus = new LocalMessageBus(_storage.Object, LogHelper.DefaultLogger, _resolver.Object);
+            var container = new Mock<IContainerScope>();
+            _bus = new LocalMessageBus(_storage.Object, container.Object, _resolver.Object, LogHelper.DefaultLogger);
             
             
             Setup();

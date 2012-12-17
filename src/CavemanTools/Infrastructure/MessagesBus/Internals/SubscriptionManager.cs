@@ -38,7 +38,12 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
             return null;
         }
 
-        public EventExecutor GetOrCreate(Type t)
+        /// <summary>
+        /// Creates one new if not found
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public EventExecutor GetEventExecutor(Type t)
         {
             var e = Get(t);
             if (e==null)

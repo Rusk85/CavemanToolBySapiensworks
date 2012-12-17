@@ -21,7 +21,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         private ILogWriter _logger= NullLogger.Instance;
         private IStoreMessageBusState _storage;
-        private IResolveDependencies _resolver;
+        private IContainerScope _resolver;
 
         public void PerformRecovery()
         {
@@ -32,12 +32,12 @@ namespace CavemanTools.Infrastructure.MessagesBus
             }
             var bus = CreateBus() as LocalMessageBus;
             bus.RecoveryMode = true;
-            foreach(var ev in all.CastSilently<IEvent>())
+            foreach(var ev in all.CastSilentlyTo<IEvent>())
             {
                 bus.Publish(ev);
             }
 
-            foreach(var cmd in all.CastSilently<ICommand>())
+            foreach(var cmd in all.CastSilentlyTo<ICommand>())
             {
                 bus.Send(cmd);
             }
@@ -45,13 +45,12 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         public IMessageBus CreateBus()
         {
-            var bus = new LocalMessageBus(_storage, _logger,new SagaDependecyResolver(_resolver));
+            var bus = new LocalMessageBus(_storage, _resolver,new SagaDependecyResolver(_resolver), _logger);
             foreach(var handlerType in _handlers)
             {
-                var instance = _resolver.Resolve(handlerType.HandlerTypeName);
                 foreach(var message in handlerType.MessagesTypes)
                 {
-                    bus.RegisterHandler(message, instance);
+                    bus.RegisterHandlerType(message, handlerType.HandlerTypeName);
                 }
             }
             return bus;
@@ -64,7 +63,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
             return this;
         }
 
-        public IConfigureMessageBusFactory WithDependencyResolver(IResolveDependencies resolver)
+        public IConfigureMessageBusFactory WithDependencyResolver(IContainerScope resolver)
         {
             resolver.MustNotBeNull();
             _resolver = resolver;
@@ -102,8 +101,10 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         public IMessageBusFactory Build()
         {
-            if (_logger == null || _resolver == null || _storage == null)
-                throw new InvalidOperationException("Can't build factory because some elements weren't configured");
+            if (_resolver == null)
+                throw new InvalidOperationException("Can't build factory without a dependency resolver. If you don't use a DI Container (really?! why? I suggest Autofac) call the 'UseDefaultTypeActivator' method when configuring the bus");
+            if (_storage == null)
+                throw new InvalidOperationException("Can't build factory without a storage. Use the 'WithNoPersistence' method when configuring the bus");
 
             return this;
         }

@@ -76,6 +76,11 @@
     <Compile Include="Infrastructure\MessagesBus\IMessageBus.cs" />
     <Compile Include="Infrastructure\MessagesBus\IMessageBusFactory.cs" />
     <Compile Include="Infrastructure\MessagesBus\InMemoryBusStorage.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\HandlerTypeInvoker.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\IDisposableHandlerInstance.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\IInvokeMessageHandler.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\HandlerInstanceInvoker.cs" />
+    <Compile Include="Infrastructure\MessagesBus\Internals\LambdaHandlerInvoker.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\MessageHandlerDiscoverer.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\NullStorage.cs" />
     <Compile Include="Infrastructure\MessagesBus\MessageBusFactory.cs" />

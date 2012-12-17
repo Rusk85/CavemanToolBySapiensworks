@@ -4,8 +4,8 @@ namespace CavemanTools.Infrastructure
 {
     public class ActivatorContainer:DependencyContainerWrapper
     {
-        static IResolveDependencies _inst= new ActivatorContainer();
-        public static IResolveDependencies Instance
+        static IContainerScope _inst= new ActivatorContainer();
+        public static IContainerScope Instance
         {
             get { return _inst; }
         }
