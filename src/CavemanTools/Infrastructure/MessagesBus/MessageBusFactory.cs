@@ -32,15 +32,18 @@ namespace CavemanTools.Infrastructure.MessagesBus
             }
             var bus = CreateBus() as LocalMessageBus;
             bus.RecoveryMode = true;
+            _logger.Info("[Message Bus] Starting recovery...");
+            _logger.Info("[Message Bus] Publishing unfinished events");
             foreach(var ev in all.CastSilentlyTo<IEvent>())
             {
                 bus.Publish(ev);
             }
-
+            _logger.Info("[Message Bus] Executing unfinished commands");
             foreach(var cmd in all.CastSilentlyTo<ICommand>())
             {
                 bus.Send(cmd);
             }
+            _logger.Info("[Message Bus] Completed recovery");
         }
 
         public IMessageBus CreateBus()
