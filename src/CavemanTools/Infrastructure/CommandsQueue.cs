@@ -67,7 +67,7 @@ namespace CavemanTools.Infrastructure
             {
                if (item.ShouldBeExecuted)
                {
-                   _q.Add(item);
+                   _q.TryAdd(item);
                    _logger.Debug("[Caveman Queue] Added command '{0}' to be executed at {1}", item.Command,item.ExecuteAt);
                }
             }
