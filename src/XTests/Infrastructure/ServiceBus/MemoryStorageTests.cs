@@ -23,7 +23,7 @@ namespace XTests.Infrastructure.ServiceBus
         {
             _storage.StoreMessageInProgress(_cmd);
             _storage.StoreMessageInProgress(new MyCommand(){Test = 56});
-            var all=_storage.GetUncompletedMessages();
+            var all=_storage.GetUncompletedMessages(3);
             Assert.Equal(2,all.Count());
         }
 
@@ -31,8 +31,8 @@ namespace XTests.Infrastructure.ServiceBus
         public void complete_message()
         {
             _storage.StoreMessageInProgress(_cmd);
-            _storage.StoreMessageCompleted(_cmd.Id);
-            var all = _storage.GetUncompletedMessages();
+            _storage.MarkMessageCompleted(_cmd.Id);
+            var all = _storage.GetUncompletedMessages(3);
             Assert.Equal(0, all.Count());
         }
 

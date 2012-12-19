@@ -12,6 +12,8 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
         /// <param name="correlationId"></param>
         /// <param name="sagaType"></param>
         /// <returns></returns>
-        ISagaState GetSaga(string correlationId, Type sagaType);    
+        ISagaState GetSaga(string correlationId, Type sagaType);
+
+        void EnsureStorage();
     }
 }

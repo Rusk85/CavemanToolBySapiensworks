@@ -23,5 +23,10 @@ namespace CavemanTools.Infrastructure
             get { return DateTime.UtcNow.Ticks >= ExecuteAt.Ticks; 
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("Queued Item '{0}' with command '{1}' Id: {2}",Id,Command.ToString(),Command.Id);
+        }
     }
 }

@@ -20,7 +20,9 @@ namespace CavemanTools.Infrastructure
             _logger = logger??NullLogger.Instance;
             IsPaused = true;
             SetupTimer();
-            PollingInterval = TimeSpan.FromSeconds(1);
+            PollingInterval = TimeSpan.FromSeconds(60);
+            OnUnhandledException = ex => { };
+            RetriesOnFailure = 3;
         }
 
         private void SetupTimer()
@@ -29,6 +31,33 @@ namespace CavemanTools.Infrastructure
             _timer.Enabled = false;            
             _timer.Elapsed += _timer_Elapsed;
             _timer.AutoReset = true;
+        }
+
+        /// <summary>
+        /// By default it does nothing. Exceptions are always logged
+        /// </summary>
+        public Action<Exception> OnUnhandledException
+        {
+            get { return _onUnhandledException; }
+            set
+            {
+                value.MustNotBeNull();
+                _onUnhandledException = value;
+            }
+        }
+
+        /// <summary>
+        /// How many times to retry a command if it fails
+        /// Default is 3
+        /// </summary>
+        public int RetriesOnFailure
+        {
+            get { return _retriesOnFailure; }
+            set
+            {
+                _retriesOnFailure = value;
+                _storage.FailureCountToIgnore = value;
+            }
         }
 
         private int MaxItemsFromStorage = 50;
@@ -94,20 +123,36 @@ namespace CavemanTools.Infrastructure
 
                 while (!IsPaused)
                 {
+                    QueueItem tsk = null;
                     try
                     {
-                        QueueItem tsk = null;
+                        
                         if (!_q.TryTake(out tsk))
                         {
                             continue;
                         }
-                      
-                        ProcessItem(tsk);
+
+                        
                     }
                     catch (InvalidOperationException)
                     {
                         //underlying collection was modified, we can live with that
                     }
+                    
+                    if (tsk != null)
+                    {
+                        try
+                        {
+                            ProcessItem(tsk);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Error("[Caveman Queue] Exception for task '{0}' {1}", tsk, ex.ToString());
+                            _storage.MarkItemAsFailed(tsk.Id);
+                            OnUnhandledException(ex);
+                        } 
+                    }
+              
                 }
                 _logger.Info("[Caveman Queue] Worker thread finished");
             });
@@ -127,6 +172,8 @@ namespace CavemanTools.Infrastructure
         private bool _disposed;
         BlockingCollection<QueueItem> _q= new BlockingCollection<QueueItem>();
         private Timer _timer;
+        private Action<Exception> _onUnhandledException;
+        private int _retriesOnFailure;
 
         public void Stop()
         {

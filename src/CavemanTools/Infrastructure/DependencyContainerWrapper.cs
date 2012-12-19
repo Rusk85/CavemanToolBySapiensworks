@@ -22,6 +22,16 @@ namespace CavemanTools.Infrastructure
         }
 
         /// <summary>
+        /// If type is not registered return null
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public object ResolveOptional(Type type)
+        {
+            return Resolve(type);
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()

@@ -44,7 +44,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -83,6 +82,7 @@
     <Compile Include="Infrastructure\MessagesBus\Internals\LambdaHandlerInvoker.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\MessageHandlerDiscoverer.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\NullStorage.cs" />
+    <Compile Include="Infrastructure\MessagesBus\MessageBusException.cs" />
     <Compile Include="Infrastructure\MessagesBus\MessageBusFactory.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\RequestExecutor.cs" />
     <Compile Include="Infrastructure\MessagesBus\Internals\TypeWithHandlers.cs" />

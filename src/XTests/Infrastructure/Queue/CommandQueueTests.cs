@@ -48,16 +48,17 @@ namespace XTests.Infrastructure.Queue
             _storage.Setup(d => d.GetItems(It.IsAny<DateTime>(), 50)).Returns(new[] {item});
             _q.PollingInterval = TimeSpan.FromMilliseconds(400);
             _q.Start();
-            Thread.Sleep(TimeSpan.FromSeconds(.5));
+            Thread.Sleep(TimeSpan.FromSeconds(.6));
             _dispacther.Verify(d => d.Send(It.IsAny<ICommand>()), Times.Once());
-            _storage.Verify(d=>d.MarkItemAsExecuted(item.Id));
+            _storage.Verify(d => d.MarkItemAsExecuted(item.Id));                        
         }
 
         [Fact(Skip = "Run this test alone")]
+        //[Fact]
         public void items_are_not_executed_before_their_time()
         {
             var item = new QueueItem(new MyCommand()){ExecuteAt = DateTime.UtcNow.Add(TimeSpan.FromDays(1))};
-            var item2 = new QueueItem(new MyCommand());
+            var item2 = new QueueItem(new MyCommand(){Test = 500});
             _storage.Setup(d => d.GetItems(It.IsAny<DateTime>(), 50)).Returns(new[] { item,item2 });
             _q.PollingInterval = TimeSpan.FromMilliseconds(400);
             _q.Start();
@@ -90,6 +91,11 @@ namespace XTests.Infrastructure.Queue
                 
             }
 
+            public void MarkItemAsFailed(Guid id)
+            {
+                
+            }
+
             public IEnumerable<QueueItem> GetItems(DateTime date, int maxItems)
             {
                 lock (_sync)
@@ -98,9 +104,20 @@ namespace XTests.Infrastructure.Queue
                 }
                 
             }
+
+            /// <summary>
+            /// Items which failed more than this value will be ignored by the repository
+            /// </summary>
+            public int FailureCountToIgnore { get; set; }
+
+            public void EnsureStorage()
+            {
+                
+            }
         }
 
         [Fact(Skip = "takes too long")]
+        //[Fact]
         public void queue_multiple()
         {
             var q = new CommandsQueue(new FakeStorage(), _dispacther.Object, LogHelper.DefaultLogger);
@@ -125,6 +142,7 @@ namespace XTests.Infrastructure.Queue
         }
 
         [Fact(Skip = "Run this test alone")]
+        //[Fact]
         public void paused_queue_doesnt_process_anything()
         {
             _q.Stop();
