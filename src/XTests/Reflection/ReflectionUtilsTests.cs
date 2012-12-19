@@ -58,8 +58,10 @@ namespace XTests.Reflection
             Assert.Equal("Test",d["Name"]);
             Assert.Null(d["Date"]);
 
-            object o = mc;
-            d=o.ToDictionary();
+            mc.Id = 23;
+
+            var d2 = mc.ToDictionary();
+            Assert.Equal(23,d2["Id"]);
         }
 
         private void Write(string format, params object[] param)

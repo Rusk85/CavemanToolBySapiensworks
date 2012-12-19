@@ -24,14 +24,19 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
         public static IEnumerable<Type> GetImplementedInterfaces(Type handlerType,Type msgType=null)
         {
             var rez= handlerType.GetInterfaces().Where(
-                i =>
+                i => 
                 i.IsGenericType && InterfaceNames.Any(n => i.Name.StartsWith(n)) &&
                 MessageTypes.Any(m => i.GetGenericArguments()[0].Implements(m)));
             if (msgType!=null)
             {
                 rez = rez.Where(i => i.GetGenericArguments()[0].Equals(msgType));
             }
-            return rez;
+            var list = rez.ToList();
+            //filter ISubscribeToEvent when ISagaStartedBy is available
+            var events =
+                rez.Where(t => t.Name.StartsWith(StartsSagaInterfaceName)).Select(i => i.GetGenericArguments()[0]).ToArray();
+            list.RemoveAll(t => t.Name.StartsWith(EventHandlerInterfaceName) && (events.Contains(t.GetGenericArguments()[0])));
+            return list;
 
         }
 

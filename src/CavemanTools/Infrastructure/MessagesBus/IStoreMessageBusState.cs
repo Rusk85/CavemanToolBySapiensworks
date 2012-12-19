@@ -11,38 +11,23 @@ namespace CavemanTools.Infrastructure.MessagesBus
         /// <exception cref="DuplicateMessageException"></exception>
         /// <param name="cmd"></param>
         void StoreMessageInProgress(IMessage cmd);
-        void StoreMessageCompleted(Guid id);
+        void MarkMessageCompleted(Guid id);
+        void MarkMessageFailed(Guid id);
 
         /// <summary>
         /// Gets all the un completed messages, usually as aresult of server crash
         /// </summary>
+        /// <param name="ignoreFailedCount">Ignore failed messages with a failure count greater than value</param>
         /// <returns></returns>
-        IEnumerable<IMessage> GetUncompletedMessages();
+        IEnumerable<IMessage> GetUncompletedMessages(int ignoreFailedCount);
 
         /// <summary>
         /// Do message store cleanup
         /// </summary>
         void Cleanup();
 
-        ///// <summary>
-        ///// The commands must be stored as in progress
-        ///// </summary>
-        ///// <param name="result"></param>
-        //void StoreSagaResult(SagaResult result);
-        //T GetSagaState<T>(string correlationId) where T:IContainSagaState;
+        void EnsureStorage();
+
     }
-
-   
-
-    //public class SagaResult
-    //{
-    //    public SagaResult()
-    //    {
-    //        Commands=new ICommand[0];
-    //    }
-    //    public IContainSagaState State { get; set; }
-    //    public IEnumerable<ICommand> Commands { get; set; }
-    //}
-
 
 }

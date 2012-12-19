@@ -48,6 +48,7 @@ namespace XTests.Infrastructure.ServiceBus
     public class SagaTests:Saga<MyTestSagaData>
         ,ISagaStartedBy<MySagaEvent>
         ,ISagaStartedBy<MySagaOtherEvent>,IExecuteCommand<MyCommand>
+        ,ISubscribeToEvent<MyEvent>
     {
         private Stopwatch _t = new Stopwatch();
         private Mock<IStoreMessageBusState> _storage;
@@ -229,6 +230,11 @@ namespace XTests.Infrastructure.ServiceBus
         public void Execute(MyCommand cmd)
         {
             _cmdExecuted = true;
+        }
+
+        public void Handle(MyEvent evnt)
+        {
+            throw new NotImplementedException();
         }
     }
 }

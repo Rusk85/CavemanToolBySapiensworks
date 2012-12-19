@@ -1,4 +1,5 @@
-﻿using CavemanTools.Infrastructure;
+﻿using System.Linq;
+using CavemanTools.Infrastructure;
 using CavemanTools.Infrastructure.MessagesBus;
 using CavemanTools.Infrastructure.MessagesBus.Internals;
 using CavemanTools.Infrastructure.MessagesBus.Saga;
@@ -18,6 +19,14 @@ namespace XTests.Infrastructure.ServiceBus
        }
    }
 
+    public class TypedEventHandler:ISubscribeToEvent<MySagaEvent>
+    {
+        public void Handle(MySagaEvent evnt)
+        {
+            
+        }
+    }
+
     public class MessageBusSubscriptionTests:
         IExecuteCommand<MyCommand>
         ,ISubscribeToEvent<MyEvent>
@@ -33,6 +42,13 @@ namespace XTests.Infrastructure.ServiceBus
             var resolver = new Mock<IResolveSagaRepositories>();
             var container = ActivatorContainer.Instance;
             _bus = new LocalMessageBus(store.Object, container, resolver.Object, LogHelper.DefaultLogger);
+        }
+
+        [Fact]
+        public void internal_messageHandlerDiscoverer_doesnt_consider_both_saga_and_event()
+        {
+            var all = MessageHandlerDiscoverer.GetImplementedInterfaces(typeof (SagaTests));
+            Assert.Equal(4,all.Count());
         }
 
         [Fact]

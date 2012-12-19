@@ -1,5 +1,6 @@
 using System;
 using CavemanTools.Infrastructure.MessagesBus.Internals;
+using CavemanTools.Logging;
 
 namespace CavemanTools.Infrastructure.MessagesBus
 {
@@ -12,7 +13,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
         /// <returns></returns>
         public static IConfigureMessageBusFactory UseInMemoryPersistence(this IConfigureMessageBusFactory config)
         {
-            return config.WithStorage(new InMemoryBusStorage());            
+            return config.WithStorageFactory(()=>new InMemoryBusStorage());            
         }
 
         /// <summary>
@@ -45,8 +46,22 @@ namespace CavemanTools.Infrastructure.MessagesBus
         /// <returns></returns>
         public static IConfigureMessageBusFactory WithNoPersistence(this IConfigureMessageBusFactory config)
         {
-            return config.WithStorage(new NullStorage());
+            return config.WithStorageFactory(()=>new NullStorage());
         }
         
+        /// <summary>
+        /// Implementations of <see cref="ILogWriter"/> and <see cref="IStoreMessageBusState"/> must be registered in the container
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="resolver"></param>
+        /// <returns></returns>
+        public static IConfigureMessageBusFactory UseResolverToPopulateDependencies(
+            this IConfigureMessageBusFactory config, IContainerScope resolver)
+        {
+            config.WithDependencyResolver(resolver);
+            config.WithLogger(resolver.Resolve<ILogWriter>());
+            config.WithStorageFactory(resolver.Resolve<IStoreMessageBusState>);
+            return config;
+        }
     }
 }

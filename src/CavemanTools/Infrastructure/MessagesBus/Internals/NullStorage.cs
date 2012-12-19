@@ -10,17 +10,27 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
             
         }
 
-        public void StoreMessageCompleted(Guid id)
+        public void MarkMessageCompleted(Guid id)
         {
             
         }
 
-        public IEnumerable<IMessage> GetUncompletedMessages()
+        public void MarkMessageFailed(Guid id)
+        {
+            
+        }
+
+        public IEnumerable<IMessage> GetUncompletedMessages(int f)
         {
             return new IMessage[0];
         }
 
         public void Cleanup()
+        {
+            
+        }
+
+        public void EnsureStorage()
         {
             
         }

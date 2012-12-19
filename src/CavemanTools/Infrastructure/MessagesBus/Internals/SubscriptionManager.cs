@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CavemanTools.Infrastructure.MessagesBus.Internals
 {
-    class SubscriptionManager
+    class SubscriptionManager:IDisposable
     {
         class DisposableSubscription:IDisposable
         {
@@ -76,6 +77,20 @@ namespace CavemanTools.Infrastructure.MessagesBus.Internals
         public void Clear()
         {
             _list.Clear();
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+           if (_list != null)
+           {
+               _list.Values.ForEach(v=>v.Dispose());
+               _list.Clear();
+               _list = null;
+           }
+           
         }
     }
 }

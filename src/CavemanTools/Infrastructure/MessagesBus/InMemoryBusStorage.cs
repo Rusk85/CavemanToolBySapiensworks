@@ -24,13 +24,19 @@ namespace CavemanTools.Infrastructure.MessagesBus
             }
         }
       
-        public void StoreMessageCompleted(Guid id)
+        public void MarkMessageCompleted(Guid id)
         {
             var commit = _items.First(d => d.Value.Id == id).Key;
             _items.Remove(commit);
         }
 
-        public IEnumerable<IMessage> GetUncompletedMessages()
+        public void MarkMessageFailed(Guid id)
+        {
+            
+        }
+
+      
+        public IEnumerable<IMessage> GetUncompletedMessages(int dd)
         {
             return _items.Select(d => d.Value);
         }
@@ -38,6 +44,11 @@ namespace CavemanTools.Infrastructure.MessagesBus
         public void Cleanup()
         {
             throw new NotImplementedException();            
+        }
+
+        public void EnsureStorage()
+        {
+            
         }
     }
 

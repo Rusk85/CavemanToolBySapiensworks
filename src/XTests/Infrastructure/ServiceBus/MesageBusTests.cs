@@ -61,7 +61,7 @@ namespace XTests.Infrastructure.ServiceBus
             _flag = false;
             var cmd = new MyCommand() { Test = 75 };
             _bus.Send(cmd);
-            _storage.Verify(d => d.StoreMessageCompleted(cmd.Id), Times.Once());
+            _storage.Verify(d => d.MarkMessageCompleted(cmd.Id), Times.Once());
         }
 
         [Fact]
@@ -206,7 +206,7 @@ namespace XTests.Infrastructure.ServiceBus
             var ev = new MyEvent() { Test = 75 ,SourceId = Guid.Empty};
             var t=_bus.PublishAsync(ev);
             t.Wait();
-            _storage.Verify(d => d.StoreMessageCompleted(ev.Id), Times.Once());
+            _storage.Verify(d => d.MarkMessageCompleted(ev.Id), Times.Once());
         }
 
         [Fact]
@@ -222,6 +222,7 @@ namespace XTests.Infrastructure.ServiceBus
         [Fact]
         public void throw_exception_in_event_handler()
         {
+            _bus.OnUnhandledException = x => { throw x; };
             var t =_bus.PublishAsync(new MyEvent() {SourceId = Guid.Empty, Test = 34});
             Assert.Throws<AggregateException>(() => t.Wait());                        
         }

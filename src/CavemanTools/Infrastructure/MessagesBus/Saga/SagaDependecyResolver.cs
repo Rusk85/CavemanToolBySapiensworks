@@ -2,7 +2,7 @@ using System;
 
 namespace CavemanTools.Infrastructure.MessagesBus.Saga
 {
-    public class SagaDependecyResolver : IResolveSagaRepositories
+    internal class SagaDependecyResolver : IResolveSagaRepositories
     {
         private readonly IResolveDependencies _resolver;
 
@@ -18,12 +18,12 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
 
         public dynamic GetSagaLocator(Type sagaType, Type eventType)
         {
-            return _resolver.Resolve(typeof (IFindSaga<>.Using<>).MakeGenericType(sagaType, eventType));
+            return _resolver.ResolveOptional(typeof (IFindSaga<>.Using<>).MakeGenericType(sagaType, eventType));
         }
 
         public dynamic GetSagaPersister(Type sagaType)
         {
-            return _resolver.Resolve(typeof(ISaveSagaState<>).MakeGenericType(sagaType));
+            return _resolver.ResolveOptional(typeof(ISaveSagaState<>).MakeGenericType(sagaType));
         }
     }
 }

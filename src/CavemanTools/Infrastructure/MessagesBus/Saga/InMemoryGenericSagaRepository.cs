@@ -27,5 +27,10 @@ namespace CavemanTools.Infrastructure.MessagesBus.Saga
             }
             return (ISagaState) Activator.CreateInstance(sagaType);
         }
+
+        public void EnsureStorage()
+        {
+            
+        }
     }
 }

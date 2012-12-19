@@ -9,7 +9,12 @@ namespace CavemanTools.Infrastructure
         {
             get { return _inst; }
         }
-        private ActivatorContainer() : base(t=>Activator.CreateInstance(t))
+        private ActivatorContainer() : base(t =>
+            {
+                if (t.IsInterface || t.IsAbstract) return null;
+                var res = Activator.CreateInstance(t);
+                return res;
+            })
         {
         }
     }

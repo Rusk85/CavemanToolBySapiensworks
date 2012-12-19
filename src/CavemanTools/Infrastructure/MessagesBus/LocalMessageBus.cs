@@ -9,6 +9,8 @@ using CavemanTools.Logging;
 
 namespace CavemanTools.Infrastructure.MessagesBus
 {
+
+    //todo Better failure management
     public class LocalMessageBus : IMessageBus
     {
         private IStoreMessageBusState _storage;
@@ -26,18 +28,30 @@ namespace CavemanTools.Infrastructure.MessagesBus
             _resolver = resolver;
             _log = log;
             _sagaResolver = sagaResolver;        
-            ThrowOnUnhandledExceptions = true;
+            //ThrowOnUnhandledExceptions = true;
             IgnoreMissingCommandHandler = false;
-            RecoveryMode = false;            
+            RecoveryMode = false;        
+            log.Debug("[Message Bus] New instance created");
+            OnUnhandledException = x => { }; 
         }
 
         internal bool RecoveryMode { get; set; }
 
        SubscriptionManager _subs= new SubscriptionManager();
-        
+        private Action<Exception> _onUnhandledException;
 
-        private bool ThrowOnUnhandledExceptions
-        { get; set; }
+        internal Action<Exception> OnUnhandledException
+        {
+            get { return _onUnhandledException; }
+            set
+            {
+                value.MustNotBeNull();
+                _onUnhandledException = value;
+            }
+        }
+
+        //internal bool ThrowOnUnhandledExceptions
+        //{ get; set; }
 
      
         internal SubscriptionManager Subscriptions
@@ -235,24 +249,18 @@ namespace CavemanTools.Infrastructure.MessagesBus
                     _log.Debug("Command '{0}' already in progress. Ignoring.", cmd.GetType());
                     throw;
                 } 
-            }          
+            }
 
             try
             {
                 _log.Debug("Executing handler for command '{0}'", cmd.GetType());
-                result=handler.ExecuteRequest(cmd);
-                _storage.StoreMessageCompleted(cmd.Id);
+                result = handler.ExecuteRequest(cmd);
+                _storage.MarkMessageCompleted(cmd.Id);
                 _log.Debug("Command '{0}' completed", cmd.GetType());
             }
             catch (Exception ex)
             {
-                _log.Error("Handling command {0} threw exception: {1}", cmd, ex);
-                if (ThrowOnUnhandledExceptions) throw;
-                else
-                {
-                    var err = new UnhandledMessageException(ex);
-                    Notify(err);
-                }
+                Notify(ex, cmd);
             }
             return result;
         }
@@ -317,25 +325,25 @@ namespace CavemanTools.Infrastructure.MessagesBus
                     _log.Debug("Command '{0}' already in progress. Ignoring.", cmd.GetType());
                     return;
                 }
- 
+                catch (Exception ex)
+                {
+                    Notify(ex);
+                    return;
+                }
             }
          
             try
             {
                 _log.Debug("Executing handler for command '{0}'", cmd.GetType());
                 handler.Handle(cmd);
-                _storage.StoreMessageCompleted(cmd.Id);
+                _storage.MarkMessageCompleted(cmd.Id);
                 _log.Debug("Command '{0}' completed", cmd.GetType());
             }
             catch (Exception ex)
             {
                 _log.Error("Handling command {0} threw exception: {1}",cmd,ex);
-                if (ThrowOnUnhandledExceptions) throw;
-                else
-                {
-                    var err = new UnhandledMessageException(ex);
-                    Notify(err);
-                }
+               Notify(ex,cmd);
+               
             }
 
         }
@@ -375,7 +383,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
                     _log.Debug("Executing handler for event '{0}'", ev);
                     var h = _subs.Get(ev.GetType());
                     h.Handle(ev);
-                    _storage.StoreMessageCompleted(ev.Id);
+                    _storage.MarkMessageCompleted(ev.Id);
                     _log.Debug("Publishing of event '{0}' completed", ev);
                 }
                 catch (Exception ex)
@@ -386,7 +394,7 @@ namespace CavemanTools.Infrastructure.MessagesBus
             }
             if (exceptions.Count > 0)
             {
-                throw new AggregateException(exceptions);
+                Notify(new AggregateException(exceptions));
             }
         }
 
@@ -409,6 +417,12 @@ namespace CavemanTools.Infrastructure.MessagesBus
                                                  _log.Debug("Event '{0}' already in progress. Ignoring.", ev.GetType());
                                                  return null;
                                              }
+
+                                             catch (Exception ex)
+                                             {
+                                                 Notify(ex);
+                                                 return null;
+                                             }
                                          }).Where(e => e != null).ToArray();
             return exec;
         }
@@ -417,17 +431,19 @@ namespace CavemanTools.Infrastructure.MessagesBus
 
         #region Errors
 
-        private void Notify(AbstractErrorMessage ex)
+        private void Notify(Exception ex,IMessage msg=null)
         {
             if (ex == null) throw new ArgumentNullException("ex");
-            //   SendMessage(ex);
+            if (msg != null)
+            {
+                _log.Error("[Message Bus] Handling message '{0}' threw exception {1}",msg.ToString(),ex.ToString());
+                _storage.MarkMessageFailed(msg.Id);
+            }
+            else _log.Error(ex.ToString());
+            OnUnhandledException(new MessageBusException(ex));
         } 
         #endregion
 
-     
+      
     }
-
-    
-
-   
 }

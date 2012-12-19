@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Text;
 using CavemanTools.Extensions;
 
@@ -28,14 +27,14 @@ namespace System
 			    _typeDicts= new ConcurrentDictionary<Type, TypeInfo>();
 			}
 
-		    TypeInfo inv;
+		    TypeInfo info;
 		    var tp = value.GetType();
             if (tp==typeof(ExpandoObject))
             {
                 return (IDictionary<string, object>) value;
             }
             
-            if(!_typeDicts.TryGetValue(tp,out inv))
+            if(!_typeDicts.TryGetValue(tp,out info))
             {
                 var allp = tp.GetProperties(BindingFlags.Instance|BindingFlags.Public|BindingFlags.GetProperty);
                 
@@ -60,28 +59,29 @@ namespace System
                 var body = Expression.Block(lblock);
                 var lambda = Expression.Lambda(Expression.GetActionType(typeof(IDictionary<string,object>),typeof(object)),body, dict, inst);
                 
-                inv=new TypeInfo(allp.Length,lambda.Compile());
-                _typeDicts.TryAdd(tp, inv);
+                info=new TypeInfo(allp.Length,lambda.Compile());
+                _typeDicts.TryAdd(tp, info);
             }
 
-            inv.Update(value.ConvertTo(tp));
-		    return inv.Dictionary;         
+            return info.Update(value.ConvertTo(tp));		    
 		}
 		
         class TypeInfo
         {
+            private readonly int _size;
             private readonly Delegate _del;
-            public Dictionary<string, object> Dictionary {get; private set; }
-
+         
             public TypeInfo(int size,Delegate del)
             {
-                Dictionary=new Dictionary<string, object>(size);
+                _size = size;
                 _del = del;
             }
 
-            public void Update(object o)
+            public Dictionary<string,object> Update(object o)
             {
-              (_del as Action<IDictionary<string,object>,object>)(Dictionary, o);
+                var d = new Dictionary<string, object>(_size);
+                (_del as Action<IDictionary<string,object>,object>)(d, o);
+                return d;
             }
         }
 
