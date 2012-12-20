@@ -65,17 +65,6 @@
     <Compile Include="Cookies\EncryptedCookieTests.cs" />
     <Compile Include="Cookies\ExtensionTests.cs" />
     <Compile Include="General.cs" />
-    <Compile Include="Infrastructure\AggregateRoot\IdempotencyTests.cs" />
-    <Compile Include="Infrastructure\Queue\CommandQueueTests.cs" />
-    <Compile Include="Infrastructure\ServiceBus\MemoryStorageTests.cs" />
-    <Compile Include="Infrastructure\ServiceBus\MesageBusTests.cs" />
-    <Compile Include="Infrastructure\ServiceBus\MessageBusFactoryTests.cs" />
-    <Compile Include="Infrastructure\ServiceBus\MessageBusSetupFromObject.cs" />
-    <Compile Include="Infrastructure\ServiceBus\MyCommandFactoryHandler.cs" />
-    <Compile Include="Infrastructure\ServiceBus\SagaTests.cs" />
-    <Compile Include="Infrastructure\ServiceBus\ServiceBusExtensionTests.cs" />
-    <Compile Include="Infrastructure\ServiceBus\MessageBusSubscriptionTests.cs" />
-    <Compile Include="Infrastructure\ServiceBus\Setup.cs" />
     <Compile Include="Lists\KeyValueStoreTests.cs" />
     <Compile Include="LoggingHelperTests.cs" />
     <Compile Include="Model\ValidationTests.cs" />
