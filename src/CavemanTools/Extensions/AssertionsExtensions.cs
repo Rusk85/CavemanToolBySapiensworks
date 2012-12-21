@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace System
@@ -15,14 +17,27 @@ namespace System
             if (string.IsNullOrWhiteSpace(arg)) throw new FormatException(string.Format("Argument '{0}' must not be null, empty or whitespaces",paramName??""));
         }
 
-        public static void MustNotBeEmpty(this ICollection list,string paramName=null)
+        public static void MustNotBeEmpty<T>(this IEnumerable<T> list,string paramName=null)
         {
-            if (list==null || list.Count==0) throw new ArgumentException("The collection must contain at least one element",paramName??"");
+            if (list.IsNullOrEmpty()) throw new ArgumentException("The collection must contain at least one element",paramName??"");
         }
             
         public static void MustMatch(this string source,string regex,RegexOptions options=RegexOptions.None)
         {
             if (source.IsNullOrEmpty() || !Regex.IsMatch(source,regex,options)) throw new FormatException(string.Format("Argument doesn't match expression '{0}'",regex));
+        }
+
+        public static void MustHaveValues<T>(this IEnumerable<T> list,bool throwWhenNullValues=true) where T : class
+        {
+            list.MustNotBeEmpty();
+            
+            if (throwWhenNullValues)
+            {
+                if (list.Any(v => v == null))
+                {
+                    throw new ArgumentException("The collection is null, empty or it contains null values");
+                }
+            }            
         }
     }
 }

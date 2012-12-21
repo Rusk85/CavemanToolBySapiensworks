@@ -57,6 +57,11 @@
     <Compile Include="Extensions\Images.cs" />
     <Compile Include="Extensions\LCGUtils.cs" />
     <Compile Include="Extensions\TypeFactory.cs" />
+    <Compile Include="Infrastructure\ActivatorContainer.cs" />
+    <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
+    <Compile Include="Infrastructure\IContainerScope.cs" />
+    <Compile Include="Infrastructure\IResolveDependencies.cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
     <Compile Include="Extensions\LoggingUtility.cs" />
@@ -99,6 +104,7 @@
     <Compile Include="Reflection\ObjectCreator.cs" />
     <Compile Include="Reflection\PrivateReflectionDynamicObject.cs" />
     <Compile Include="SingletonsRegistry.cs" />
+    <Compile Include="Subscriptions.cs" />
     <Compile Include="Testing\BenchmarkResult.cs" />
     <Compile Include="Testing\BenchmarkUnit.cs" />
     <Compile Include="SemanticVersion.cs" />
