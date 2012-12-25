@@ -61,6 +61,28 @@ namespace System.Reflection
                 i => i.GetGenericArguments().HasTheSameElementsAs(genericType));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tp">Generic type</param>
+        /// <param name="index">0 based index of the generic argument</param>
+        /// <exception cref="InvalidOperationException">When the type is not generic</exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <returns></returns>
+        public static Type GetGenericArgument(this Type tp, int index = 0)
+        {
+            tp.MustNotBeNull(); 
+            if (!tp.IsGenericType) throw new InvalidOperationException("Provided type is not generic");
+            var all=tp.GetGenericArguments();
+            if (index >= all.Length)
+            {
+                throw new ArgumentException("There is no generic argument at the specified index","index");
+            }
+            return all[index];
+        }
+
+
 		/// <summary>
 		/// Used for resource localizing
 		/// </summary>

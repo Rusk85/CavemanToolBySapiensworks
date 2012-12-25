@@ -8,9 +8,9 @@
     <licenseUrl>http://cavemantools.codeplex.com/license</licenseUrl>
     <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/CTools</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Evolved toolkit for developing applications faster and with less code, written in C# on .Net 4.0 using best practices.  Provides ready to use sub-systems such as: Common Logging, Common DI support, Local Message Bus  for  message driven architecture, Local Commands Queue,  Right-Based Authorization tools for multi tenant web applications. Includes general purpose extension methods, assertions, predefined value objects (Email, Percentage etc) and specialized helper classes for specific tasks. </description>
+    <description>Evolved toolkit for developing applications faster and with less code, written in C# on .Net 4.0 using best practices.  Provides ready to use sub-systems such as: Common Logging, Common DI support, Right-Based Authorization tools for multi tenant web applications. Includes general purpose extension methods, assertions, predefined value objects (Email, Percentage etc) and specialized helper classes for specific tasks. </description>
 	<summary>
-		Evolved toolkit for developing applications faster and with less code, written in C# on .Net 4.0 using best practices. Includes general purpose extension methods and provides ready to use sub-systems such as: Common Logging,  Local Message Bus , Local Commands Queue,  Right-Based Authorization tools for multi tenant web applications. 
+		Evolved toolkit for developing applications faster and with less code, written in C# on .Net 4.0 using best practices. Includes general purpose extension methods and provides ready to use sub-systems such as: Common Logging, Right-Based Authorization tools for multi tenant web applications. 
 	</summary>
     <language>en-US</language>
     <tags>toolkit, library, tools, utility, lcg, reflection, multi-tenant, tenant, authorization, bus, messages, architecture, assert, contracts, queue, helper</tags>
