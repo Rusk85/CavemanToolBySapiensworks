@@ -27,6 +27,12 @@ namespace System
             if (source.IsNullOrEmpty() || !Regex.IsMatch(source,regex,options)) throw new FormatException(string.Format("Argument doesn't match expression '{0}'",regex));
         }
 
+        /// <summary>
+        /// List must not be empty and must have non-null values
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="throwWhenNullValues"></param>
         public static void MustHaveValues<T>(this IEnumerable<T> list,bool throwWhenNullValues=true) where T : class
         {
             list.MustNotBeEmpty();
