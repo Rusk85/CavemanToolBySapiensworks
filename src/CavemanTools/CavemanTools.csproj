@@ -106,6 +106,7 @@
     <Compile Include="SingletonsRegistry.cs" />
     <Compile Include="Subscriptions.cs" />
     <Compile Include="Testing\BenchmarkResult.cs" />
+    <Compile Include="Testing\BenchmarksContainer.cs" />
     <Compile Include="Testing\BenchmarkUnit.cs" />
     <Compile Include="SemanticVersion.cs" />
     <Compile Include="Web\ContextInstance.cs" />
