@@ -13,6 +13,6 @@
 		Evolved toolkit for developing applications faster and with less code, written in C# on .Net 4.0 using best practices. Includes general purpose extension methods and provides ready to use sub-systems such as: Common Logging, Right-Based Authorization tools for multi tenant web applications. 
 	</summary>
     <language>en-US</language>
-    <tags>toolkit, library, tools, utility, lcg, reflection, multi-tenant, tenant, authorization, bus, messages, architecture, assert, contracts, queue, helper</tags>
+    <tags>toolkit, library, tools, utility, lcg, reflection, multi-tenant, tenant, authorization,  assert, contracts, helper</tags>
   </metadata>  
 </package>
