@@ -59,6 +59,7 @@
     <Compile Include="Extensions\TypeFactory.cs" />
     <Compile Include="Infrastructure\ActivatorContainer.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
+    <Compile Include="Infrastructure\ICacheData.cs" />
     <Compile Include="Infrastructure\IContainerScope.cs" />
     <Compile Include="Infrastructure\IResolveDependencies.cs" />
     <Compile Include="IUnitOfWork.cs" />
