@@ -184,7 +184,11 @@ namespace System
 
 		}
         
-            
+        public static string Format(this string pattern, params object[] args)
+        {
+            pattern.MustNotBeEmpty();
+            return string.Format(pattern, args);
+        }
 	}
 }
 
