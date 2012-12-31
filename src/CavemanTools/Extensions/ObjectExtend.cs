@@ -250,8 +250,7 @@ namespace System
         /// <typeparam name="T"></typeparam>
         /// <param name="o"></param>
         /// <returns></returns>
-        [Obsolete("Use the Cast<T> method")]
-        public static T As<T>(this object o)
+       public static T As<T>(this object o)
         {
             return o.Cast<T>() ;
 		}
