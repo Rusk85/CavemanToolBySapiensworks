@@ -189,6 +189,13 @@ namespace System
             pattern.MustNotBeEmpty();
             return string.Format(pattern, args);
         }
+
+
+        public static T ToEnum<T>(this string value)
+        {
+            if (!typeof(T).IsEnum) throw new ArgumentException("Type '{0}' is not an enum".Format(typeof(T)));
+            return (T)Enum.Parse(typeof(T), value, true);
+        }
 	}
 }
 

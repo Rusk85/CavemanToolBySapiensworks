@@ -85,5 +85,27 @@ namespace System.Web
             }
             return rez;
         }
+
+        public static string HtmlEncode(this string data)
+        {
+            data.MustNotBeEmpty();
+            return HttpUtility.HtmlEncode(data);
+        }
+
+        public static string HtmlDecode(this string data)
+        {
+            return HttpUtility.HtmlDecode(data);
+        }
+
+        public static string UrlEncode(this string data)
+        {
+            return HttpUtility.UrlEncode(data);
+        }
+
+        public static string UrlDecode(this string data)
+        {
+            return HttpUtility.UrlDecode(data);
+        }
+
 	}
 }

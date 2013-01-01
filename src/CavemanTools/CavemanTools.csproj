@@ -56,6 +56,7 @@
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\Images.cs" />
     <Compile Include="Extensions\LCGUtils.cs" />
+    <Compile Include="Extensions\ReflectionUtils.cs" />
     <Compile Include="Extensions\TypeFactory.cs" />
     <Compile Include="Infrastructure\ActivatorContainer.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
@@ -170,7 +171,7 @@
     <Compile Include="Model\Validation\DefaultValidationWrapper.cs" />
     <Compile Include="Model\ResultSet.cs" />
     <Compile Include="Extensions\CopyOptionsAttribute.cs" />
-    <Compile Include="Extensions\ReflectionUtils.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\StringUtils.cs" />
     <Compile Include="Extensions\Xml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

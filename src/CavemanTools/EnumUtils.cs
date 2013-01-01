@@ -45,10 +45,13 @@ namespace CavemanTools
 		/// <typeparam name="T">EnumType</typeparam>
 		/// <param name="value">Enum constant</param>
 		/// <returns></returns>
+		[Obsolete("Use ToEnum")]
 		public static T Parse<T>(string value)
 		{
-			return (T) Enum.Parse(typeof (T), value,true);
+		    return value.ToEnum<T>();
 		}
+
+       
 
 		/// <summary>
 		/// Returns a random enum constant

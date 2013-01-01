@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 namespace System.Linq
@@ -13,7 +14,8 @@ namespace System.Linq
 		/// <typeparam name="TSource">Sequence</typeparam>
 		/// <param name="source">Function to execute</param>
 		/// <returns></returns>
-		public static void ForEach<TSource>(this IEnumerable<TSource> source,Action<TSource> action
+         [DebuggerStepThrough]
+    	public static void ForEach<TSource>(this IEnumerable<TSource> source,Action<TSource> action
 			) 
 		{
 			if (source == null) throw new ArgumentNullException("source");
@@ -24,6 +26,12 @@ namespace System.Linq
 			}
 		}
 
+        /// <summary>
+        /// Tries to cast each item to the specified type. If it fails,  it just ignores the item
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static IEnumerable<T> CastSilentlyTo<T>(this IEnumerable source) where T:class
         {
             T res = null;

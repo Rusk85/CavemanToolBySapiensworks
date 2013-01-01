@@ -184,5 +184,24 @@ namespace System.Collections.Generic
             if (dic.ContainsKey(key)) return dic[key].Cast<T>();
             return defValue;
         }
+
+        public static void AddIfNotPresent<T>(this IList<T> list, T item)
+        {
+            list.MustNotBeEmpty();
+            if (!list.Contains(item)) list.Add(item);
+            
+        }
+
+        public static void RemoveAll<T>(this IList<T> items, Func<T, bool> predicate)
+        {
+            items.MustNotBeEmpty();
+            predicate.MustNotBeNull();
+        
+            for (int i = items.Count - 1; i >= 0; i--)
+            {
+                if (predicate(items[i])) items.RemoveAt(i);
+            }
+
+        }
 	}
 }
