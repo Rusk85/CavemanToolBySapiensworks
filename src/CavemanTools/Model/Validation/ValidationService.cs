@@ -60,7 +60,7 @@ namespace CavemanTools.Model.Validation
 		 public IEnumerable<TA> GetValidators<TA>(Expression<Func<T,object>> property) where TA:ValidationAttribute
 		 {
 		 	if (property == null) throw new ArgumentNullException("property");
-			var mi = property.GetInfo();
+			var mi = property.GetPropertyInfo();
 			var item = _validators.Find(d => d.ReflectionInfo.Name.Equals(mi.Name, StringComparison.InvariantCultureIgnoreCase));
 			if (item == null) return new TA[0];
 		 	return item.Validators.Where(d=> d.IsExactlyType<TA>()).Cast<TA>();
@@ -74,7 +74,7 @@ namespace CavemanTools.Model.Validation
 		public IEnumerable<ValidationAttribute> GetValidators(Expression<Func<T,object>> property)
 		{
 			if (property == null) throw new ArgumentNullException("property");
-			var mi = property.GetInfo();
+			var mi = property.GetPropertyInfo();
 			var item = _validators.Find(d => d.ReflectionInfo.Name.Equals(mi.Name, StringComparison.InvariantCultureIgnoreCase));
 			if (item == null) return new ValidationAttribute[0];
 			return item.Validators;
@@ -91,7 +91,7 @@ namespace CavemanTools.Model.Validation
 		public void AddValidation(Expression<Func<T,object>> property,ValidationAttribute validator)
 		{
 			if (validator == null) throw new ArgumentNullException("validator");
-			var mi = property.GetInfo();
+			var mi = property.GetPropertyInfo();
 			AddToCollection(mi,validator);
 		}
 
@@ -154,7 +154,7 @@ namespace CavemanTools.Model.Validation
 		public bool ValidateValueFor(Expression<Func<T,object>> property,object value,IValidationDictionary errorBag)
 		{
 			if (property == null) throw new ArgumentNullException("property");
-			var mi = property.GetInfo();
+			var mi = property.GetPropertyInfo();
 			var item=_validators.Find(d => d.ReflectionInfo.Name.Equals(mi.Name, StringComparison.InvariantCultureIgnoreCase));
 			if (item == null) return true;
 			return item.Validate(value, errorBag);
