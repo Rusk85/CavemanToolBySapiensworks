@@ -64,6 +64,7 @@
     <Compile Include="Assertions\AssertionsTests.cs" />
     <Compile Include="Cookies\EncryptedCookieTests.cs" />
     <Compile Include="Cookies\ExtensionTests.cs" />
+    <Compile Include="Extensions\ExpressionExtensionsTests.cs" />
     <Compile Include="General.cs" />
     <Compile Include="Lists\KeyValueStoreTests.cs" />
     <Compile Include="LoggingHelperTests.cs" />
