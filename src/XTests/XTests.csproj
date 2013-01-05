@@ -73,7 +73,6 @@
     <Compile Include="Lists\KeyValueStoreTests.cs" />
     <Compile Include="LoggingHelperTests.cs" />
     <Compile Include="Model\ValidationTests.cs" />
-    <Compile Include="Mvc\Controllers\BaseControllerTests.cs" />
     <Compile Include="Mvc\Controllers\SmartControllerTests.cs" />
     <Compile Include="OverridableOptionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
