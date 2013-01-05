@@ -4,7 +4,7 @@ using Xunit;
 using System;
 using System.Diagnostics;
 
-namespace XTests.Mvc.Controller
+namespace XTests.Mvc.Controllers
 {
     
     public class TestModel
