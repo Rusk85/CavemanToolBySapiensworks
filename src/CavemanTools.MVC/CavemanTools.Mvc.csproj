@@ -76,12 +76,24 @@
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AbstractResultForInvalidModel.cs" />
+    <Compile Include="Controllers\Internal\IContextFacadeForSmartAction.cs" />
+    <Compile Include="Controllers\IValidationFailedPolicyFactory.cs" />
+    <Compile Include="Controllers\TransferResultForInvalidModel.cs" />
+    <Compile Include="Controllers\ValidationFailedPolicyActivator.cs" />
+    <Compile Include="Controllers\IResultForInvalidModel.cs" />
+    <Compile Include="Controllers\ISetupModel.cs" />
+    <Compile Include="Controllers\NullSetupModel.cs" />
+    <Compile Include="Controllers\IOverrideValidationFailedPolicy.cs" />
+    <Compile Include="Controllers\SetupModelExtensions.cs" />
     <Compile Include="Controllers\SmartActionAttribute.cs" />
+    <Compile Include="Controllers\Internal\SmartActionWorker.cs" />
+    <Compile Include="Controllers\Internal\SmartContextFacade.cs" />
+    <Compile Include="Controllers\SmartControllerAttribute.cs" />
+    <Compile Include="Controllers\ViewResultForInvalidModel.cs" />
     <Compile Include="Extensions\ThemeInfo.cs" />
     <Compile Include="AjaxRequestAttribute.cs" />
     <Compile Include="MvcRequestMetrics.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\InvalidModelException.cs" />
     <Compile Include="Controllers\IPopulateModel.cs" />
     <Compile Include="Controllers\ModelIsArgumentAttribute.cs" />
     <Compile Include="Controllers\PopulateModel.cs" />
@@ -102,6 +114,7 @@
     <Compile Include="Security\DemandRight.cs" />
     <Compile Include="Controllers\SmartController.cs" />
     <Compile Include="ThemeAttribute.cs" />
+    <Compile Include="TransferResult.cs" />
     <Compile Include="UnitTesting\FakeController.cs" />
     <Compile Include="ViewEngines\BuildManagerWrapper.cs" />
     <Compile Include="ViewEngines\IBuildManager.cs" />

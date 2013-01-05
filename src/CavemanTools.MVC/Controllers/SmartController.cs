@@ -9,9 +9,11 @@ using CavemanTools.Web;
 
 namespace CavemanTools.Mvc.Controllers
 {
+  
     /// <summary>
     /// Base controller that handles automatically invalid model state.
     /// </summary>
+    [Obsolete("Use the SmartControllerAttribute",true)]
     public abstract class SmartController:Controller
     {
         private const string ViewNameKey = "_smart-view";
@@ -22,10 +24,7 @@ namespace CavemanTools.Mvc.Controllers
             {
                 HandleActionExecuting(filterContext);
             }
-            else
-            {
-                HttpContextRegistry.Set(ViewNameKey, attr.ViewName);
-            }
+           
         }
 
         internal void HandleActionExecuting(ActionExecutingContext filterContext)
@@ -84,10 +83,7 @@ namespace CavemanTools.Mvc.Controllers
             {
                 HandleActionExecuted(filterContext);
             }
-            else
-            {
-                HttpContextRegistry.Set(ViewNameKey,attr.ViewName);
-            }
+         
         }
 
         internal void HandleActionExecuted(ActionExecutedContext filterContext)
