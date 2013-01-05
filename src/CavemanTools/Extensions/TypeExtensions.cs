@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace System
 {
     using Reflection;
@@ -62,7 +64,21 @@ namespace System
             return all[index];
         }
 
-
+        /// <summary>
+        /// Checks if type is a reference but also not
+        ///  a string, array, Nullable, enum
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsUserDefinedClass(this Type type)
+        {
+            type.MustNotBeNull();
+            if (!type.IsClass) return false;
+            if (Type.GetTypeCode(type) != TypeCode.Object) return false;
+            if (type.IsArray) return false;
+            if (type.IsNullable()) return false;
+           return true;
+        }
        
         //static object getLock = new object();
 	   

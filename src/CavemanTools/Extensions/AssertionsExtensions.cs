@@ -28,6 +28,43 @@ namespace System
         }
 
         /// <summary>
+        /// Value type must be of specified type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        public static void MustBe<T>(this object value)
+        {
+            var tp = typeof (T);
+            bool ex = false;
+            if (value == null)
+            {
+                if (tp.IsClass) return;
+                ex = true;
+            }
+            if (ex || (value.GetType()!=tp)) throw new ArgumentException("Argument must be of type '{0}'".Format(tp));
+        }
+
+        /// <summary>
+        /// Arugment must implement interface T
+        /// </summary>
+        /// <typeparam name="T">Inerface type</typeparam>
+        /// <param name="value"></param>
+        public static void MustImplement<T>(this object value)
+        {
+            value.MustNotBeNull("value");
+            var tp = typeof (T);
+            if (!tp.IsInterface) throw new ArgumentException("'{0}' is not an interface".Format(tp));
+            var otype = value.GetType();
+            
+            if (value is Type)
+            {
+                otype= value.As<Type>();
+            }
+
+            if (!otype.Implements(tp)) throw new ArgumentException("Argument must implement '{0}'".Format(tp));
+        }
+
+        /// <summary>
         /// List must not be empty and must have non-null values
         /// </summary>
         /// <typeparam name="T"></typeparam>
