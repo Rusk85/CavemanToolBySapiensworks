@@ -60,12 +60,21 @@ namespace System.Web
         /// <returns></returns>
         public static T Get<T>(this HttpContextBase ctx, string key, T defaultValue = default(T))
         {
+            ctx.MustNotBeNull();
+            key.MustNotBeEmpty();
             var rez = defaultValue;
             if (ctx.Items.Contains(key))
             {
                 rez = (T)ctx.Items[key];
             }
             return rez;
+        }
+
+        public static void Set<T>(this HttpContextBase ctx, string key, T value)
+        {
+            ctx.MustNotBeNull();
+            key.MustNotBeEmpty();
+            ctx.Items[key] = value;
         }
 
         /// <summary>
