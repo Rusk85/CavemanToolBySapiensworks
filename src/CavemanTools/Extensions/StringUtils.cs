@@ -57,7 +57,7 @@ namespace System
 		/// </summary>
 		/// <param name="lang"></param>
 		/// <returns></returns>
-		public static CultureInfo ParseCulture(this string lang)
+		public static CultureInfo ToCulture(this string lang)
 		{
 			CultureInfo c = null;
 			try
@@ -76,6 +76,8 @@ namespace System
 			return c;
 		}
 		
+
+
 		/// <summary>
 		/// Cuts the string to the specified length
 		/// </summary>
@@ -88,6 +90,14 @@ namespace System
 			var l = value.Length > length ? length : value.Length;
 			return value.Substring(0, l);
 		}
+
+        public static string RemoveLastChar(this string value)
+        {
+            value.MustNotBeNull();
+            if (value.Length == 0) return value;
+            return value.Remove(value.Length - 1, 1);
+        }
+
 
         /// <summary>
         /// Returns true if the string is empty 
@@ -163,17 +173,27 @@ namespace System
             return source.Split('\n').FirstOrDefault();
         }
 		
-	
+	/// <summary>
+	/// Generates a random string of the specified length
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="length"></param>
+	/// <returns></returns>
+        public static string GenerateRandomString(this string a, int length)
+        {
+            return RandomString(length);
+        }
+
 		/// <summary>
 		/// Generates a random string (only letters) of the specified length
 		/// </summary>
-		/// <param name="size">Maximum string length</param>
+		/// <param name="length">Maximum string length</param>
 		/// <returns></returns>
-		public static string RandomString(int size)
+		public static string RandomString(int length)
 		{
 			var _random = new Random();
 			StringBuilder builder = new StringBuilder();
-			for (int i = 0; i < size; i++)
+			for (int i = 0; i < length; i++)
 			{
 
 				//26 letters in the alfabet, ascii + 65 for the capital letters

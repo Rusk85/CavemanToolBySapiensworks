@@ -25,6 +25,16 @@ namespace System
 			}
 		}
 
+        public static TimeSpan ToMiliseconds(this int value)
+        {
+            return TimeSpan.FromMilliseconds(value);
+        }
+
+        public static TimeSpan ToSeconds(this int value)
+        {
+            return TimeSpan.FromSeconds(value);
+        }
+
         /// <summary>
         /// Outputs the 'human friendly' format (ex: 4 days ago). English only
         /// </summary>
