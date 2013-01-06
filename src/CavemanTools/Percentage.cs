@@ -23,13 +23,13 @@ namespace CavemanTools
 
         public decimal ApplyTo(decimal amount)
         {
-            return amount * Value;
+            return amount * _value;
         }
 
 
         public override string ToString()
         {
-            return Value.ToString("P");
+            return _value.ToString("P");
         }
 
         /// <summary>
@@ -68,6 +68,11 @@ namespace CavemanTools
         }
 
         #region operator overload
+
+        public static implicit operator Percentage(decimal d)
+        {
+            return new Percentage(d);
+        }
 
         public static Percentage operator +(Percentage p1, Percentage p2)
         {
