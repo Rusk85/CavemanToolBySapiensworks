@@ -70,6 +70,7 @@
     <Compile Include="Lists\TrackedListItem.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\DeveloperLogger.cs" />
+    <Compile Include="Logging\FileLogger.cs" />
     <Compile Include="Logging\LogHelper.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Lists\IModifiedSet.cs" />

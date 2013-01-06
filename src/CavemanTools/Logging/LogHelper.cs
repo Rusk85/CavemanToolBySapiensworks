@@ -65,6 +65,24 @@ namespace CavemanTools.Logging
             }
         }
 
+
+        /// <summary>
+        /// Sets the default logger to be consoler. 
+        /// Logger name is "console"
+        /// </summary>
+        public static void OutputToConsole()
+        {
+            Register(new ConsoleLogger(), "console",true);
+        }
       
+        /// <summary>
+        /// Sends all the logging to the writer.
+        /// Logger name is "devel"
+        /// </summary>
+        /// <param name="writer"></param>
+        public static void OutputTo(Action<string> writer)
+        {
+            Register(new DeveloperLogger(writer),"devel");
+        }
     }
 }
