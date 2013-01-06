@@ -45,6 +45,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -59,10 +60,13 @@
     <Compile Include="Extensions\ReflectionUtils.cs" />
     <Compile Include="Extensions\TypeFactory.cs" />
     <Compile Include="Infrastructure\ActivatorContainer.cs" />
+    <Compile Include="Infrastructure\LocalMemoryCache.cs" />
+    <Compile Include="Web\AspNetCache.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
     <Compile Include="Infrastructure\ICacheData.cs" />
     <Compile Include="Infrastructure\IContainerScope.cs" />
     <Compile Include="Infrastructure\IResolveDependencies.cs" />
+    <Compile Include="Infrastructure\NullCache.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Lists\KeyValueDataStore.cs" />
     <Compile Include="Lists\ModifiedItem.cs" />
