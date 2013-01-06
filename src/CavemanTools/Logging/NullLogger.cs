@@ -4,8 +4,7 @@ namespace CavemanTools.Logging
 {
     public class NullLogger : LogWriterBase
     {
-        public static IWriteToLog Instance { get { return _inst; }}
-        static readonly NullLogger _inst=new NullLogger();
+        public static readonly NullLogger Instance=new NullLogger();
         private NullLogger()
         {
             
