@@ -1,5 +1,8 @@
 namespace CavemanTools.Web.Security
 {
+    /// <summary>
+    /// Uses Int32 as id type
+    /// </summary>
     public class DefaultAuthorizationScopeId:AuthorizationScopeId
     {
         public DefaultAuthorizationScopeId(int value)
@@ -9,14 +12,11 @@ namespace CavemanTools.Web.Security
 
         public override bool Equals(AuthorizationScopeId other)
         {
+            if (other == null) return false;
             var o = other as DefaultAuthorizationScopeId;
             if (o==null) return false;
             return (int)o.Value == (int)Value;
         }
-
-        public override object Value
-        {
-            get; protected set; }
 
         public override bool Equals(object obj)
         {
