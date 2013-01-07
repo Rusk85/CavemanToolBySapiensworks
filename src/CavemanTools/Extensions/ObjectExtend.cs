@@ -233,9 +233,23 @@ namespace System
 
                     if (tp == typeof (DateTime))
                     {
+                        if (data is DateTimeOffset)
+                        {
+                            return data.Cast<DateTimeOffset>().DateTime;
+                        }
                         return DateTime.Parse(data.ToString());                        
                     }
                    
+                    if (tp == typeof (DateTimeOffset))
+                    {
+                        if (data is DateTime)
+                        {
+                            var dt = (DateTime) data;
+                            return new DateTimeOffset(dt);
+                        }
+                        return DateTimeOffset.Parse(data.ToString());
+                    }
+
                     if (tp.IsNullable())
                     {
                         var under=Nullable.GetUnderlyingType(tp);
