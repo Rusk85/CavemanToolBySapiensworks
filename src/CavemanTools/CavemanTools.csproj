@@ -120,6 +120,7 @@
     <Compile Include="Web\HttpContextRegistry.cs" />
     <Compile Include="Web\RequestMetricsModule.cs" />
     <Compile Include="Web\Security\AuthenticationUtils.cs" />
+    <Compile Include="Web\Security\AuthorizationScopeGuid.cs" />
     <Compile Include="Web\Security\AuthorizationScopeId.cs" />
     <Compile Include="Web\Security\DefaultAuthorizationScopeId.cs" />
     <Compile Include="Web\Security\HashedPassword.cs" />
