@@ -18,7 +18,7 @@ namespace CavemanTools.Mvc.Controllers
             policy.MakeGenericType(typeof(T)).MustImplement<IResultForInvalidModel<T>>();
             var inst = _solver.GetService(policy.MakeGenericType(typeof (T)));
 
-            if (inst==null) throw new InvalidOperationException("Can't instantiate type '{0}'. The type isn't available from the DI Container or it doesn't exist.".Format(typeof(T)));
+            if (inst==null) throw new InvalidOperationException("Can't instantiate type '{0}'. The type isn't available from the DI Container or it doesn't exist.".ToFormat(typeof(T)));
 
             var cast=  inst.Cast<IResultForInvalidModel<T>>();
             cast.Model = model;

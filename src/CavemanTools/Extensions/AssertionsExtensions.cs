@@ -41,7 +41,7 @@ namespace System
                 if (tp.IsClass) return;
                 ex = true;
             }
-            if (ex || (value.GetType()!=tp)) throw new ArgumentException("Argument must be of type '{0}'".Format(tp));
+            if (ex || (value.GetType()!=tp)) throw new ArgumentException("Argument must be of type '{0}'".ToFormat(tp));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace System
         {
             value.MustNotBeNull("value");
             var tp = typeof (T);
-            if (!tp.IsInterface) throw new ArgumentException("'{0}' is not an interface".Format(tp));
+            if (!tp.IsInterface) throw new ArgumentException("'{0}' is not an interface".ToFormat(tp));
             var otype = value.GetType();
             
             if (value is Type)
@@ -61,7 +61,7 @@ namespace System
                 otype= value.As<Type>();
             }
 
-            if (!otype.Implements(tp)) throw new ArgumentException("Argument must implement '{0}'".Format(tp));
+            if (!otype.Implements(tp)) throw new ArgumentException("Argument must implement '{0}'".ToFormat(tp));
         }
 
         /// <summary>

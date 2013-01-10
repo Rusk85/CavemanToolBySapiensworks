@@ -38,7 +38,7 @@ namespace System
         {
             type.MustNotBeNull();
             interfaceType.MustNotBeNull();
-            if (!interfaceType.IsInterface) throw new ArgumentException("The generic type '{0}' is not an interface".Format(interfaceType));
+            if (!interfaceType.IsInterface) throw new ArgumentException("The generic type '{0}' is not an interface".ToFormat(interfaceType));
             return interfaceType.IsAssignableFrom(type);
         }
        

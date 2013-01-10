@@ -166,7 +166,7 @@ namespace CavemanTools.Web
         public T GetUnderlyingCacheAs<T>() where T : class
         {
             var c= _cache as T;
-            if (c==null) throw new InvalidCastException("Cache isn't of type '{0}'".Format(typeof(T)));
+            if (c==null) throw new InvalidCastException("Cache isn't of type '{0}'".ToFormat(typeof(T)));
             return c;
         }
     }

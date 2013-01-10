@@ -23,7 +23,7 @@ namespace System.Web
 		}
 
 		/// <summary>
-		///  Returns subdomain from url
+		///  Returns subdomain from url. It covers only some common cases.
 		/// </summary>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <param name="host">Host name</param>
@@ -31,15 +31,24 @@ namespace System.Web
 		public static string ExtractSubdomain(this string  host)
 		{
 			if (string.IsNullOrEmpty(host)) throw new ArgumentNullException("host");
-			var all = host.Split('.');
-			if (all.Length < 3) return string.Empty;
-			var l = all.Length - 3;
-			string d = string.Empty;
-			for (int i = 0; i <= l; i++) d = d + all[i]+".";
-			return d.Remove(d.Length-1,1);
+
+            var all = host.Split('.');
+            if (all.Length < 3) return string.Empty;
+            var l = all.Length - 3;
+            string d = string.Empty;
+            for (int i = 0; i <= l; i++) d = d + all[i] + ".";
+            return d.Remove(d.Length - 1, 1);
 		}
 
-	   
+       //public static string GetSubdomain(this Uri url)
+       //{
+       //    if (url.HostNameType == UriHostNameType.Dns)
+       //    {
+       //        return url.Host.ExtractSubdomain();
+       //    }
+       //    return null;
+       //}
+
         /// <summary>
         /// Tries to detect if the requested path is a static resource
         /// </summary>

@@ -20,7 +20,7 @@ namespace XTests.Extensions
         {
             var objects = new object[] {2,Guid.Empty,new byte[0], EnvironmentVariableTarget.Process,"string"};
             
-            objects.ForEach(o=>o.GetType().IsUserDefinedClass().Should().BeFalse("{0}".Format(o)));
+            objects.ForEach(o=>o.GetType().IsUserDefinedClass().Should().BeFalse("{0}".ToFormat(o)));
 
             typeof (int?).IsUserDefinedClass().Should().BeFalse();
 
