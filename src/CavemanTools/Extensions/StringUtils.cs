@@ -204,16 +204,16 @@ namespace System
 
 		}
         
-        public static string Format(this string pattern, params object[] args)
+        public static string ToFormat(this string pattern, params object[] args)
         {
             pattern.MustNotBeEmpty();
-            return string.Format(pattern, args);
+            return String.Format(pattern, args);
         }
 
 
         public static T ToEnum<T>(this string value)
         {
-            if (!typeof(T).IsEnum) throw new ArgumentException("Type '{0}' is not an enum".Format(typeof(T)));
+            if (!typeof(T).IsEnum) throw new ArgumentException("Type '{0}' is not an enum".ToFormat(typeof(T)));
             return (T)Enum.Parse(typeof(T), value, true);
         }
 	}

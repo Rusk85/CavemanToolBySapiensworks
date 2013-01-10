@@ -39,7 +39,7 @@ namespace CavemanTools.Logging
         /// <param name="level">Status</param><param name="message">Entry Text</param><param name="args">List of arguments</param>
         public override void Log(LogLevel level, string message, params object[] args)
         {
-            var data = (DateTime.Now.ToString() + " - " + level.ToString() + ": " + message.Format(args));
+            var data = (DateTime.Now.ToString() + " - " + level.ToString() + ": " + message.ToFormat(args));
             File.AppendAllText(_filename, data); 
         }
     }
