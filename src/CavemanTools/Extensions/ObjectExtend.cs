@@ -307,9 +307,9 @@ namespace System
         /// <typeparam name="T"></typeparam>
         /// <param name="o"></param>
         /// <returns></returns>
-       public static T As<T>(this object o)
+       public static T As<T>(this object o) where T:class 
         {
-            return o.Cast<T>() ;
+            return o as T ;
 		}
 
         /// <summary>
