@@ -58,7 +58,7 @@ namespace System
             
             if (value is Type)
             {
-                otype= value.As<Type>();
+                otype= value as Type;
             }
 
             if (!otype.Implements(tp)) throw new ArgumentException("Argument must implement '{0}'".ToFormat(tp));
