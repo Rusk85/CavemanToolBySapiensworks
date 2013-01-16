@@ -61,6 +61,7 @@
     <Compile Include="Extensions\TypeFactory.cs" />
     <Compile Include="Infrastructure\ActivatorContainer.cs" />
     <Compile Include="Infrastructure\LocalMemoryCache.cs" />
+    <Compile Include="Infrastructure\ServiceLocator.cs" />
     <Compile Include="Web\AspNetCache.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
     <Compile Include="Infrastructure\ICacheData.cs" />

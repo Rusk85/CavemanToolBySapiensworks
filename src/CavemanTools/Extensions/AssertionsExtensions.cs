@@ -28,6 +28,20 @@ namespace System
         }
 
         /// <summary>
+        /// Throws if the value can't be used as-is in an url
+        /// </summary>
+        /// <param name="source"></param>
+        public static void MustBeUrlFriendly(this string source)
+        {
+            if (!source.IsNullOrEmpty())
+            {
+                if (source.MakeSlug().Equals(source,StringComparison.OrdinalIgnoreCase)) return;
+            }
+            throw new FormatException("Provided string value must be url friendly");
+        }
+
+
+        /// <summary>
         /// Value type must be of specified type
         /// </summary>
         /// <typeparam name="T"></typeparam>
