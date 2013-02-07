@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace System
 {
@@ -41,8 +42,18 @@ namespace System
             if (!interfaceType.IsInterface) throw new ArgumentException("The generic type '{0}' is not an interface".ToFormat(interfaceType));
             return interfaceType.IsAssignableFrom(type);
         }
-       
-		
+
+
+        public static bool CheckIfAnonymousType(this Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+            return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+                && type.IsGenericType && type.Name.Contains("AnonymousType")
+                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
+                && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+        }
+
         /// <summary>
         /// 
         /// </summary>

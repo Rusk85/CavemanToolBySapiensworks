@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -86,63 +87,7 @@ namespace System
             }
         }
 
-		/// <summary>
-		/// Generates a string containing the properties and values of the object
-		/// </summary>
-		/// <param name="val"></param>
-		/// <returns></returns>
-		public static string ToDebugString(this object val,StringBuilder sb=null)
-		{
-			if (val == null) return string.Empty;
-			if (sb == null)
-			{
-			    sb = new StringBuilder();
-			}
-			var dict=val.GetType().GetProperties(BindingFlags.Instance|BindingFlags.Public)
-                .Where(p=>p.GetIndexParameters().Length==0)
-                .ToDictionary(p=>string.Format("({1}) {0}",p.Name,p.PropertyType.Name),p=>p.GetValue(val,null));
-		    sb.AppendFormat("({0})\n", val.GetType());
-            foreach (var kv in dict)
-            {
-                sb.AppendFormat("{0} =", kv.Key);
-                if (kv.Value != null)
-                {
-                    var tp = kv.Value.GetType();
-                    if (tp.Implements<IEnumerable>())
-                    {
-                        var en = kv.Value as IEnumerable;
-                        var i = 0;
-                        sb.AppendFormat("\n\t");
-                        foreach (var item in en)
-                        {
-                            sb.AppendFormat("[{0}]={1}\n",i,item.ToDebugString());
-                            i++;
-                        }
-                     
-                    }
-                    else
-                    {
-                        if (!tp.IsPrimitive)
-                        {
-                            sb.Append("\n\t");
-                            sb.Append(kv.Value.ToDebugString());
-                        }
-                        else
-                        {
-                            sb.Append(kv.Value);
-                        }
-                    }
-                }
-                else
-                {
-                    sb.Append("null");
-                }
-                sb.AppendLine();
-            }
-            
-			return sb.ToString();
-		}
-
+	
 		/// <summary>
         ///  Shallow copies source object into destination, only public properties are copied. Use CopyOptionsAttribute to mark the properties you want ignored.
         /// Use Automapper for heavy duty mapping
@@ -211,54 +156,54 @@ namespace System
 		       }
 		       return null;
 		   }
-           
-                var otp = data.GetType();
-                if (otp.Equals(tp)) return data;
-                if (tp.IsEnum)
-                {
-                    if (data is string)
-                    {
-                        return Enum.Parse(tp, data.ToString());
-                    }
-                    var o = Enum.ToObject(tp, data);
-                    return o;
-                }
 
-                if (tp.IsValueType)
-                {
-                    if (tp == typeof (TimeSpan))
-                    {
-                        return TimeSpan.Parse(data.ToString());
-                    }
+           var otp = data.GetType();
+           if (otp.Equals(tp)) return data;
+           if (tp.IsEnum)
+           {
+               if (data is string)
+               {
+                   return Enum.Parse(tp, data.ToString());
+               }
+               var o = Enum.ToObject(tp, data);
+               return o;
+           }
 
-                    if (tp == typeof (DateTime))
-                    {
-                        if (data is DateTimeOffset)
-                        {
-                            return data.Cast<DateTimeOffset>().DateTime;
-                        }
-                        return DateTime.Parse(data.ToString());                        
-                    }
-                   
-                    if (tp == typeof (DateTimeOffset))
-                    {
-                        if (data is DateTime)
-                        {
-                            var dt = (DateTime) data;
-                            return new DateTimeOffset(dt);
-                        }
-                        return DateTimeOffset.Parse(data.ToString());
-                    }
+           if (tp.IsValueType)
+           {
+               if (tp == typeof(TimeSpan))
+               {
+                   return TimeSpan.Parse(data.ToString());
+               }
 
-                    if (tp.IsNullable())
-                    {
-                        var under=Nullable.GetUnderlyingType(tp);
-                        return data.ConvertTo(under);
-                    }
-                }
-                else if (tp == typeof (CultureInfo)) return new CultureInfo(data.ToString());
-          
-		    return System.Convert.ChangeType(data, tp);
+               if (tp == typeof(DateTime))
+               {
+                   if (data is DateTimeOffset)
+                   {
+                       return data.Cast<DateTimeOffset>().DateTime;
+                   }
+                   return DateTime.Parse(data.ToString());
+               }
+
+               if (tp == typeof(DateTimeOffset))
+               {
+                   if (data is DateTime)
+                   {
+                       var dt = (DateTime)data;
+                       return new DateTimeOffset(dt);
+                   }
+                   return DateTimeOffset.Parse(data.ToString());
+               }
+
+               if (tp.IsNullable())
+               {
+                   var under = Nullable.GetUnderlyingType(tp);
+                   return data.ConvertTo(under);
+               }
+           }
+           else if (tp == typeof(CultureInfo)) return new CultureInfo(data.ToString());
+
+           return System.Convert.ChangeType(data, tp);
 		}
 
 		/// <summary>
@@ -323,4 +268,71 @@ namespace System
             return (T)o;
         }
 	}
-}								 
+
+    
+}
+
+namespace CavemanTools.Testing
+{
+public static class ObjectExtensions
+{
+    /// <summary>
+    /// Generates a string containing the properties and values of the object
+    /// </summary>
+    /// <param name="val"></param>
+    /// <returns></returns>
+    public static string ToDebugString(this object val, StringBuilder sb = null)
+    {
+        if (val == null) return string.Empty;
+        if (sb == null)
+        {
+            sb = new StringBuilder();
+        }
+        var dict = val.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .Where(p => p.GetIndexParameters().Length == 0)
+            .ToDictionary(p => string.Format("({1}) {0}", p.Name, p.PropertyType.Name), p => p.GetValue(val, null));
+        sb.AppendFormat("({0})\n", val.GetType());
+        foreach (var kv in dict)
+        {
+            sb.AppendFormat("{0} =", kv.Key);
+            if (kv.Value != null)
+            {
+                var tp = kv.Value.GetType();
+                if (tp.Implements<IEnumerable>())
+                {
+                    var en = kv.Value as IEnumerable;
+                    var i = 0;
+                    sb.AppendFormat("\n\t");
+                    foreach (var item in en)
+                    {
+                        sb.AppendFormat("[{0}]={1}\n", i, item.ToDebugString());
+                        i++;
+                    }
+
+                }
+                else
+                {
+                    if (!tp.IsPrimitive)
+                    {
+                        sb.Append("\n\t");
+                        sb.Append(kv.Value.ToDebugString());
+                    }
+                    else
+                    {
+                        sb.Append(kv.Value);
+                    }
+                }
+            }
+            else
+            {
+                sb.Append("null");
+            }
+            sb.AppendLine();
+        }
+
+        return sb.ToString();
+    }
+
+}
+
+}							 

@@ -62,6 +62,7 @@
     <Compile Include="Infrastructure\ActivatorContainer.cs" />
     <Compile Include="Infrastructure\LocalMemoryCache.cs" />
     <Compile Include="Infrastructure\ServiceLocator.cs" />
+    <Compile Include="Model\LinkedItems.cs" />
     <Compile Include="Web\AspNetCache.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
     <Compile Include="Infrastructure\ICacheData.cs" />
@@ -173,10 +174,10 @@
     <Compile Include="Web\Security\AccessRules\ValidateCredentialsFactory.cs" />
     <Compile Include="Extensions\WebExtensions.cs" />
     <Compile Include="Xml\XmlToObject.cs" />
-    <Compile Include="Model\IResultSet.cs" />
+    <Compile Include="Model\IPagedResult.cs" />
     <Compile Include="Model\Validation\IValidationDictionary.cs" />
     <Compile Include="Model\Validation\DefaultValidationWrapper.cs" />
-    <Compile Include="Model\ResultSet.cs" />
+    <Compile Include="Model\PagedResult.cs" />
     <Compile Include="Extensions\CopyOptionsAttribute.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\StringUtils.cs" />
