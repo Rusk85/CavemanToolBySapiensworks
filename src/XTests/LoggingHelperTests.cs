@@ -21,7 +21,8 @@ namespace XTests
 
         public LoggingHelperTests()
         {
-
+            //LogHelper.OutputTo(s=>Debug.WriteLine(s));
+            
         }
 
         [Fact]

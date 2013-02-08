@@ -69,6 +69,7 @@
     <Compile Include="Cookies\EncryptedCookieTests.cs" />
     <Compile Include="Cookies\ExtensionTests.cs" />
     <Compile Include="Extensions\ExpressionExtensionsTests.cs" />
+    <Compile Include="Extensions\GuardClauseTests.cs" />
     <Compile Include="Extensions\ObjectExtensionsTests.cs" />
     <Compile Include="Extensions\TypeExtensiont.cs" />
     <Compile Include="General.cs" />
