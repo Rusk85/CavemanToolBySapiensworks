@@ -121,7 +121,7 @@ namespace System.Collections.Generic
         /// <param name="old"></param>
         /// <param name="fresh"></param>
         /// <returns></returns>
-        public static void Update<T>(this ICollection<T> old,IEnumerable<T> fresh) where T:IEquatable<T>
+        public static void Update<T>(this IList<T> old,IEnumerable<T> fresh) where T:IEquatable<T>
         {
             if (old == null) throw new ArgumentNullException("old");
             if (fresh == null) throw new ArgumentNullException("fresh");
