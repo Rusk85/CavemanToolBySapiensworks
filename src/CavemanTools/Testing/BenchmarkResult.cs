@@ -49,7 +49,7 @@ namespace CavemanTools.Testing
             }
             i++;
             Total = Total.Add(ts);
-            Average = Total.Multiply((float) 1/i);
+            Average = Total.Multiply(1/(float)i);
         }
 
         public override string ToString()
