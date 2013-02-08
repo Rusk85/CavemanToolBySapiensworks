@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>CavemanTools.Mvc4</id> 
+	<title>CavemanTools.Mvc4</title>
+    <version></version> 
+    <authors>Mihai Mogosanu</authors>
+    <description>Asp.Net Mvc 4 toolkit for faster web application development with less code. Features SmartController, Theming support for both Razor and WebForm engines, Rights Based Authorization and easy to use helpers. </description> 
+    <language>en-US</language>
+	<tags>toolkit utility mvc asp.net viewengine themes skins dry controller smart authorization</tags>
+    <licenseUrl>http://cavemantoolsmvc.codeplex.com/license</licenseUrl>
+    <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/CToolsMvc</projectUrl>
+  <dependencies>
+   <dependency id="Microsoft.AspNet.Mvc" version="4.0.20710.0" />
+  </dependencies>
+  </metadata> 
+  
+</package>
