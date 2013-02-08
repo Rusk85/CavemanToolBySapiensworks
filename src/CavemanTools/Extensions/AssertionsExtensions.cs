@@ -58,7 +58,7 @@ namespace System
             if (ex || (value.GetType()!=tp)) throw new ArgumentException("Argument must be of type '{0}'".ToFormat(tp));
         }
 
-        public static void MustComplyTo<T>(this T arg,Func<T, bool> condition,string msg)
+        public static void MustComplyWith<T>(this T arg,Func<T, bool> condition,string msg)
         {
             msg.MustNotBeEmpty();
             if (!condition(arg))
