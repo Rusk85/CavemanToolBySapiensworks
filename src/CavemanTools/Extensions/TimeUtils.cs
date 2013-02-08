@@ -25,6 +25,11 @@ namespace System
 			}
 		}
 
+        public static TimeSpan ToDays(this int value)
+        {
+            return TimeSpan.FromDays(value);
+        }
+
         public static TimeSpan ToMiliseconds(this int value)
         {
             return TimeSpan.FromMilliseconds(value);
