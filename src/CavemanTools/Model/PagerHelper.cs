@@ -1,9 +1,13 @@
+using System;
+
 namespace CavemanTools.Model
 {
-	/// <summary>
+	
+    /// <summary>
 	/// Used for paginating stuff
 	/// </summary>
-	public class PagerHelper
+    [Obsolete("Use Pagination")]
+    public class PagerHelper
 	{
 		/// <summary>
 		/// How many items should be skipped to reach the result page
@@ -11,6 +15,7 @@ namespace CavemanTools.Model
 		/// <param name="page">Page number</param>
 		/// <param name="itemsOnPage">Number of items on a page</param>
 		/// <returns></returns>
+        [Obsolete("Use Pagination")]
 		public static int GetSkips(int page,int itemsOnPage)
 		{
 			if (page < 1) page = 1;

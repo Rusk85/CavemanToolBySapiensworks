@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CavemanTools.Infrastructure
 {
@@ -29,6 +30,11 @@ namespace CavemanTools.Infrastructure
         public object ResolveOptional(Type type)
         {
             return Resolve(type);
+        }
+
+        public IEnumerable<T> GetServices<T>()
+        {
+            yield return Resolve<T>();
         }
 
         /// <summary>
