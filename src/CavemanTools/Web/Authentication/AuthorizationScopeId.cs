@@ -1,6 +1,6 @@
 using System;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web.Authentication
 {
     public abstract class AuthorizationScopeId:IEquatable<AuthorizationScopeId>
     {

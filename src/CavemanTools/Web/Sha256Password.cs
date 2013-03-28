@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web
 {
     /// <summary>
     /// Password hashing strategy using sha256

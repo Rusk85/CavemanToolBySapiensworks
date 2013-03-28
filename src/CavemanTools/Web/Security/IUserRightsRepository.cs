@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CavemanTools.Web.Authentication;
 
 namespace CavemanTools.Web.Security
 {

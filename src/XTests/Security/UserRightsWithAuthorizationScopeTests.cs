@@ -1,4 +1,6 @@
-﻿using CavemanTools.Web.Security;
+﻿using CavemanTools.Web;
+using CavemanTools.Web.Authentication;
+using CavemanTools.Web.Security;
 using Xunit;
 using System;
 using System.Diagnostics;

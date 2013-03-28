@@ -1,6 +1,6 @@
 using System;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web
 {
     /// <summary>
     /// Use it to encapsulate password hash generation. 

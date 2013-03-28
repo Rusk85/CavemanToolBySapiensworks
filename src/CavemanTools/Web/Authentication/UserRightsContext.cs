@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CavemanTools.Web.Security;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web.Authentication
 {
     /// <summary>
     /// Change the AdminRight field to the value you want

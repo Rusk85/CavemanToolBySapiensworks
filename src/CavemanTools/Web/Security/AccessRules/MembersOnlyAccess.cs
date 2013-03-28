@@ -1,4 +1,5 @@
 using System;
+using CavemanTools.Web.Authentication;
 
 namespace CavemanTools.Web.Security.AccessRules
 {

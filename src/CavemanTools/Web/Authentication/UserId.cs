@@ -1,6 +1,6 @@
 using System;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web.Authentication
 {
     /// <summary>
     /// Implements the user id value as an int

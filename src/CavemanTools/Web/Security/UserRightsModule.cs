@@ -2,6 +2,7 @@
 using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
+using CavemanTools.Web.Authentication;
 
 namespace CavemanTools.Web.Security
 {

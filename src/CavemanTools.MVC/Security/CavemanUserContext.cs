@@ -5,7 +5,8 @@ using CavemanTools.Web.Security;
 namespace CavemanTools.Mvc.Security
 {
     /// <summary>
-    /// Asp.net mvc 3 global filter which creates UserContext
+    /// Asp.net mvc 3 global filter which creates UserContext.
+    /// Forms auth only
     /// </summary>
     public sealed class CavemanUserContext:IAuthorizationFilter
     {
