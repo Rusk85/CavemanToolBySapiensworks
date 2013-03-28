@@ -1,6 +1,6 @@
 using System;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web.Authentication
 {
     /// <summary>
     /// Implments the user id value as a GUID

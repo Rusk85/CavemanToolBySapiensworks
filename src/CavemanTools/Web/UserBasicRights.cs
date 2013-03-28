@@ -1,4 +1,4 @@
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web
 {
     public class UserBasicRights
     {

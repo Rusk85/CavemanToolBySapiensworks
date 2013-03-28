@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using CavemanTools.Web.Security;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web.Authentication
 {
     public interface IUserContextGroup
     {

@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Security;
 using System.Linq;
+using CavemanTools.Web.Authentication;
 
 
 namespace CavemanTools.Web.Security

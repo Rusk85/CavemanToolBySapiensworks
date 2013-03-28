@@ -1,4 +1,4 @@
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web.Authentication
 {
     /// <summary>
     /// Uses Int32 as id type

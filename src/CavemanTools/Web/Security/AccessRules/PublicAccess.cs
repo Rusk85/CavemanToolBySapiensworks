@@ -1,4 +1,6 @@
 ﻿
+using CavemanTools.Web.Authentication;
+
 namespace CavemanTools.Web.Security.AccessRules
 {
     public class PublicAccess:IValidateCredentials

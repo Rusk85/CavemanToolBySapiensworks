@@ -67,5 +67,16 @@ namespace System.Web.Mvc
            }
            return rv;
        }
+
+        public static ViewResult CreateView(this Controller controller,string viewName=null)
+        {
+            var ViewName = viewName??controller.GetActionName();
+            var result = new ViewResult();
+            result.TempData = controller.TempData;
+            result.ViewData = controller.ViewData;
+            result.ViewName = ViewName;            
+            return result;
+        }
+
     }
 }

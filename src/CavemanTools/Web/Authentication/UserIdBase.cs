@@ -1,6 +1,6 @@
 using System;
 
-namespace CavemanTools.Web.Security
+namespace CavemanTools.Web.Authentication
 {
     /// <summary>
     /// Base class to implement user id value
