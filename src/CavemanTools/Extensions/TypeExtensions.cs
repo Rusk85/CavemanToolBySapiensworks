@@ -43,6 +43,29 @@ namespace System
             return interfaceType.IsAssignableFrom(type);
         }
 
+        /// <summary>
+        /// True if the type implements of extends T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool DerivesFrom<T>(this Type type)
+        {
+            return type.DerivesFrom(typeof (T));
+        }
+
+        /// <summary>
+        /// True if the type implements of extends parent
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public static bool DerivesFrom(this Type type, Type parent)
+        {
+            type.MustNotBeNull();
+            parent.MustNotBeNull();
+            return parent.IsAssignableFrom(type);
+        }
 
         public static bool CheckIfAnonymousType(this Type type)
         {
