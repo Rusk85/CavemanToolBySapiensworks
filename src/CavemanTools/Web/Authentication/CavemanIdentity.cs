@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Principal;
 
 namespace CavemanTools.Web.Authentication
@@ -10,14 +11,25 @@ namespace CavemanTools.Web.Authentication
         /// </summary>
         public const string Type = "Caveman";
 
-
-        public CavemanIdentity(IUserIdValue userId, IUserContextGroup grp) : base(userId, grp)
+        /// <summary>
+        /// Anonymous
+        /// </summary>
+        public CavemanIdentity():base(null,new IUserContextGroup[0])
         {
+            SessionId = Guid.Empty;
         }
 
-        public CavemanIdentity(IUserIdValue userId, IEnumerable<IUserContextGroup> groups) : base(userId, groups)
+        public CavemanIdentity(Guid id,IUserIdValue userId, IUserContextGroup grp) : base(userId, grp)
         {
+            SessionId = id;
         }
+
+        public CavemanIdentity(Guid id,IUserIdValue userId, IEnumerable<IUserContextGroup> groups) : base(userId, groups)
+        {
+            SessionId = id;
+        }
+
+        public Guid SessionId { get; private set; }
 
         /// <summary>
         /// Gets the type of authentication used.

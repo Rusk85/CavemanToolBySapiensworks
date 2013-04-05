@@ -46,12 +46,12 @@ namespace CavemanTools.Web.Authentication
                 _cache.Set(key, data, CacheDuration);
             }
 
-            return CreateIdentity(data);
+            return CreateIdentity(id,data);
         }
 
-        static CavemanIdentity CreateIdentity(AuthenticationData data)
+        static CavemanIdentity CreateIdentity(Guid id, AuthenticationData data)
         {
-            var user = new CavemanIdentity(data.UserId, data.Groups);
+            var user = new CavemanIdentity(id,data.UserId, data.Groups);
             user.Name = data.Name;
             return user;
         }

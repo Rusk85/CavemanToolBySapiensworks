@@ -16,7 +16,7 @@ namespace CavemanTools.Web.Authentication
         public static TimeSpan SessionValidity = TimeSpan.FromDays(1);
         public static TimeSpan RememberMeValidity = TimeSpan.FromDays(30);
 
-        private string LoginRedirect = "";
+        public static string LoginRedirect = "";
         public const string WebConfigLoginRedirectKey = "Caveman:LoginRedirect";
         public CavemanAuthenticationModule(IAuthenticationService service)
         {
@@ -62,7 +62,7 @@ namespace CavemanTools.Web.Authentication
                     DestroyAuthCookie(ctx.Response.Cookies);
                 }
             }
-            ctx.User=new GenericPrincipal(new CavemanIdentity(null,new IUserContextGroup[0]),new string[0]);
+            ctx.User = new GenericPrincipal(new CavemanIdentity(), new string[0]);
         }
 
        

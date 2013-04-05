@@ -6,7 +6,7 @@ namespace CavemanTools.Mvc.Security
 {
     /// <summary>
     /// Asp.net mvc 3 global filter which creates UserContext.
-    /// Forms auth only
+    /// Forms auth only. Doesn't need module
     /// </summary>
     public sealed class CavemanUserContext:IAuthorizationFilter
     {

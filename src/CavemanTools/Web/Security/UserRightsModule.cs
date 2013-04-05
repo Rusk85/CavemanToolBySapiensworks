@@ -7,6 +7,7 @@ using CavemanTools.Web.Authentication;
 namespace CavemanTools.Web.Security
 {
     /// <summary>
+    /// Asp.Net WebForms + Forms Auth only
     /// Requires an utility (like HttpModuleMagic.Mvc3 nuget package) for module dependecy injection.
     /// Automatically creates UserContext
     /// </summary>
