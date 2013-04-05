@@ -11,7 +11,7 @@ namespace CavemanTools.Web.Authentication
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public static IUserRightsContext GetCavemanIdentity(this IPrincipal user)
+        public static CavemanIdentity GetCavemanIdentity(this IPrincipal user)
         {
             if (user.Identity.AuthenticationType == CavemanIdentity.Type)
             {
@@ -32,5 +32,9 @@ namespace CavemanTools.Web.Authentication
             usr.ScopeId = scopeId;
         }
      
+        public static TimeSpan DefaultSessionValability(this IPrincipal user)
+        {
+            return CavemanAuthenticationModule.SessionValidity;
+        }
     }
 }
