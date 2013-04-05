@@ -88,6 +88,25 @@ namespace System
         }
 
         /// <summary>
+        /// Argument must be an implementation or subclass of T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        public static void MustDeriveFrom<T>(this object value)
+        {
+            value.MustNotBeNull("value");
+            var tp = typeof(T);
+            var otype = value.GetType();
+
+            if (value is Type)
+            {
+                otype = value as Type;
+            }
+
+            if (!otype.DerivesFrom(tp)) throw new ArgumentException("Argument must derive from '{0}'".ToFormat(tp)); 
+        }
+
+        /// <summary>
         /// List must not be empty and must have non-null values
         /// </summary>
         /// <typeparam name="T"></typeparam>
