@@ -106,6 +106,16 @@
     <Compile Include="Extensions\HtmlHelpers.cs" />
     <Compile Include="Extensions\ThemeHelper.cs" />
     <Compile Include="OverrideThemeAttribute.cs" />
+    <Compile Include="Routing\ActionCall.cs" />
+    <Compile Include="Routing\Extensions.cs" />
+    <Compile Include="Routing\HandlerRouteConvention.cs" />
+    <Compile Include="Routing\HomepageAttribute.cs" />
+    <Compile Include="Routing\IGlobalRoutePolicy.cs" />
+    <Compile Include="Routing\IMatchAction.cs" />
+    <Compile Include="Routing\IRouteConvention.cs" />
+    <Compile Include="Routing\IRouteUrlFormatPolicy.cs" />
+    <Compile Include="Routing\RoutingPolicy.cs" />
+    <Compile Include="Routing\RoutingPolicySettings.cs" />
     <Compile Include="Security\CavemanUserContext.cs" />
     <Compile Include="Controllers\UpdateModelResult.cs" />
     <Compile Include="IpTracking.cs" />
@@ -159,7 +169,9 @@
       <Name>CavemanTools</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
