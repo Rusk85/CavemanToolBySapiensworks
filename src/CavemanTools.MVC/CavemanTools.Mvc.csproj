@@ -95,6 +95,11 @@
     <Compile Include="Extensions\SecurityUtils.cs" />
     <Compile Include="Extensions\ThemeInfo.cs" />
     <Compile Include="AjaxRequestAttribute.cs" />
+    <Compile Include="Filters\Extensions.cs" />
+    <Compile Include="Filters\FilterActionInfo.cs" />
+    <Compile Include="Filters\FiltersPolicy.cs" />
+    <Compile Include="Filters\FiltersWithPoliciesProvider.cs" />
+    <Compile Include="Filters\IFilterPolicy.cs" />
     <Compile Include="MvcRequestMetrics.cs" />
     <Compile Include="Controllers\IPopulateModel.cs" />
     <Compile Include="Controllers\ModelIsArgumentAttribute.cs" />
@@ -169,9 +174,7 @@
       <Name>CavemanTools</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Filters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
