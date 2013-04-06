@@ -48,24 +48,27 @@ namespace CavemanTools.Mvc.Routing
         public IList<IGlobalRoutePolicy> GlobalPolicies { get; private set; }
 
         
-        public void Apply(RouteCollection routes)
+        public void Apply(RouteCollection routeCollection)
         {
             foreach (var action in _actions)
             {
                 foreach (var convention in Conventions.Where(c => c.Match(action)))
                 {
-                    var route = convention.Build(action);
+                    var routes = convention.Build(action);
                     foreach (var formatter in UrlFormatPolicies.Where(u => u.Match(action)))
                     {
-                        route.Url = formatter.Format(route.Url, action);
+                        foreach (var route in routes)
+                        {
+                            route.Url = formatter.Format(route.Url, action);
+                        }
                     }
 
-                    GlobalPolicies.ForEach(p=>p.ApplyTo(route));
+                    GlobalPolicies.ForEach(p=>routes.ForEach(r=>p.ApplyTo(r)));
 
-                    routes.Add(route);
+                    routes.ForEach(r=>routeCollection.Add(r));                    
                 }
             }
-            HandleHomepage(routes);
+            HandleHomepage(routeCollection);
         }
 
         void HandleHomepage(RouteCollection routes)
