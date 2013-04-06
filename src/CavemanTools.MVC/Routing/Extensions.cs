@@ -13,6 +13,32 @@ namespace CavemanTools.Mvc.Routing
          }
 
         /// <summary>
+        /// Scans assembly and registers policies. Uses dependency resolver
+        /// </summary>
+        /// <param name="policy"></param>
+        /// <param name="asm"></param>
+        public static void RegisterPolicies(this RoutingPolicy policy, Assembly asm)
+        {
+            var res = DependencyResolver.Current;
+            asm.GetTypesImplementing<IRouteConvention>(true).ForEach(t =>
+                {
+                    policy.Conventions.Add(res.GetService(t) as IRouteConvention);
+                });
+            
+            asm.GetTypesImplementing<IRouteUrlFormatPolicy>(true).ForEach(t =>
+                {
+                    policy.UrlFormatPolicies.Add(res.GetService(t) as IRouteUrlFormatPolicy);
+                });
+            
+            asm.GetTypesImplementing<IGlobalRoutePolicy>(true).ForEach(t =>
+                {
+                    policy.GlobalPolicies.Add(res.GetService(t) as IGlobalRoutePolicy);
+                });
+            
+            
+        }
+
+        /// <summary>
         /// Register types deriving from Controller class
         /// </summary>
         /// <param name="policy"></param>
@@ -57,6 +83,11 @@ namespace CavemanTools.Mvc.Routing
                     policy.AddAction(new ActionCall(m, policy.Settings));
                 }); 
             }           
+        }
+
+        public static void RegisterHandlerConvention(this RoutingPolicy policy)
+        {
+            policy.Conventions.Add(new HandlerRouteConvention());
         }
     }
 }
