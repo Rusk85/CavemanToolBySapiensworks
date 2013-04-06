@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Web.Routing;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace CavemanTools.Mvc.Routing
             return true;
         }
 
-        public Route Build(ActionCall action)
+        public IEnumerable<Route> Build(ActionCall action)
         {
             
             var sb = new StringBuilder();
@@ -56,7 +57,7 @@ namespace CavemanTools.Mvc.Routing
                                  ? "POST"
                                  : "GET";
             constraints["httpMethod"] =new HttpMethodConstraint(httpMethod) ;
-            return new Route(sb.ToString(),defaults,constraints,action.Settings.CreateHandler());
+            return new[]{ new Route(sb.ToString(),defaults,constraints,action.Settings.CreateHandler())};
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Web.Routing;
+﻿using System.Collections.Generic;
+using System.Web.Routing;
 
 namespace CavemanTools.Mvc.Routing
 {
@@ -8,7 +9,7 @@ namespace CavemanTools.Mvc.Routing
     public interface IRouteConvention
     {
         bool Match(ActionCall actionCall);
-        Route Build(ActionCall actionInfo);
+        IEnumerable<Route> Build(ActionCall actionInfo);
     }
     
 }
