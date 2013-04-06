@@ -6,13 +6,13 @@ namespace System.Reflection
 	public static class AssemblyExtensions
 	{
 		/// <summary>
-		/// Returns public types implementing T
+		/// Returns public types derived from T
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="asm"></param>
 		/// <param name="instantiable">True to return only types that can be instantiated i.e no interfaces and no abstract classes</param>
 		/// <returns></returns>
-		public static IEnumerable<Type> GetTypesImplementing<T>(this Assembly asm,bool instantiable=false)
+		public static IEnumerable<Type> GetTypesDerivedFrom<T>(this Assembly asm,bool instantiable=false)
 		{
 			if (asm == null) throw new ArgumentNullException("asm");
 			var res= asm.GetExportedTypes().Where(tp => (typeof (T)).IsAssignableFrom(tp));
@@ -23,10 +23,18 @@ namespace System.Reflection
 		    return res;
 		}
 
+        [Obsolete("Use GetTypesDerivedFrom")]
+        public static IEnumerable<Type> GetTypesImplementing<T>(this Assembly asm, bool instantiable = false)
+        {
+            return asm.GetTypesDerivedFrom<T>(instantiable);
+        }
+
 		public static IEnumerable<Type> GetTypesWithAttribute<T>(this Assembly asm) where T:Attribute
 		{
 			if (asm == null) throw new ArgumentNullException("asm");
 			return asm.GetExportedTypes().Where(a => a.HasCustomAttribute<T>());
 		}
+
+
 	}
 }
