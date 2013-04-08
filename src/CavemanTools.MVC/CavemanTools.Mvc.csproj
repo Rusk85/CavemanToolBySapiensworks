@@ -115,7 +115,7 @@
     <Compile Include="Routing\Extensions.cs" />
     <Compile Include="Routing\HandlerRouteConvention.cs" />
     <Compile Include="Routing\HomepageAttribute.cs" />
-    <Compile Include="Routing\IGlobalRoutePolicy.cs" />
+    <Compile Include="Routing\IRouteGlobalPolicy.cs" />
     <Compile Include="Routing\IMatchAction.cs" />
     <Compile Include="Routing\IRouteConvention.cs" />
     <Compile Include="Routing\IRouteUrlFormatPolicy.cs" />

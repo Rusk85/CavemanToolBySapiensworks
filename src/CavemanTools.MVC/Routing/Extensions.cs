@@ -30,9 +30,9 @@ namespace CavemanTools.Mvc.Routing
                     policy.UrlFormatPolicies.Add(res.GetService(t) as IRouteUrlFormatPolicy);
                 });
             
-            asm.GetTypesImplementing<IGlobalRoutePolicy>(true).ForEach(t =>
+            asm.GetTypesImplementing<IRouteGlobalPolicy>(true).ForEach(t =>
                 {
-                    policy.GlobalPolicies.Add(res.GetService(t) as IGlobalRoutePolicy);
+                    policy.GlobalPolicies.Add(res.GetService(t) as IRouteGlobalPolicy);
                 });
             
             
