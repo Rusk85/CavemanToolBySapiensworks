@@ -7,7 +7,7 @@ namespace CavemanTools.Mvc.Filters
 {
     public class FiltersPolicy
     {
-        private FiltersPolicy()
+        public FiltersPolicy()
         {
             Policies = new List<IFilterPolicy>();
             Actions=new List<MethodInfo>();
