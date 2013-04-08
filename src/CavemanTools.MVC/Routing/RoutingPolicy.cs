@@ -14,7 +14,7 @@ namespace CavemanTools.Mvc.Routing
             Conventions=new List<IRouteConvention>();
             Settings=new RoutingPolicySettings();
             Settings.NamespaceRoot = Assembly.GetCallingAssembly().GetName().Name + ".Controllers";
-            GlobalPolicies= new List<IGlobalRoutePolicy>();
+            GlobalPolicies= new List<IRouteGlobalPolicy>();
         }
 
         public RoutingPolicySettings Settings { get; private set; }
@@ -45,7 +45,7 @@ namespace CavemanTools.Mvc.Routing
         /// <summary>
         /// Gets a list of policies that apply to every route
         /// </summary>
-        public IList<IGlobalRoutePolicy> GlobalPolicies { get; private set; }
+        public IList<IRouteGlobalPolicy> GlobalPolicies { get; private set; }
 
         
         public void Apply(RouteCollection routeCollection)
