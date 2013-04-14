@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Management.Instrumentation;
 using System.Reflection;
 using System.Web.Mvc;
 
@@ -41,6 +42,10 @@ namespace CavemanTools.Mvc.Filters
                 var filters = new List<Filter>();
                 foreach (var policy in Policies.Where(p => p.Match(action)))
                 {
+                    if (policy.Instance == null)
+                    {
+                        throw new InstanceNotFoundException("Filter instance is missing. Every filter policy needs an instance of the filter");
+                    }
                     var f = new Filter(policy.Instance, FilterScope.Global,policy.Order);
                     filters.Add(f);
                 }
