@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AF9FF5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc4", "CavemanTools.Mvc4\CavemanTools.Mvc4.csproj", "{FCAD6B51-6573-4E28-949D-FBF0631A0613}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication1", "MvcApplication1\MvcApplication1.csproj", "{8A5AE2ED-7392-4082-AA73-05A3461EA67C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,16 +64,6 @@ Global
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.Build.0 = Release|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.ActiveCfg = Release|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.Build.0 = Release|x86
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{8A5AE2ED-7392-4082-AA73-05A3461EA67C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
