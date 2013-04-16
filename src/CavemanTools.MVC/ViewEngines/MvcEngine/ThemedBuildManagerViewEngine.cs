@@ -11,10 +11,11 @@
  * ***************************************************************************/
 
 /* Modified for CavemanTools*/
+
 using System;
 using System.Web.Mvc;
 
-namespace CavemanTools.Mvc.ViewEngines
+namespace CavemanTools.Mvc.ViewEngines.MvcEngine
 {
 	public abstract class ThemedBuildManagerViewEngine : ThemedVirtualPathProviderViewEngine
 	{

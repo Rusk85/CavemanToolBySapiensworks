@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Web.Compilation;
 
-namespace CavemanTools.Mvc.ViewEngines
+namespace CavemanTools.Mvc.ViewEngines.MvcEngine
 {
 	public class BuildManagerWrapper : IBuildManager
     {
