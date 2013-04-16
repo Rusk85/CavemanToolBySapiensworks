@@ -133,14 +133,22 @@
     <Compile Include="ThemeAttribute.cs" />
     <Compile Include="TransferResult.cs" />
     <Compile Include="UnitTesting\FakeController.cs" />
-    <Compile Include="ViewEngines\BuildManagerWrapper.cs" />
-    <Compile Include="ViewEngines\IBuildManager.cs" />
-    <Compile Include="ViewEngines\IResolver.cs" />
-    <Compile Include="ViewEngines\SingleServiceResolver.cs" />
+    <Compile Include="ViewEngines\FlexibleViewEngine.cs" />
+    <Compile Include="ViewEngines\IFindViewConvention.cs" />
+    <Compile Include="ViewEngines\IViewFactory.cs" />
+    <Compile Include="ViewEngines\MissingViewConventionsException.cs" />
+    <Compile Include="ViewEngines\MvcEngine\BuildManagerWrapper.cs" />
+    <Compile Include="ViewEngines\FlexibleViewEngineSettings.cs" />
+    <Compile Include="ViewEngines\Conventions\RazorConvention.cs" />
+    <Compile Include="ViewEngines\MvcEngine\IBuildManager.cs" />
+    <Compile Include="ViewEngines\MvcEngine\IResolver.cs" />
+    <Compile Include="ViewEngines\MvcEngine\SingleServiceResolver.cs" />
+    <Compile Include="ViewEngines\RazorViewFactory.cs" />
     <Compile Include="ViewEngines\ThemedWebformViewEngine.cs" />
-    <Compile Include="ViewEngines\ThemedBuildManagerViewEngine.cs" />
+    <Compile Include="ViewEngines\MvcEngine\ThemedBuildManagerViewEngine.cs" />
     <Compile Include="ViewEngines\ThemedRazorViewEngine.cs" />
-    <Compile Include="ViewEngines\ThemedVirtualPathProviderViewEngine.cs" />
+    <Compile Include="ViewEngines\MvcEngine\ThemedVirtualPathProviderViewEngine.cs" />
+    <Compile Include="ViewEngines\ViewCreationData.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

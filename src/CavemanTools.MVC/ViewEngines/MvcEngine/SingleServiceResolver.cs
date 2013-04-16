@@ -14,7 +14,7 @@ using System;
 using System.Globalization;
 using System.Web.Mvc;
 
-namespace CavemanTools.Mvc.ViewEngines
+namespace CavemanTools.Mvc.ViewEngines.MvcEngine
 {
 	internal class SingleServiceResolver<TService> : IResolver<TService> where TService : class
 	{

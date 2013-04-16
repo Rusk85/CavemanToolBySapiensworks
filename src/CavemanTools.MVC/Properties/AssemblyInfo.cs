@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CavemanTools.MVC")]
-[assembly: AssemblyDescription("Utils for asp.net mvc 3+")]
+[assembly: AssemblyDescription("Power Tools for Asp.Net Mvc")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("CavemanTools.Mvc")]

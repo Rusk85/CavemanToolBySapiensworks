@@ -22,7 +22,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace CavemanTools.Mvc.ViewEngines
+namespace CavemanTools.Mvc.ViewEngines.MvcEngine
 {
 	public abstract class ThemedVirtualPathProviderViewEngine : IViewEngine
 	{

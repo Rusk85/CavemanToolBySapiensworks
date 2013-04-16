@@ -9,7 +9,7 @@
  * You must not remove this notice, or any other, from this software.
  *
  * ***************************************************************************/
-namespace CavemanTools.Mvc.ViewEngines
+namespace CavemanTools.Mvc.ViewEngines.MvcEngine
 {
 	
 	internal interface IResolver<T> {

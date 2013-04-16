@@ -9,11 +9,12 @@
  * You must not remove this notice, or any other, from this software.
  *
  * ***************************************************************************/
+
 using System;
 using System.Collections;
 using System.IO;
 
-namespace CavemanTools.Mvc.ViewEngines
+namespace CavemanTools.Mvc.ViewEngines.MvcEngine
 {
 	internal interface IBuildManager
 	{
