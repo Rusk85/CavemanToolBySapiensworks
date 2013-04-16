@@ -55,7 +55,8 @@ namespace System
         }
 
         /// <summary>
-        /// True if the type implements of extends parent
+        /// True if the type implements of extends parent. 
+        /// Doesn't work with generics
         /// </summary>
         /// <param name="type"></param>
         /// <param name="parent"></param>
