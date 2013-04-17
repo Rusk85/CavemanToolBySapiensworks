@@ -4,7 +4,7 @@ using CavemanTools.Web;
 namespace CavemanTools.Mvc
 {
     /// <summary>
-    /// RequestStatsModule is required to be active, in order to show the metrics
+    /// RequestMetricsModule is required to be active, in order to show the metrics
     /// </summary>    
     public class RequestMetricsFilter:IActionFilter,IResultFilter
     {
