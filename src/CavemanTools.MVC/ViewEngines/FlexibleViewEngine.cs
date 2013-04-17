@@ -44,7 +44,7 @@ namespace CavemanTools.Mvc.ViewEngines
             return GetView(controllerContext, viewName, masterName, useCache, false);
         }
 
-        bool IsMvcTemplate(string viewName)
+        public static bool IsMvcTemplate(string viewName)
         {
             return viewName.StartsWith("DisplayTemplates") || viewName.StartsWith("EditorTemplates");
         }

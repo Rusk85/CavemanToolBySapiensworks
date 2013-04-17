@@ -24,11 +24,15 @@ namespace System.Web.Mvc
         public static ThemeInfo GetThemeInfo(this HttpContextBase ctx)
         {
             var t= ctx.Get<ThemeInfo>(ThemeInfoKey);
-            //if (t==null)
-            //{
-            //    t= new ThemeInfo(ctx);
-            //    ctx.Items[ThemeInfoKey] = t;
-            //}
+            if (t == null)
+            {
+                var theme = ctx.GetCurrentTheme();
+                if (!theme.IsNullOrEmpty())
+                {
+                    t = new ThemeInfo(ctx,theme);
+                    ctx.Items[ThemeInfoKey] = t;
+                }
+            }
             return t;
         }
 

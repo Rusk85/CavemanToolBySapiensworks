@@ -13,10 +13,10 @@ namespace CavemanTools.Mvc.Extensions
         public static string CssDirectoryName = "Style";
         public static string ScriptsDirectoryName = "Scripts";
 
-        internal ThemeInfo(HttpContextBase ctx)
+        internal ThemeInfo(HttpContextBase ctx,string theme)
         {
             if (ctx == null) throw new ArgumentNullException("ctx");
-            Name = ctx.GetCurrentTheme();
+            Name = theme;
             BaseUrl=UrlHelper.GenerateContentUrl("~/"+ThemesDirectoryName+"/"+Name,ctx);
             StyleUrl = BaseUrl + "/"+CssDirectoryName;
             ScriptsUrl = BaseUrl + "/"+ScriptsDirectoryName;

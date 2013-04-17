@@ -100,7 +100,7 @@
     <Compile Include="Filters\FiltersPolicy.cs" />
     <Compile Include="Filters\FiltersWithPoliciesProvider.cs" />
     <Compile Include="Filters\IFilterPolicy.cs" />
-    <Compile Include="MvcRequestMetrics.cs" />
+    <Compile Include="RequestMetricsFilter.cs" />
     <Compile Include="Controllers\IPopulateModel.cs" />
     <Compile Include="Controllers\ModelIsArgumentAttribute.cs" />
     <Compile Include="Controllers\PopulateModel.cs" />
