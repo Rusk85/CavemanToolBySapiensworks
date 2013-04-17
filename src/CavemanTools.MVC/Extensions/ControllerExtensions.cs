@@ -43,6 +43,10 @@ namespace System.Web.Mvc
             return ctrl.RouteData.GetRequiredString("action");
         }
 
+        public static string GetControllerName(this ControllerContext ctrl)
+        {
+            return ctrl.RouteData.GetRequiredString("controller");
+        }
      
        internal static RouteValueDictionary ToRouteValues<T>(Expression<Action<T>> selector) where T:Controller
        {
