@@ -16,14 +16,19 @@ namespace System.Web.Mvc
             return page.ViewContext.HttpContext.GetThemeInfo();
         }
 
+        /// <summary>
+        /// Gets current theme info or null if no theme is set
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
         public static ThemeInfo GetThemeInfo(this HttpContextBase ctx)
         {
             var t= ctx.Get<ThemeInfo>(ThemeInfoKey);
-            if (t==null)
-            {
-                t= new ThemeInfo(ctx);
-                ctx.Items[ThemeInfoKey] = t;
-            }
+            //if (t==null)
+            //{
+            //    t= new ThemeInfo(ctx);
+            //    ctx.Items[ThemeInfoKey] = t;
+            //}
             return t;
         }
 

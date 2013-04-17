@@ -6,27 +6,23 @@ namespace CavemanTools.Mvc.ViewEngines.Conventions
     /// <summary>
     /// Default asp.net mvc views path searching with theming support
     /// </summary>
-    public abstract class BaseRazorMvcConvention:IFindViewConvention
+    public abstract class BaseRazorMvcConvention:BaseViewConvention
     {
-        public bool Match(ControllerContext context, string viewName)
-        {
-            return true;
-        }
-
+       
         /// <summary>
         /// Gets relative path for view. 
         /// </summary>
         /// <param name="controllerContext"></param>
         /// <param name="viewName"></param>
         /// <returns></returns>
-        public string GetViewPath(ControllerContext controllerContext, string viewName)
+        public override string GetViewPath(ControllerContext controllerContext, string viewName)
         {
             var controller = IsShared?"":controllerContext.RouteData.GetRequiredString("controller");
-            var theme = controllerContext.HttpContext.GetCurrentTheme();
+            var theme = controllerContext.HttpContext.GetThemeInfo();
             var path = "~/Views/";
-            if (!theme.IsNullOrEmpty())
+            if (theme!=null)
             {
-                path = "~/Themes/" + theme + "/Views/";                
+                path = theme.ViewsPath;                
             }
 
             return path+"{0}/{1}.cshtml".ToFormat(IsShared?"Shared":controller,viewName);
@@ -34,21 +30,10 @@ namespace CavemanTools.Mvc.ViewEngines.Conventions
         }
 
         /// <summary>
-        /// Serach in the Shared folder
+        /// Search in the Shared folder
         /// </summary>
         protected abstract bool IsShared { get; }
-       
-        /// <summary>
-        /// Gets relative path for master.
-        /// </summary>
-        /// <param name="controllerContext"></param>
-        /// <param name="masterName"></param>
-        /// <returns></returns>
-        public string GetMasterPath(ControllerContext controllerContext, string masterName)
-        {
-            if (masterName.IsNullOrEmpty()) return masterName;
-            return "~/Views/Shared/{0}.cshtml".ToFormat(masterName);
-        }
+               
     }
 
     public class RazorControllerActionConvention:BaseRazorMvcConvention
@@ -67,6 +52,41 @@ namespace CavemanTools.Mvc.ViewEngines.Conventions
         protected override bool IsShared
         {
             get { return true; }
+        }
+    }
+
+    public abstract class BaseViewConvention:IFindViewConvention
+    {
+        public virtual bool Match(ControllerContext context, string viewName)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets relative path for view. 
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <param name="viewName"></param>
+        /// <returns></returns>
+        public abstract string GetViewPath(ControllerContext controllerContext, string viewName);
+
+        /// <summary>
+        /// Gets relative path for master (layout). If master name is empty, it should return empty
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <param name="masterName"></param>
+        /// <returns></returns>
+        public virtual string GetMasterPath(ControllerContext controllerContext, string masterName)
+        {
+            if (masterName.IsNullOrEmpty()) return masterName;
+            var theme = controllerContext.HttpContext.GetThemeInfo();
+            var path = "~/Views/";
+            if (theme != null)
+            {
+                path = theme.ViewsPath;
+            }
+
+            return path + "{0}/Shared/{1}.cshtml".ToFormat(path,masterName);        
         }
     }
 }
