@@ -50,5 +50,14 @@ namespace CavemanTools.Mvc.Controllers
         /// Must be registered as generic
         /// </summary>
         public static Type[] TypesForDIContainer = new[] {SmartActionAttribute.DefaultPolicy};
+
+        /// <summary>
+        /// Registers types with a DI Container using the provided action
+        /// </summary>
+        /// <param name="genericTypeRegistration">Action which will register a generic open type with the DI Container</param>
+        public static void RegisterContainerTypes(Action<Type> genericTypeRegistration)
+        {
+            Array.ForEach(TypesForDIContainer,genericTypeRegistration);
+        }
     }
 }
