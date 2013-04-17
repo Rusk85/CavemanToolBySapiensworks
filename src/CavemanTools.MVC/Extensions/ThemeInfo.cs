@@ -9,14 +9,18 @@ namespace CavemanTools.Mvc.Extensions
     /// </summary>
     public class ThemeInfo
     {
+        public static string ThemesDirectoryName = "Themes";
+        public static string CssDirectoryName = "Style";
+        public static string ScriptsDirectoryName = "Scripts";
+
         internal ThemeInfo(HttpContextBase ctx)
         {
             if (ctx == null) throw new ArgumentNullException("ctx");
             Name = ctx.GetCurrentTheme();
-            BaseUrl=UrlHelper.GenerateContentUrl(string.Format("~/Themes/{0}", Name),ctx);
-            StyleUrl = BaseUrl + "/Style";
-            ScriptsUrl = BaseUrl + "/Scripts";
-            ViewsPath = string.Format("~/Themes/{0}/Views", Name);
+            BaseUrl=UrlHelper.GenerateContentUrl("~/"+ThemesDirectoryName+"/"+Name,ctx);
+            StyleUrl = BaseUrl + "/"+CssDirectoryName;
+            ScriptsUrl = BaseUrl + "/"+ScriptsDirectoryName;
+            ViewsPath = string.Format("~/{1}/{0}/Views", Name,ThemesDirectoryName);
         }
         /// <summary>
         /// Gets current theme name
