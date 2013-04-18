@@ -19,7 +19,7 @@ namespace CavemanTools.Mvc.ViewEngines
 
         public IView CreatePartial(ViewCreationData settings)
         {
-            return new RazorView(settings.Context, settings.ViewPath, null, !settings.IsMvcTemplate, _extensions);
+            return new RazorView(settings.Context, settings.ViewPath, null, false, _extensions);
         }
     }
 }

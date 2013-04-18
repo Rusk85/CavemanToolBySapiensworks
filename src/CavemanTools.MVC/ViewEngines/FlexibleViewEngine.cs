@@ -103,7 +103,6 @@ namespace CavemanTools.Mvc.ViewEngines
                 }
                 
                 var settings = new ViewCreationData(controllerContext, viewPath, masterPath);
-                settings.IsMvcTemplate = IsMvcTemplate(viewName);
                 
                 var view = isPartial?factory.CreatePartial(settings):factory.Create(settings);
                 return new ViewEngineResult(view, this);
