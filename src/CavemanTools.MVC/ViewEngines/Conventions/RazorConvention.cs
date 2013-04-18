@@ -19,13 +19,13 @@ namespace CavemanTools.Mvc.ViewEngines.Conventions
         {
             var controller = IsShared?"":controllerContext.RouteData.GetRequiredString("controller");
             var theme = controllerContext.HttpContext.GetThemeInfo();
-            var path = "~/Views/";
+            var path = "~/Views";
             if (theme!=null)
             {
                 path = theme.ViewsPath;                
             }
 
-            return path+"{0}/{1}.cshtml".ToFormat(IsShared?"Shared":controller,viewName);
+            return path+"/{0}/{1}.cshtml".ToFormat(IsShared?"Shared":controller,viewName);
             
         }
 
