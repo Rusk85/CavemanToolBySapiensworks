@@ -44,6 +44,11 @@ namespace CavemanTools.Mvc.ViewEngines
             return GetView(controllerContext, viewName, masterName, useCache, false);
         }
 
+        /// <summary>
+        /// True if the view is part of Mvc display or editor templates
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <returns></returns>
         public static bool IsMvcTemplate(string viewName)
         {
             return viewName.StartsWith("DisplayTemplates") || viewName.StartsWith("EditorTemplates");
