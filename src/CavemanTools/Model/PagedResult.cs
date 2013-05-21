@@ -11,7 +11,7 @@ namespace CavemanTools.Model
 	/// <typeparam name="T">Type of item</typeparam>
     public class PagedResult<T>:IResultSet<T>
 	{
-		public int Count
+		public long Count
 		{
 			get; set;
 		}
