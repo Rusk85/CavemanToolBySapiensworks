@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Security.Principal;
 using System.Text;
 using System.Web.Caching;
+using System.Web.Mvc;
 using CavemanTools;
 using CavemanTools.Infrastructure;
 using CavemanTools.Logging;
@@ -14,19 +17,7 @@ using System.Reflection;
 
 namespace XTests
 {
-    public class Hah
-    {
-        public int Id { get; set; }
-        public MyClass Class { get; set; }
-        public List<string> List {get; set; }
-
-        public Hah()
-        {
-            Class=new MyClass(){Id=45};
-            List=new List<string>();
-            List.Add("hi");
-        }
-    }
+   
    
     public class General
     {
@@ -40,13 +31,7 @@ namespace XTests
         [Fact]
         public void FactMethodName()
         {
-            var g = Guid.NewGuid();
-            Write(g.ToString().Length.ToString());
-            var data = Convert.ToBase64String(g.ToByteArray());
-            Write(data.Length.ToString());
-            var g1 = new Guid(Convert.FromBase64String(data));
-            Assert.Equal(g,g1);
-            
+          
         }
 
 

@@ -88,54 +88,54 @@ namespace System
         }
 
 	
-		/// <summary>
-        ///  Shallow copies source object into destination, only public properties are copied. Use CopyOptionsAttribute to mark the properties you want ignored.
-        /// Use Automapper for heavy duty mapping
-        /// </summary>
-		/// <seealso cref="CopyOptionsAttribute"/>
-		/// <typeparam name="T">Destination type must have parameterless constructor</typeparam>
-		/// <param name="source">Object to copy</param>
-		public static T CopyTo<T>(this object source) where T :class, new() 
-		{
-			var destination = new T();
-			source.CopyTo(destination);
-			return destination;
-		}
+        ///// <summary>
+        /////  Shallow copies source object into destination, only public properties are copied. Use CopyOptionsAttribute to mark the properties you want ignored.
+        ///// Use Automapper for heavy duty mapping
+        ///// </summary>
+        ///// <seealso cref="CopyOptionsAttribute"/>
+        ///// <typeparam name="T">Destination type must have parameterless constructor</typeparam>
+        ///// <param name="source">Object to copy</param>
+        //public static T CopyTo<T>(this object source) where T :class, new() 
+        //{
+        //    var destination = new T();
+        //    source.CopyTo(destination);
+        //    return destination;
+        //}
 
 
-		/// <summary>
-		/// Shallow copies source object into destination, only public properties are copied. For ocasional use.
-		/// Use Automapper for heavy duty mapping
-		/// </summary>
-		/// <exception cref="ArgumentNullException">If source or destination are null</exception>
-		/// <typeparam name="T">Destination Type</typeparam>
-		/// <param name="source">Object to copy from</param>
-		/// <param name="destination">Object to copy to. Unmatching or read-only properties are ignored</param>
-		public static void CopyTo<T>(this object source, T destination) where T : class
-		{
-			if (source == null) throw new ArgumentNullException("source");
-			if (destination == null) throw new ArgumentNullException("destination");
-			var srcType = source.GetType();
-			var attr = destination.GetType().GetSingleAttribute<CopyOptionsAttribute>();
-			if (attr != null)
-			{
-				if (attr.IgnoreProperty) ;
-			}
+        ///// <summary>
+        ///// Shallow copies source object into destination, only public properties are copied. For ocasional use.
+        ///// Use Automapper for heavy duty mapping
+        ///// </summary>
+        ///// <exception cref="ArgumentNullException">If source or destination are null</exception>
+        ///// <typeparam name="T">Destination Type</typeparam>
+        ///// <param name="source">Object to copy from</param>
+        ///// <param name="destination">Object to copy to. Unmatching or read-only properties are ignored</param>
+        //public static void CopyTo<T>(this object source, T destination) where T : class
+        //{
+        //    if (source == null) throw new ArgumentNullException("source");
+        //    if (destination == null) throw new ArgumentNullException("destination");
+        //    var srcType = source.GetType();
+        //    var attr = destination.GetType().GetSingleAttribute<CopyOptionsAttribute>();
+        //    if (attr != null)
+        //    {
+        //        if (attr.IgnoreProperty) ;
+        //    }
 
-			foreach (var destProperty in destination.GetType().GetProperties(BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.FlattenHierarchy))
-			{
-				if (!destProperty.CanWrite) continue;
+        //    foreach (var destProperty in destination.GetType().GetProperties(BindingFlags.Instance | BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.FlattenHierarchy))
+        //    {
+        //        if (!destProperty.CanWrite) continue;
 
-				var pSource = srcType.GetProperty(destProperty.Name, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
-				if (pSource == null) continue;
-				var o = pSource.GetValue(source, null);
-				if (!pSource.PropertyType.Equals(destProperty.PropertyType))
-				{
-					o = ConvertTo(o, destProperty.PropertyType);
-				}
-				destProperty.SetValue(destination, o, null);
-			}
-		}
+        //        var pSource = srcType.GetProperty(destProperty.Name, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
+        //        if (pSource == null) continue;
+        //        var o = pSource.GetValue(source, null);
+        //        if (!pSource.PropertyType.Equals(destProperty.PropertyType))
+        //        {
+        //            o = ConvertTo(o, destProperty.PropertyType);
+        //        }
+        //        destProperty.SetValue(destination, o, null);
+        //    }
+        //}
 
 		
 		/// <summary>

@@ -26,10 +26,10 @@ namespace CavemanTools.Model
 		IEnumerable<T> Items{ get;}	
 	}
 
-    [Obsolete("Use IPagedResult<T>")]
-    public interface IResultSet<T>:IPagedResult<T>
-    {
+    //[Obsolete("Use IPagedResult<T>",true)]
+    //public interface IResultSet<T>:IPagedResult<T>
+    //{
         
-    }
+    //}
 
 }
