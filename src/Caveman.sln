@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AF9FF5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc4", "CavemanTools.Mvc4\CavemanTools.Mvc4.csproj", "{FCAD6B51-6573-4E28-949D-FBF0631A0613}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Web", "CavemanTools.Web\CavemanTools.Web.csproj", "{B1B0A041-B3F8-4977-A74B-1F78DDD88357}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,16 @@ Global
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.Build.0 = Release|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.ActiveCfg = Release|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.Build.0 = Release|x86
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -174,26 +174,6 @@ namespace System.Xml
 		#endregion
 
 
-		#region Old
-		///// <summary>
-		///// Gets the attribute value. If it doesn't exist it returns the default of the type
-		///// </summary>
-		///// <typeparam name="T"></typeparam>
-		///// <param name="node"></param>
-		///// <param name="name">Name of attribute</param>
-		///// <returns></returns>
-		//public static T GetAttr<T>(this XmlElement node, string name)
-		//{
-		//    if (!node.HasAttribute(name))
-		//    {
-		//        return default(T);
-		//    }
-		//    var v = node.Attributes[name].Value;
-		//    if (string.IsNullOrEmpty(v)) return default(T);
-
-		//    return v.ConvertTo<T>();			
-		//}
-		#endregion
 		
 	}
 }

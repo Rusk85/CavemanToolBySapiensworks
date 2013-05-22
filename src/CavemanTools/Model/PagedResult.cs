@@ -9,8 +9,8 @@ namespace CavemanTools.Model
 	/// Used for pagination.
 	/// </summary>
 	/// <typeparam name="T">Type of item</typeparam>
-    public class PagedResult<T>:IResultSet<T>
-	{
+    public class PagedResult<T>:IPagedResult<T>
+    {
 		public int Count
 		{
 			get; set;
@@ -43,10 +43,10 @@ namespace CavemanTools.Model
 		}
 	}
 
-    [Obsolete("Use PagedResult<T>")]
-    public class ResultSet<T>:PagedResult<T>
-    {
+    //[Obsolete("Use PagedResult<T>",true)]
+    //public class ResultSet<T>:PagedResult<T>
+    //{
         
-    }
+    //}
     
 }
