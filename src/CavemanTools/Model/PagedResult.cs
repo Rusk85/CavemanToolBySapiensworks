@@ -11,10 +11,26 @@ namespace CavemanTools.Model
 	/// <typeparam name="T">Type of item</typeparam>
     public class PagedResult<T>:IResultSet<T>
 	{
-		public long Count
+		public int Count
 		{
 			get; set;
 		}
+
+        private long? _count;
+
+        public long LongCount
+        {
+	       get
+	       {
+	           if (_count == null)
+	           {
+	               return Count;
+	           }
+	           return _count.Value;
+	       }
+
+            set { _count = value; }
+        }
 
 	    public PagedResult()
 	    {

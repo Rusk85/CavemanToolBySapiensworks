@@ -13,7 +13,12 @@ namespace CavemanTools.Model
 		/// <summary>
 		/// Gets the total number of items
 		/// </summary>
-		long Count { get;}
+		int Count { get;}
+
+        /// <summary>
+        /// Gets total number of items
+        /// </summary>
+        long LongCount { get; }
 
 		/// <summary>
 		/// Gets result items
