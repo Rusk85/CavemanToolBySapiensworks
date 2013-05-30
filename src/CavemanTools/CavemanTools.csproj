@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Data\JsonStatus.cs" />
     <Compile Include="Data\JsonStruct.cs" />
+    <Compile Include="DisposableList.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="Extensions\AssertionsExtensions.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
