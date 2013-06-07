@@ -14,6 +14,8 @@ namespace CavemanTools.Infrastructure
         /// <returns></returns>
         object ResolveOptional(Type type);
 
+        T ResolveOptional<T>();
+
         IEnumerable<T> GetServices<T>();
     }
 }
