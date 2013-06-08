@@ -32,7 +32,7 @@ namespace CavemanTools.Infrastructure
             return Resolve(type);
         }
 
-        public T ResolveOptional<T>()
+        public T ResolveOptional<T>() where T : class
         {
             return (T)ResolveOptional(typeof (T));
         }
