@@ -13,7 +13,11 @@ namespace System.Collections.Generic
 		/// <returns></returns>
         public static bool HasTheSameElementsAs<T>(this IEnumerable<T> first,IEnumerable<T> second)
 		{
-		    var cnt1 = first.Count();
+		    first.MustNotBeNull();
+            second.MustNotBeNull();
+
+            var cnt1 = first.Count();
+		    if (cnt1 != second.Count()) return false;
 		    T item1 = default(T);
 		    T item2 = default(T);
             for(int i=0;i<cnt1;i++)
