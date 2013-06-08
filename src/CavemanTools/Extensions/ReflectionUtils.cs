@@ -1,7 +1,5 @@
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Emit;
 
@@ -131,19 +129,7 @@ namespace System.Reflection
             return (o.GetType() == typeof(T));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="o"></param>
-        /// <param name="interfaceName">The intuitive interface name</param>
-        /// <param name="genericType">Interface's generic arguments types</param>
-        /// <returns></returns>
-        public static bool ImplementsGenericInterface(this object o, string interfaceName, params Type[] genericType)
-        {
-            var tp = o.GetType();
-            return tp.GetInterfaces().Where(i => i.IsGenericType && i.Name.StartsWith(interfaceName)).Any(
-                i => i.GetGenericArguments().HasTheSameElementsAs(genericType));
-        }
+       
 
         /// <summary>
         /// Gets the value of a property
