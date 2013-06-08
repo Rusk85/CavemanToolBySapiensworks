@@ -267,6 +267,11 @@ namespace System
         {
             return (T)o;
         }
+
+        public static bool Is<T>(this object o)
+        {
+            return o is T;
+        }
 	}
 
     
