@@ -17,6 +17,16 @@ namespace CavemanTools.Mvc.Routing
             GlobalPolicies= new List<IRouteGlobalPolicy>();
         }
 
+        /// <summary>
+        /// Scans assemblies for controllers and policies and apply them to the route collection
+        /// </summary>
+        /// <param name="asms"></param>
+        public static void CreateAndApply(params Assembly[] asms)
+        {
+            var policy = new RoutingPolicy();
+            policy.ConfigureFrom(asms).Apply(RouteTable.Routes);
+        }
+
         public RoutingPolicySettings Settings { get; private set; }
         List<ActionCall> _actions=new List<ActionCall>();
         public void AddAction(ActionCall action)
