@@ -17,14 +17,29 @@ namespace CavemanTools.Mvc.Routing
             GlobalPolicies= new List<IRouteGlobalPolicy>();
         }
 
+         /// <summary>
+         /// Scans assemblies for controllers and policies and apply them to the route collection
+         /// </summary>
+         /// <param name="asms"></param>
+         public static void CreateAndApply(params Assembly[] asms)
+         {
+             CreateAndApply(null,asms);
+         }
+
         /// <summary>
         /// Scans assemblies for controllers and policies and apply them to the route collection
         /// </summary>
+        /// <param name="policyConfig">Advanced configuration</param>
         /// <param name="asms"></param>
-        public static void CreateAndApply(params Assembly[] asms)
+        public static void CreateAndApply(Action<RoutingPolicy> policyConfig,params Assembly[] asms)
         {
             var policy = new RoutingPolicy();
-            policy.ConfigureFrom(asms).Apply(RouteTable.Routes);
+            var p = policy.ConfigureFrom(asms);
+            if (policyConfig != null)
+            {
+                policyConfig(p);
+            }
+            p.Apply(RouteTable.Routes);
         }
 
         public RoutingPolicySettings Settings { get; private set; }
