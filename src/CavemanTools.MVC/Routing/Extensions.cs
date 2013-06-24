@@ -17,7 +17,7 @@ namespace CavemanTools.Mvc.Routing
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="asm"></param>
-        public static void RegisterPolicies(this RoutingPolicy policy, Assembly asm)
+        public static RoutingPolicy RegisterPolicies(this RoutingPolicy policy, Assembly asm)
         {
             var res = DependencyResolver.Current;
             asm.GetTypesImplementing<IRouteConvention>(true).ForEach(t =>
@@ -34,8 +34,8 @@ namespace CavemanTools.Mvc.Routing
                 {
                     policy.GlobalPolicies.Add(res.GetService(t) as IRouteGlobalPolicy);
                 });
-            
-            
+
+            return policy;
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace CavemanTools.Mvc.Routing
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="asm"></param>
-        public static void RegisterControllers(this RoutingPolicy policy,Assembly asm)
+        public static RoutingPolicy RegisterControllers(this RoutingPolicy policy,Assembly asm)
         {
-            Register(policy,asm,t =>t.DerivesFrom<Controller>());          
+            return Register(policy,asm,t =>t.DerivesFrom<Controller>());          
         }
         /// <summary>
         /// Register as actions types matching a criteria
@@ -53,9 +53,10 @@ namespace CavemanTools.Mvc.Routing
         /// <param name="policy"></param>
         /// <param name="asm"></param>
         /// <param name="match"></param>
-        public static void Register(this RoutingPolicy policy, Assembly asm, Func<Type, bool> match)
+        public static RoutingPolicy Register(this RoutingPolicy policy, Assembly asm, Func<Type, bool> match)
         {
-            RegisterActions(policy, asm.GetTypes().Where(match).ToArray());           
+            RegisterActions(policy, asm.GetTypes().Where(match).ToArray());
+            return policy;
         }
 
         /// <summary>
@@ -63,9 +64,10 @@ namespace CavemanTools.Mvc.Routing
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="policy"></param>
-        public static void Register<T>(this RoutingPolicy policy) where T : Controller
+        public static RoutingPolicy Register<T>(this RoutingPolicy policy) where T : Controller
         {
             policy.RegisterActions(typeof(T));
+            return policy;
         }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace CavemanTools.Mvc.Routing
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="controllers"></param>
-        public static void RegisterActions(this RoutingPolicy policy, params Type[] controllers)
+        public static RoutingPolicy RegisterActions(this RoutingPolicy policy, params Type[] controllers)
         {
             foreach (var c in controllers)
             {
@@ -82,12 +84,23 @@ namespace CavemanTools.Mvc.Routing
                 {
                     policy.AddAction(new ActionCall(m, policy.Settings));
                 }); 
-            }           
+            }
+            return policy;
         }
 
-        public static void RegisterHandlerConvention(this RoutingPolicy policy)
+        public static RoutingPolicy RegisterHandlerConvention(this RoutingPolicy policy)
         {
             policy.Conventions.Add(new HandlerRouteConvention());
+            return policy;
+        }
+
+        public static RoutingPolicy ConfigureFrom(this RoutingPolicy policy,params Assembly[] asms)
+        {
+            foreach (var asm in asms)
+            {
+                policy.RegisterControllers(asm).RegisterPolicies(asm);
+            }
+            return policy;
         }
     }
 }
