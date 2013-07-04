@@ -58,6 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -100,6 +101,7 @@
     <Compile Include="Filters\FiltersPolicy.cs" />
     <Compile Include="Filters\FiltersWithPoliciesProvider.cs" />
     <Compile Include="Filters\IFilterPolicy.cs" />
+    <Compile Include="HttpModuleHost.cs" />
     <Compile Include="RequestMetricsFilter.cs" />
     <Compile Include="Controllers\IPopulateModel.cs" />
     <Compile Include="Controllers\ModelIsArgumentAttribute.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="ThemeAttribute.cs" />
     <Compile Include="TransferResult.cs" />
     <Compile Include="UnitTesting\FakeController.cs" />
+    <Compile Include="ViewEngines\Conventions\ViewIsControllerNameConvention.cs" />
     <Compile Include="ViewEngines\FlexibleViewEngine.cs" />
     <Compile Include="ViewEngines\IFindViewConvention.cs" />
     <Compile Include="ViewEngines\IViewFactory.cs" />
