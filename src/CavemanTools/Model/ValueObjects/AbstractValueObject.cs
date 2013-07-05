@@ -24,5 +24,10 @@ namespace CavemanTools.Model.ValueObjects
         {
             return "[{0}]{1}".ToFormat(GetType().Name,_value);
         }
+
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
+        }
      }
 }
