@@ -42,6 +42,6 @@ namespace CavemanTools.Mvc
         module.Init(context);
       }
     }
-  }
+  
     }
 }
