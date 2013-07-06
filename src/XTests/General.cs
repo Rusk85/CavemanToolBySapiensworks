@@ -14,6 +14,7 @@ using System;
 using System.Diagnostics;
 using CavemanTools.Strings;
 using System.Reflection;
+using Xunit.Extensions;
 
 namespace XTests
 {
@@ -31,7 +32,7 @@ namespace XTests
         [Fact]
         public void FactMethodName()
         {
-          
+            Write("re".GenerateRandomString(5));
         }
 
 
