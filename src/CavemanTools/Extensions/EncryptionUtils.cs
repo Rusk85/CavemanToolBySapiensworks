@@ -215,7 +215,7 @@ namespace System
 
 		public static byte[] GenerateEncryptionKey()
 		{
-			string t = StringUtils.RandomString(16);
+			string t = StringUtils.CreateRandomString(16);
 			return Encoding.Unicode.GetBytes(t);
 
 		}
