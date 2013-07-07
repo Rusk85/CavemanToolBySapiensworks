@@ -22,11 +22,11 @@ namespace CavemanTools.Web
         /// </summary>
         /// <param name="password"></param>
         /// <param name="hasher">Hashing strategy, implement <see cref="IHashPassword"/></param>
-        /// <param name="salt">A random 7 characters string will be used if empty</param>
+        /// <param name="salt">A random 16 characters string will be used if empty</param>
         public Password(string password,IHashPassword hasher, string salt=null)
         {
             if (hasher == null) throw new ArgumentNullException("hasher");
-            salt = salt ?? StringUtils.CreateRandomString(7);
+            salt = salt ?? StringUtils.CreateRandomString(16);
             Hash = new HashedPassword(hasher.Hash(password, salt), salt);
         }
 
