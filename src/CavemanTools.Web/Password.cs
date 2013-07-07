@@ -33,6 +33,6 @@ namespace CavemanTools.Web
         /// <summary>
         /// Gets hashed password
         /// </summary>
-        public HashedPassword Hash { get; private set; }
+        public PasswordHash Hash { get; private set; }
     }
 }

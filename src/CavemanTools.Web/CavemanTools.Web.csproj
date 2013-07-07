@@ -61,6 +61,7 @@
     <Compile Include="Authentication\UserId.cs" />
     <Compile Include="Authentication\UserIdBase.cs" />
     <Compile Include="Authentication\UserRightsContext.cs" />
+    <Compile Include="CavemanHash.cs" />
     <Compile Include="ContextInstance.cs" />
     <Compile Include="CookieCache.cs" />
     <Compile Include="CookieExtensions.cs" />
