@@ -2,12 +2,9 @@ using System;
 
 namespace CavemanTools.Web
 {
-    /// <summary>
-    /// Hashed password class
-    /// </summary>
-    public class HashedPassword
+    public class PasswordHash
     {
-        public HashedPassword(string hash,string salt="")
+        public PasswordHash(string hash,string salt="")
         {
             if (string.IsNullOrWhiteSpace(hash)) throw new ArgumentNullException("hash");
             if (salt == null) throw new ArgumentNullException("salt");
@@ -33,5 +30,16 @@ namespace CavemanTools.Web
             return otherHash != null && (Hash.Equals(otherHash, StringComparison.InvariantCultureIgnoreCase));
         }
         
+    }
+
+    /// <summary>
+    /// Hashed password class
+    /// </summary>
+    [Obsolete("Use PasswordHash")]
+    public class HashedPassword:PasswordHash
+    {
+        public HashedPassword(string hash, string salt = "") : base(hash, salt)
+        {
+        }
     }
 }

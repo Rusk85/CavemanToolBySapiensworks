@@ -11,3 +11,4 @@ namespace CavemanTools.Web
         string Hash(string text, string salt = null);       
     }
 }
+
