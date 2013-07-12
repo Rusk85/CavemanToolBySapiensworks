@@ -27,7 +27,7 @@ namespace CavemanTools.Web
         {
             if (hasher == null) throw new ArgumentNullException("hasher");
             salt = salt ?? StringUtils.CreateRandomString(16);
-            Hash = new HashedPassword(hasher.Hash(password, salt), salt);
+            Hash = new PasswordHash(hasher.Hash(password, salt), salt);
         }
 
         /// <summary>
