@@ -21,7 +21,7 @@ namespace CavemanTools.Web
 
             var first = salt.Substring(0, salt.Length/2);
 
-            var pwd = first + text+salt.Substring(salt.Length/2,salt.Length);
+            var pwd = first + text+salt.Substring(salt.Length/2,salt.Length/2);
             return pwd.Sha512();
         }
     }

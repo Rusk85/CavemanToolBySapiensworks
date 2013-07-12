@@ -84,6 +84,7 @@
     <Compile Include="OnlineUserInfo.cs" />
     <Compile Include="OnlineUsersData.cs" />
     <Compile Include="Password.cs" />
+    <Compile Include="PasswordHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestMetricsModule.cs" />
     <Compile Include="RequestPersonalizationParameter.cs" />

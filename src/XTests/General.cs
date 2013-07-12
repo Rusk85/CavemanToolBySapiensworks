@@ -32,7 +32,8 @@ namespace XTests
         [Fact]
         public void FactMethodName()
         {
-            Write("re".GenerateRandomString(5));
+            var s = new CavemanHashStrategy();
+            var d=s.Hash("hah", StringUtils.CreateRandomString(16));
         }
 
 
