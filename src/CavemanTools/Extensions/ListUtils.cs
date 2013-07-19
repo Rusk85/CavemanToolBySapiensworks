@@ -189,11 +189,15 @@ namespace System.Collections.Generic
             return defValue;
         }
 
-        public static void AddIfNotPresent<T>(this IList<T> list, T item)
+        public static bool AddIfNotPresent<T>(this IList<T> list, T item)
         {
             list.MustNotBeNull();
-            if (!list.Contains(item)) list.Add(item);
-            
+            if (!list.Contains(item))
+            {
+                list.Add(item);
+                return true;
+            }
+            return false;
         }
 
         public static void RemoveAll<T>(this IList<T> items, Func<T, bool> predicate)
