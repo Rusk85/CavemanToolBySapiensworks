@@ -191,7 +191,7 @@ namespace System.Collections.Generic
 
         public static void AddIfNotPresent<T>(this IList<T> list, T item)
         {
-            list.MustNotBeEmpty();
+            list.MustNotBeNull();
             if (!list.Contains(item)) list.Add(item);
             
         }
