@@ -10,7 +10,7 @@ namespace CavemanTools.Model.ValueObjects
         
         public static Email CreateRandomTestValue()
         {
-            return new Email("test"+new Random().Next()+"@exmple.com");
+            return new Email("test"+Guid.NewGuid().ToString().Substring(4)+"@exmple.com");
         }
             
 
