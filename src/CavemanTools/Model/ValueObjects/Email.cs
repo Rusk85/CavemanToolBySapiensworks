@@ -8,6 +8,12 @@ namespace CavemanTools.Model.ValueObjects
     public class Email:AbstractValueObject<string>,IEquatable<Email>
     {
         
+        public static Email CreateRandomTestValue()
+        {
+            return new Email("test"+new Random().Next()+"@exmple.com");
+        }
+            
+
         public Email(string value) : base(value)
         {
             
