@@ -199,17 +199,27 @@ namespace System.Collections.Generic
             }
             return false;
         }
-
-        public static void RemoveAll<T>(this IList<T> items, Func<T, bool> predicate)
+        /// <summary>
+        /// Returns number of items removed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static int RemoveAll<T>(this IList<T> items, Func<T, bool> predicate)
         {
             items.MustNotBeEmpty();
             predicate.MustNotBeNull();
-        
+            var removed = 0;
             for (int i = items.Count - 1; i >= 0; i--)
             {
-                if (predicate(items[i])) items.RemoveAt(i);
+                if (predicate(items[i]))
+                {
+                    items.RemoveAt(i);
+                    removed++;
+                }
             }
-
+            return removed;
         }
 	}
 }
