@@ -17,9 +17,13 @@ namespace CavemanTools.Mvc.Routing
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="asm"></param>
-        public static RoutingPolicy RegisterPolicies(this RoutingPolicy policy, Assembly asm)
+        /// <param name="res">Null means it uses the current dependecy resolver</param>
+        public static RoutingPolicy RegisterPolicies(this RoutingPolicy policy, Assembly asm,IDependencyResolver res=null)
         {
-            var res = DependencyResolver.Current;
+            if (res == null)
+            {
+                res = DependencyResolver.Current;
+            }            
             asm.GetTypesImplementing<IRouteConvention>(true).ForEach(t =>
                 {
                     policy.Conventions.Add(res.GetService(t) as IRouteConvention);
