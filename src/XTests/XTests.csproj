@@ -77,6 +77,8 @@
     <Compile Include="LoggingHelperTests.cs" />
     <Compile Include="Model\ValidationTests.cs" />
     <Compile Include="Mvc\Controllers\SmartControllerTests.cs" />
+    <Compile Include="Mvc\Routing\ActionCallTests.cs" />
+    <Compile Include="Mvc\Routing\HandlerRouteConventionTests.cs" />
     <Compile Include="OverridableOptionsTests.cs" />
     <Compile Include="PaginationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
