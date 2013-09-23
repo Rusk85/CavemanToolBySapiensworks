@@ -213,6 +213,12 @@ namespace System
             if (t == null) throw new ArgumentNullException("t");
             return String.Format("{0}, {1}", t.FullName, Assembly.GetAssembly(t).GetName().Name);
         }
+
+        public static object GetDefault(this Type type)
+        {
+            if (type.IsValueType) return Activator.CreateInstance(type);
+            return null;
+        }
 	}
 }
 
