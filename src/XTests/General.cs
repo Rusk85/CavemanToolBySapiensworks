@@ -32,14 +32,24 @@ namespace XTests
         [Fact]
         public void FactMethodName()
         {
-            var s = new CavemanHashStrategy();
-            var d=s.Hash("hah", StringUtils.CreateRandomString(16));
+            var sess = SessionId.NewId();
+            var s2 = SessionId.Parse(sess.ToString());
+            Assert.Equal(sess,s2);
+            for (int i = 0; i < 50; i++)
+            {
+                Write(SessionId.NewId().ToString());
+            }
+            Write(sess);
+            Write(s2.ToString().Length);
+
+            Assert.Throws<ArgumentException>(() => SessionId.Parse("sdfsfs"));
+            
         }
 
 
-        private void Write(string format, params object[] param)
+        private void Write(object format, params object[] param)
         {
-            Console.WriteLine(format, param);
+            Console.WriteLine(format.ToString(), param);
         }
     }  
 }
