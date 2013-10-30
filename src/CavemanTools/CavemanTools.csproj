@@ -113,6 +113,7 @@
     <Compile Include="Percentage.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
     <Compile Include="Reflection\PrivateReflectionDynamicObject.cs" />
+    <Compile Include="SessionId.cs" />
     <Compile Include="SingletonsRegistry.cs" />
     <Compile Include="Subscriptions.cs" />
     <Compile Include="Testing\BenchmarkResult.cs" />
