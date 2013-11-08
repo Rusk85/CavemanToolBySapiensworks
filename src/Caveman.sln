@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools", "CavemanTools\CavemanTools.csproj", "{7DC37B55-C861-4740-A3CD-96C5F52ADF32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc", "CavemanTools.MVC\CavemanTools.Mvc.csproj", "{CC64B941-C7E5-4F06-9826-77D3C54827BA}"
@@ -15,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc4", "CavemanTools.Mvc4\CavemanTools.Mvc4.csproj", "{FCAD6B51-6573-4E28-949D-FBF0631A0613}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Web", "CavemanTools.Web\CavemanTools.Web.csproj", "{B1B0A041-B3F8-4977-A74B-1F78DDD88357}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc5", "CavemanTools.MVC\CavemanTools.Mvc5.csproj", "{595099EC-473C-4C23-8103-40750251ACBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +80,16 @@ Global
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Release|x86.ActiveCfg = Release|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{595099EC-473C-4C23-8103-40750251ACBC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
