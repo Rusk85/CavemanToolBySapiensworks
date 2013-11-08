@@ -82,11 +82,11 @@ namespace CavemanTools
         /// 
         /// </summary>
         /// <param name="data"></param>
-        public SessionId(byte[] data)
+        public SessionId(byte[] bytes)
         {
-            data.MustNotBeEmpty();
-            data.MustComplyWith(d=>d.Length==BytesLength,"Length must be {0}".ToFormat(BytesLength));
-            _bytes = data;
+            bytes.MustNotBeEmpty();
+            bytes.MustComplyWith(d => d.Length == BytesLength, "Length must be {0}".ToFormat(BytesLength));
+            _bytes = bytes;
         }
         
 
