@@ -42,6 +42,7 @@ public static void Local()
     {
         var releaseDir=Path.GetFullPath(Path.Combine(SlnDir,project,"bin/Release"));
         "robocopy".Exec(releaseDir,TempDir,"/E","/XN","/NS","/NC","/NJH","/NJS");
+    }
 }
 
 //------------------------------ Utils ----------------

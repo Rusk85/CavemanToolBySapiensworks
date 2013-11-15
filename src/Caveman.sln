@@ -14,11 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AF9FF5
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc4", "CavemanTools.Mvc4\CavemanTools.Mvc4.csproj", "{FCAD6B51-6573-4E28-949D-FBF0631A0613}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Web", "CavemanTools.Web\CavemanTools.Web.csproj", "{B1B0A041-B3F8-4977-A74B-1F78DDD88357}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc5", "CavemanTools.MVC\CavemanTools.Mvc5.csproj", "{595099EC-473C-4C23-8103-40750251ACBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc4", "CavemanTools.MVC\CavemanTools.Mvc4.csproj", "{FCAD6B51-6573-4E28-949D-FBF0631A0613}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,16 +60,6 @@ Global
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Release|x86.ActiveCfg = Release|Any CPU
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|x86.ActiveCfg = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|x86.Build.0 = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Any CPU.ActiveCfg = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.Build.0 = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.ActiveCfg = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.Build.0 = Release|x86
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -90,6 +80,16 @@ Global
 		{595099EC-473C-4C23-8103-40750251ACBC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{595099EC-473C-4C23-8103-40750251ACBC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{595099EC-473C-4C23-8103-40750251ACBC}.Release|x86.ActiveCfg = Release|Any CPU
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|x86.ActiveCfg = Debug|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|x86.Build.0 = Debug|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Any CPU.ActiveCfg = Release|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.Build.0 = Release|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.ActiveCfg = Release|x86
+		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

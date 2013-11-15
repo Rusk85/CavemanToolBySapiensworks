@@ -51,6 +51,7 @@
     <Compile Include="Email\EmailUtils.cs" />
     <Compile Include="Email\TemplateEmailFormatter.cs" />
     <Compile Include="EncryptedCookie.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Helpers\PaginationLinks.cs" />
     <Compile Include="Helpers\Snippets.cs" />
     <Compile Include="HenriFormatter.cs" />
