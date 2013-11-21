@@ -219,6 +219,18 @@ namespace System
             if (type.IsValueType) return Activator.CreateInstance(type);
             return null;
         }
+
+        /// <summary>
+        /// Returns namespace without the assembly name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string StripNamespaceAssemblyName(this Type type)
+        {
+            var asmName = type.Assembly.GetName().Name;
+            return type.Namespace.Substring(asmName.Length + 1);
+        }
+           
 	}
 }
 

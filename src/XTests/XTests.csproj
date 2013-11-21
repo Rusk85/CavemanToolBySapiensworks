@@ -80,6 +80,7 @@
     <Compile Include="Mvc\Controllers\SmartControllerTests.cs" />
     <Compile Include="Mvc\Routing\ActionCallTests.cs" />
     <Compile Include="Mvc\Routing\HandlerRouteConventionTests.cs" />
+    <Compile Include="Mvc\Routing\UrlFormatTests.cs" />
     <Compile Include="OverridableOptionsTests.cs" />
     <Compile Include="PaginationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
