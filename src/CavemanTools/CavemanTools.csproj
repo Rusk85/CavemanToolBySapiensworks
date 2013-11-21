@@ -15,6 +15,8 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +28,7 @@
     <WarningLevel>2</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,6 +39,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>bin\Release\CavemanTools.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -90,19 +94,9 @@
     <Compile Include="Model\IdName.cs" />
     <Compile Include="Model\PagerHelper.cs" />
     <Compile Include="Model\ValueObjects\UrlSlug.cs" />
-    <Compile Include="Model\Validation\Attributes\ForbidWordsAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\RegularExpressionAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\UrlFriendlyAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\StringLengthAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\RequiredAttribute.cs" />
     <Compile Include="Model\Validation\IAddError.cs" />
-    <Compile Include="Model\Validation\Attributes\MinimumLengthAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\EmailAttribute.cs" />
     <Compile Include="Model\Validation\ValidationBag.cs" />
     <Compile Include="Model\Validation\ValidationItem.cs" />
-    <Compile Include="Model\Validation\ValidationService.cs" />
-    <Compile Include="Model\Validation\ValidationServiceItem.cs" />
-    <Compile Include="Model\Validation\ValidationUtils.cs" />
     <Compile Include="Lists\ModifiedSet.cs" />
     <Compile Include="Logging\WindowsEventLogWriter.cs" />
     <Compile Include="Logging\ILogWriter.cs" />

@@ -32,18 +32,7 @@ namespace XTests
         [Fact]
         public void FactMethodName()
         {
-            var sess = SessionId.NewId();
-            var s2 = SessionId.Parse(sess.ToString());
-            Assert.Equal(sess,s2);
-            for (int i = 0; i < 50; i++)
-            {
-                Write(SessionId.NewId().ToString());
-            }
-            Write(sess);
-            Write(s2.ToString().Length);
-
-            Assert.Throws<ArgumentException>(() => SessionId.Parse("sdfsfs"));
-            
+            Write(System.Environment.Version.ToString());
         }
 
 
