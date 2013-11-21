@@ -36,17 +36,17 @@ namespace CavemanTools.Mvc.Routing
             {
                 res = DependencyResolver.Current;
             }            
-            asm.GetTypesImplementing<IRouteConvention>(true).ForEach(t =>
+            asm.GetTypesDerivedFrom<IRouteConvention>(true).ForEach(t =>
                 {
                     policy.Conventions.Add(res.GetService(t) as IRouteConvention);
                 });
             
-            asm.GetTypesImplementing<IRouteUrlFormatPolicy>(true).ForEach(t =>
+            asm.GetTypesDerivedFrom<IRouteUrlFormatPolicy>(true).ForEach(t =>
                 {
                     policy.UrlFormatPolicies.Add(res.GetService(t) as IRouteUrlFormatPolicy);
                 });
             
-            asm.GetTypesImplementing<IRouteGlobalPolicy>(true).ForEach(t =>
+            asm.GetTypesDerivedFrom<IRouteGlobalPolicy>(true).ForEach(t =>
                 {
                     policy.GlobalPolicies.Add(res.GetService(t) as IRouteGlobalPolicy);
                 });
