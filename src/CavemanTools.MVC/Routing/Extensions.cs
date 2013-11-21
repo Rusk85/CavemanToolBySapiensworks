@@ -13,6 +13,18 @@ namespace CavemanTools.Mvc.Routing
          }
 
         /// <summary>
+        /// Gets the controller name without the "Controler" suffix
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static string GetControllerName(this ActionCall action)
+        {
+            var name = action.Controller.Name;
+            return name.Substring(0, name.Length - 10);
+        }
+
+
+        /// <summary>
         /// Scans assembly and registers policies. Uses dependency resolver
         /// </summary>
         /// <param name="policy"></param>

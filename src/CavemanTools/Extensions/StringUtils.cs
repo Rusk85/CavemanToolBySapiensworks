@@ -159,7 +159,9 @@ namespace System
 		/// <returns></returns>
 		public static bool IsEmail(this string text)
 		{
-			return Regex.IsMatch(text, @"^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$");
+			return Regex.IsMatch(text, @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" 
+    + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" 
+    + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$");
 		}
 
         /// <summary>

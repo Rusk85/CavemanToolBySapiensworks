@@ -15,22 +15,12 @@ namespace CavemanTools.Mvc.Routing
     public class HandlerRouteConvention:IRouteConvention
     {
       
-        //string[] GetUrlSegments(string name)
-        //{
-        //    var all = name.Split('_');
-        //    if (all.Length == 0)
-        //    {
-        //        return new string[0];
-        //    }
-        //    return all.Skip(1).Select(p => p.ToLowerInvariant()).ToArray();
-        //}
-
-        public bool Match(ActionCall actionCall)
+        public virtual bool Match(ActionCall actionCall)
         {
             return true;
         }
 
-        public IEnumerable<Route> Build(ActionCall action)
+        public virtual IEnumerable<Route> Build(ActionCall action)
         {
             
             var sb = new StringBuilder();
