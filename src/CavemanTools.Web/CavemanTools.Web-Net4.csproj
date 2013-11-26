@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F4EE2A4A-F54C-40AE-B561-93CD3B2F050A}</ProjectGuid>
+    <ProjectGuid>{B1B0A041-B3F8-4977-A74B-1F78DDD88357}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HtmlConventions.Tests</RootNamespace>
-    <AssemblyName>HtmlConventions.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>CavemanTools.Web</RootNamespace>
+    <AssemblyName>CavemanTools.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,51 +21,65 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\Net40\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Net40\CavemanTools.Web.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FakeItEasy">
-      <HintPath>..\packages\FakeItEasy.1.14.0\lib\net40\FakeItEasy.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.2.1.0.0\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.1\lib\net20\xunit.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.extensions">
-      <HintPath>..\packages\xunit.extensions.1.9.1\lib\net20\xunit.extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="general.cs" />
+    <Compile Include="AspNetCache.cs" />
+    <Compile Include="CavemanHashStrategy.cs" />
+    <Compile Include="ContextInstance.cs" />
+    <Compile Include="CookieCache.cs" />
+    <Compile Include="CookieExtensions.cs" />
+    <Compile Include="DefaultCookieEncryption.cs" />
+    <Compile Include="Email\EmailUtils.cs" />
+    <Compile Include="Email\TemplateEmailFormatter.cs" />
+    <Compile Include="EncryptedCookie.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Helpers\PaginationLinks.cs" />
+    <Compile Include="Helpers\Snippets.cs" />
+    <Compile Include="HenriFormatter.cs" />
+    <Compile Include="HttpContextRegistry.cs" />
+    <Compile Include="ICookieCache.cs" />
+    <Compile Include="ICookieEncryption.cs" />
+    <Compile Include="IHashPassword.cs" />
+    <Compile Include="IOnlineUserInfo.cs" />
+    <Compile Include="IOnlineUsersRepository.cs" />
+    <Compile Include="Localization\RequestLocale.cs" />
+    <Compile Include="MemoryOnlineUsersRepository.cs" />
+    <Compile Include="OnlineUserInfo.cs" />
+    <Compile Include="OnlineUsersData.cs" />
+    <Compile Include="Password.cs" />
+    <Compile Include="PasswordHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="RequestMetricsModule.cs" />
+    <Compile Include="RequestPersonalizationParameter.cs" />
+    <Compile Include="Sha256Password.cs" />
+    <Compile Include="WebExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CavemanTools\CavemanTools.csproj">
       <Project>{7dc37b55-c861-4740-a3cd-96c5f52adf32}</Project>
       <Name>CavemanTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlConventions\MvcHtmlConventions.csproj">
-      <Project>{e612379b-e7ad-449e-bab5-978b66d1e7ed}</Project>
-      <Name>MvcHtmlConventions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

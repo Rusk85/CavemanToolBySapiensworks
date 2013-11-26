@@ -276,7 +276,11 @@ namespace System
         /// <returns></returns>
         public static bool Is<T>(this object o)
         {
-           return o is T;
+            if (o is Type)
+            {
+                return (Type) o == typeof (T);
+            }
+            return o is T;
         }
 	}
 
