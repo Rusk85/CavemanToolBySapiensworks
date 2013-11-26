@@ -2,6 +2,8 @@
 //#r "mycustom.dll"
 using System;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 using CSake;
 using NuGet;   //comment it out if you don't create nuget packs or manipulate nuspec files
 
@@ -9,6 +11,8 @@ using NuGet;   //comment it out if you don't create nuget packs or manipulate nu
 //any class you create will be considered an inner class of the CSakeWrapper class
 
 const string SlnFile=@"../src/Caveman.sln";
+
+const string SlnFile_Net4=@"../src/Caveman-Net4.sln";
 
 const string SlnDir=@"../src";
 
@@ -19,19 +23,26 @@ const string PackageDir = @"temp/package";
 
 static string CurrentDir=Path.GetFullPath("./");
 
-static string[] Projects=new[]{"CavemanTools","CavemanTools.Web","CavemanTools.MVC"};
+static string[] Projects=new[]{"CavemanTools","CavemanTools.Web","CavemanTools.Mvc"};
 
+static bool Built=false;
+
+[SkipIf("Built",true)]
 public static void CleanUp()
 {
     TempDir.CleanupDir();
     SlnFile.MsBuildClean();         
+    SlnFile_Net4.MsBuildClean();         
 }
 
 
 [Depends("CleanUp")] 
+[SkipIf("Built",true)]
 public static void Build()
 {
     SlnFile.MsBuildRelease();
+    SlnFile_Net4.MsBuildRelease();
+    Built=true;
 }
 
 [Default]
@@ -45,29 +56,72 @@ public static void Local()
     }
 }
 
+[Depends("Build")]
+public static void Pack()
+{
+   Pack("CavemanTools");
+
+}
+
+// [Depends("Build")]
+// public static void Pack_Web()
+// {
+   // Pack("CavemanTools.Web",new[]{"CavemanTools"});
+// }
+
+
+static void Pack(string project,string[] deps=null)
+{
+    PackageDir.MkDir();
+    var nuspecFile=Path.Combine(CurrentDir,project+".nuspec");
+    
+    Dictionary<string,string> depsVersions=new Dictionary<string,string>();
+    if (deps!=null)
+    {
+        foreach(var dep in deps)
+        {
+            depsVersions[dep]=GetVersion(dep);            
+        }
+    }
+    
+    UpdateVersion(nuspecFile,project,depsVersions);
+    BuildNuget(project,Path.Combine(SlnDir,project));
+}
+
 //------------------------------ Utils ----------------
 
 //updates version in nuspec file
-static void UpdateVersion(string nuspecFile,string assemblyName)
+static void UpdateVersion(string nuspecFile,string assemblyName,Dictionary<string,string> localDeps=null)
 {
     var nuspec=nuspecFile.AsNuspec();   
     nuspec.Metadata.Version=GetVersion(assemblyName);
+    if (localDeps!=null)
+    {
+        foreach(var kv in localDeps)
+        {
+            nuspec.AddDependency(kv.Key,kv.Value);
+        }
+    }
     nuspec.Save(TempDir);    
 }
 
 //basePath= relative path for package files source. Usually is the project dir.
 static void BuildNuget(string nuspecFile,string basePath)
 {
-    if (!nuspecFile.EndsWith(".nuspec"))
-    {
+    //if (!nuspecFile.EndsWith(".nuspec"))
+    //{
+      var project=nuspecFile;  
         nuspecFile+=".nuspec";
-    }
+    //}
     Path.Combine(TempDir,nuspecFile).CreateNuget(basePath,PackageDir);    
 }
 
 static string GetVersion(string asmName)
 {
-   throw new NotImplementedException();
-   //return Path.Combine(ReleaseDir,asmName).GetAssemblyVersion().ToSemanticVersion().ToString();
+    return Path.Combine(GetReleaseDir(asmName),"Net45",asmName+".dll").GetAssemblyVersion().ToSemanticVersion().ToString();
 }
 
+static string GetReleaseDir(string project)
+{
+ return Path.Combine(SlnDir,project,"bin","Release");
+}
