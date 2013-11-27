@@ -159,7 +159,9 @@ namespace System
 		/// <returns></returns>
 		public static bool IsEmail(this string text)
 		{
-			return Regex.IsMatch(text, @"^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$");
+			return Regex.IsMatch(text, @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|" 
+    + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)" 
+    + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$");
 		}
 
         /// <summary>
@@ -174,14 +176,16 @@ namespace System
         }
 		
 	/// <summary>
-	/// Generates a random string of the specified length
+	/// Generates a random string of the specified length starting with prefix
 	/// </summary>
-	/// <param name="a"></param>
+	/// <param name="prefix"></param>
 	/// <param name="length"></param>
 	/// <returns></returns>
-        public static string GenerateRandomString(this string a, int length)
-        {
-            return RandomString(length);
+        public static string GenerateRandomString(this string prefix, int length)
+	{
+	    if (prefix == null) prefix = "";
+	    if (length <= prefix.Length) return prefix;
+        return prefix+CreateRandomString(length-prefix.Length);
         }
 
 		/// <summary>
@@ -189,18 +193,24 @@ namespace System
 		/// </summary>
 		/// <param name="length">Maximum string length</param>
 		/// <returns></returns>
-		public static string RandomString(int length)
+		public static string CreateRandomString(int length)
 		{
-			var _random = new Random();
-			StringBuilder builder = new StringBuilder();
-			for (int i = 0; i < length; i++)
-			{
+		    var buff = new byte[length];
+            var _random = new Random();
+            
+            _random.NextBytes(buff);
 
-				//26 letters in the alfabet, ascii + 65 for the capital letters
-				builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * _random.NextDouble() + 65))));
+		    return Convert.ToBase64String(buff).Substring(0,length);
 
-			}
-			return builder.ToString();
+            //StringBuilder builder = new StringBuilder();
+            //for (int i = 0; i < length; i++)
+            //{
+
+            //    //26 letters in the alfabet, ascii + 65 for the capital letters
+            //    builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * _random.NextDouble() + 65))));
+
+            //}
+            //return builder.ToString();
 
 		}
         

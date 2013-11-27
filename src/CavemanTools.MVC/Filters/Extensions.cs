@@ -48,7 +48,7 @@ namespace CavemanTools.Mvc.Filters
         public static void RegisterPolicies(this FiltersPolicy policy, Assembly asm)
         {
             var resolve = DependencyResolver.Current;
-            asm.GetTypesImplementing<IFilterPolicy>()
+            asm.GetTypesDerivedFrom<IFilterPolicy>()
                 .Select(t => resolve.GetService(t))
                 .Cast<IFilterPolicy>()
                 .ForEach(f =>

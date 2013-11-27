@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace System
@@ -81,6 +82,48 @@ namespace System
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="o"></param>
+        /// <param name="interfaceName">The intuitive interface name</param>
+        /// <param name="genericType">Interface's generic arguments types</param>
+        /// <returns></returns>
+        public static bool ImplementsGenericInterface(this object o, string interfaceName, params Type[] genericType)
+        {
+            Type tp = o.GetType();
+            if (o is Type)
+            {
+                tp = (Type)o;
+            }
+            var interfaces = tp.GetInterfaces().Where(i => i.IsGenericType && i.Name.StartsWith(interfaceName));
+            if (genericType.Length == 0)
+            {
+                return interfaces.Any();
+            }
+
+            return interfaces.Any(
+                i =>
+                {
+                    var args = i.GetGenericArguments();
+                    return args.HasTheSameElementsAs(genericType);
+                });
+        }
+
+        public static bool ExtendsGenericType(this Type tp, string typeName, params Type[] genericArgs)
+        {
+            tp.MustNotBeNull();
+            typeName.MustNotBeEmpty();
+            if (tp.BaseType == null) return false;
+            var baseType = tp.BaseType;
+            if (!baseType.IsGenericType || !baseType.Name.StartsWith(typeName)) return false;
+            if (genericArgs.Length > 0)
+            {
+                return baseType.GetGenericArguments().HasTheSameElementsAs(genericArgs);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="tp">Generic type</param>
         /// <param name="index">0 based index of the generic argument</param>
         /// <exception cref="InvalidOperationException">When the type is not generic</exception>
@@ -115,9 +158,7 @@ namespace System
            return true;
         }
        
-        //static object getLock = new object();
-	   
-	    /// <summary>
+        /// <summary>
         /// This always returns false if the type is taken from an instance.
         /// That is always use typeof
         /// </summary>
@@ -172,6 +213,24 @@ namespace System
             if (t == null) throw new ArgumentNullException("t");
             return String.Format("{0}, {1}", t.FullName, Assembly.GetAssembly(t).GetName().Name);
         }
+
+        public static object GetDefault(this Type type)
+        {
+            if (type.IsValueType) return Activator.CreateInstance(type);
+            return null;
+        }
+
+        /// <summary>
+        /// Returns namespace without the assembly name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string StripNamespaceAssemblyName(this Type type)
+        {
+            var asmName = type.Assembly.GetName().Name;
+            return type.Namespace.Substring(asmName.Length + 1);
+        }
+           
 	}
 }
 
