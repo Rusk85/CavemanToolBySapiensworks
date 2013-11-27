@@ -50,7 +50,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// Hash a string using the SHA512 algorithm.  128 bytes(hex): 256 unicode chars
+		/// Hash a string using the SHA512 algorithm. 128 unicode chars, 256 bytes
 		/// </summary>
 		public static string Sha512(this string plainMessage)
 		{
@@ -215,7 +215,7 @@ namespace System
 
 		public static byte[] GenerateEncryptionKey()
 		{
-			string t = StringUtils.RandomString(16);
+			string t = StringUtils.CreateRandomString(16);
 			return Encoding.Unicode.GetBytes(t);
 
 		}

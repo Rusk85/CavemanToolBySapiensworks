@@ -9,18 +9,49 @@ namespace CavemanTools.Mvc.Extensions
     /// </summary>
     public class ThemeInfo
     {
+        /// <summary>
+        /// Just the name. Can be empty. Default is Themes
+        /// </summary>
         public static string ThemesDirectoryName = "Themes";
-        public static string CssDirectoryName = "Style";
+        /// <summary>
+        /// Just the name. Can be empty. Default is Style
+        /// </summary>
+        public static string StyleDirectoryName = "Style";
+        /// <summary>
+        /// Just the name. Can be empty. Default is Scripts
+        /// </summary>
         public static string ScriptsDirectoryName = "Scripts";
+        /// <summary>
+        /// Just the name. If empty then the views are in the theme directory root.
+        /// Default is Views
+        /// </summary>
+        public static string ViewsDirectoryName = "Views";
 
         internal ThemeInfo(HttpContextBase ctx,string theme)
         {
             if (ctx == null) throw new ArgumentNullException("ctx");
             Name = theme;
             BaseUrl=UrlHelper.GenerateContentUrl("~/"+ThemesDirectoryName+"/"+Name,ctx);
-            StyleUrl = BaseUrl + "/"+CssDirectoryName;
-            ScriptsUrl = BaseUrl + "/"+ScriptsDirectoryName;
-            ViewsPath = string.Format("~/{1}/{0}/Views", Name,ThemesDirectoryName);
+
+            StyleUrl = ScriptsUrl =BaseUrl;
+            if (!StyleDirectoryName.IsNullOrEmpty())
+            {
+                StyleUrl+= "/"+StyleDirectoryName;
+            }
+
+            if (!ScriptsDirectoryName.IsNullOrEmpty())
+            {
+                ScriptsUrl += "/" + ScriptsDirectoryName;
+            }
+            
+            if (!ViewsDirectoryName.IsNullOrEmpty())
+            {
+                ViewsPath = string.Format("~/{1}/{0}/{2}", Name,ThemesDirectoryName,ViewsDirectoryName);
+            }
+            else
+            {
+                ViewsPath = "~/{0}/{1}".ToFormat(ThemesDirectoryName, Name);
+            }
         }
         /// <summary>
         /// Gets current theme name

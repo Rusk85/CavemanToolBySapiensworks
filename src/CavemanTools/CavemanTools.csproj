@@ -15,6 +15,8 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,16 +28,18 @@
     <WarningLevel>2</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\Net45\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\CavemanTools.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Net45\CavemanTools.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Data\JsonStatus.cs" />
     <Compile Include="Data\JsonStruct.cs" />
+    <Compile Include="DisposableList.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="Extensions\AssertionsExtensions.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="Infrastructure\ActivatorContainer.cs" />
     <Compile Include="Infrastructure\LocalMemoryCache.cs" />
     <Compile Include="Infrastructure\ServiceLocator.cs" />
+    <Compile Include="ISupportMemento.cs" />
     <Compile Include="Pagination.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
     <Compile Include="Infrastructure\ICacheData.cs" />
@@ -88,19 +94,9 @@
     <Compile Include="Model\IdName.cs" />
     <Compile Include="Model\PagerHelper.cs" />
     <Compile Include="Model\ValueObjects\UrlSlug.cs" />
-    <Compile Include="Model\Validation\Attributes\ForbidWordsAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\RegularExpressionAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\UrlFriendlyAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\StringLengthAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\RequiredAttribute.cs" />
     <Compile Include="Model\Validation\IAddError.cs" />
-    <Compile Include="Model\Validation\Attributes\MinimumLengthAttribute.cs" />
-    <Compile Include="Model\Validation\Attributes\EmailAttribute.cs" />
     <Compile Include="Model\Validation\ValidationBag.cs" />
     <Compile Include="Model\Validation\ValidationItem.cs" />
-    <Compile Include="Model\Validation\ValidationService.cs" />
-    <Compile Include="Model\Validation\ValidationServiceItem.cs" />
-    <Compile Include="Model\Validation\ValidationUtils.cs" />
     <Compile Include="Lists\ModifiedSet.cs" />
     <Compile Include="Logging\WindowsEventLogWriter.cs" />
     <Compile Include="Logging\ILogWriter.cs" />
@@ -111,6 +107,7 @@
     <Compile Include="Percentage.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
     <Compile Include="Reflection\PrivateReflectionDynamicObject.cs" />
+    <Compile Include="SessionId.cs" />
     <Compile Include="SingletonsRegistry.cs" />
     <Compile Include="Subscriptions.cs" />
     <Compile Include="Testing\BenchmarkResult.cs" />

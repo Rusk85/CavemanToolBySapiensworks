@@ -1,18 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools", "CavemanTools\CavemanTools.csproj", "{7DC37B55-C861-4740-A3CD-96C5F52ADF32}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc", "CavemanTools.MVC\CavemanTools.Mvc.csproj", "{CC64B941-C7E5-4F06-9826-77D3C54827BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTests", "XTests\XTests.csproj", "{218C8E67-EA90-4D58-9B27-7D9B21074EF3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AF9FF5E0-7A2A-4EFE-8DAA-1206DF0C7000}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Mvc4", "CavemanTools.Mvc4\CavemanTools.Mvc4.csproj", "{FCAD6B51-6573-4E28-949D-FBF0631A0613}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CavemanTools.Web", "CavemanTools.Web\CavemanTools.Web.csproj", "{B1B0A041-B3F8-4977-A74B-1F78DDD88357}"
 EndProject
@@ -36,16 +31,6 @@ Global
 		{7DC37B55-C861-4740-A3CD-96C5F52ADF32}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7DC37B55-C861-4740-A3CD-96C5F52ADF32}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7DC37B55-C861-4740-A3CD-96C5F52ADF32}.Release|x86.ActiveCfg = Release|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{CC64B941-C7E5-4F06-9826-77D3C54827BA}.Release|x86.ActiveCfg = Release|Any CPU
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -56,16 +41,6 @@ Global
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{218C8E67-EA90-4D58-9B27-7D9B21074EF3}.Release|x86.ActiveCfg = Release|Any CPU
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|x86.ActiveCfg = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|x86.Build.0 = Debug|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Any CPU.ActiveCfg = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.Build.0 = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.ActiveCfg = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.Build.0 = Release|x86
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B0A041-B3F8-4977-A74B-1F78DDD88357}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

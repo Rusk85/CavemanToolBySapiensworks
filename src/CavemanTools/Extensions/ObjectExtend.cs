@@ -267,6 +267,21 @@ namespace System
         {
             return (T)o;
         }
+
+        /// <summary>
+        /// Shortcut for 'object is type'
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        public static bool Is<T>(this object o)
+        {
+            if (o is Type)
+            {
+                return (Type) o == typeof (T);
+            }
+            return o is T;
+        }
 	}
 
     

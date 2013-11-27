@@ -32,6 +32,11 @@ namespace CavemanTools.Infrastructure
             return Resolve(type);
         }
 
+        public T ResolveOptional<T>() where T : class
+        {
+            return (T)ResolveOptional(typeof (T));
+        }
+
         public IEnumerable<T> GetServices<T>()
         {
             yield return Resolve<T>();

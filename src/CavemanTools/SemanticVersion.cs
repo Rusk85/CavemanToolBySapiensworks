@@ -172,6 +172,16 @@ namespace CavemanTools
             Setup(major, minor, patch, preRelease, build);
         }
 
+        /// <summary>
+        /// Creates semantic version from Version
+        /// </summary>
+        /// <param name="version">The Revision number is ignored</param>
+        public SemanticVersion(Version version,string preRelease=null,string build=null)
+        {
+            Setup((uint)version.Major,(uint)version.Minor,(uint)version.Build,preRelease,build);
+        }
+
+
         private void Setup(uint major, uint minor, uint patch, string preRelease, string build)
         {
             Major = major;

@@ -8,6 +8,12 @@ namespace CavemanTools.Model.ValueObjects
     public class Email:AbstractValueObject<string>,IEquatable<Email>
     {
         
+        public static Email CreateRandomTestValue()
+        {
+            return new Email("test"+Guid.NewGuid().ToString().Substring(4)+"@exmple.com");
+        }
+            
+
         public Email(string value) : base(value)
         {
             
@@ -26,6 +32,11 @@ namespace CavemanTools.Model.ValueObjects
         public bool Equals(Email other)
         {
             return other != null && other.Value == Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals((Email) obj);
         }
     }
 }

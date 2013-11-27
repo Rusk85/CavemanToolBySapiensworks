@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CavemanTools.Web</RootNamespace>
     <AssemblyName>CavemanTools.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,15 +21,17 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\Net45\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\CavemanTools.Web.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Net45\CavemanTools.Web.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,24 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetCache.cs" />
-    <Compile Include="Authentication\AuthenticationData.cs" />
-    <Compile Include="Authentication\AuthenticationService.cs" />
-    <Compile Include="Authentication\AuthorizationScopeGuid.cs" />
-    <Compile Include="Authentication\AuthorizationScopeId.cs" />
-    <Compile Include="Authentication\CavemanAuthenticationModule.cs" />
-    <Compile Include="Authentication\CavemanIdentity.cs" />
-    <Compile Include="Authentication\DefaultAuthorizationScopeId.cs" />
-    <Compile Include="Authentication\Extensions.cs" />
-    <Compile Include="Authentication\IAuthenticationService.cs" />
-    <Compile Include="Authentication\IAuthenticationServiceStorage.cs" />
-    <Compile Include="Authentication\IUserContextGroup.cs" />
-    <Compile Include="Authentication\IUserIdValue.cs" />
-    <Compile Include="Authentication\IUserRightsContext.cs" />
-    <Compile Include="Authentication\UserContextGroup.cs" />
-    <Compile Include="Authentication\UserGuid.cs" />
-    <Compile Include="Authentication\UserId.cs" />
-    <Compile Include="Authentication\UserIdBase.cs" />
-    <Compile Include="Authentication\UserRightsContext.cs" />
+    <Compile Include="CavemanHashStrategy.cs" />
     <Compile Include="ContextInstance.cs" />
     <Compile Include="CookieCache.cs" />
     <Compile Include="CookieExtensions.cs" />
@@ -68,7 +54,7 @@
     <Compile Include="Email\EmailUtils.cs" />
     <Compile Include="Email\TemplateEmailFormatter.cs" />
     <Compile Include="EncryptedCookie.cs" />
-    <Compile Include="HashedPassword.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Helpers\PaginationLinks.cs" />
     <Compile Include="Helpers\Snippets.cs" />
     <Compile Include="HenriFormatter.cs" />
@@ -83,20 +69,11 @@
     <Compile Include="OnlineUserInfo.cs" />
     <Compile Include="OnlineUsersData.cs" />
     <Compile Include="Password.cs" />
+    <Compile Include="PasswordHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestMetricsModule.cs" />
     <Compile Include="RequestPersonalizationParameter.cs" />
-    <Compile Include="Security\AccessRules\IValidateCredentials.cs" />
-    <Compile Include="Security\AccessRules\IValidateCredentialsFactory.cs" />
-    <Compile Include="Security\AccessRules\MembersOnlyAccess.cs" />
-    <Compile Include="Security\AccessRules\MustBeInGroupAccess.cs" />
-    <Compile Include="Security\AccessRules\PublicAccess.cs" />
-    <Compile Include="Security\AccessRules\ValidateCredentialsFactory.cs" />
-    <Compile Include="Security\AuthenticationUtils.cs" />
-    <Compile Include="Security\IUserRightsRepository.cs" />
-    <Compile Include="Security\UserRightsModule.cs" />
     <Compile Include="Sha256Password.cs" />
-    <Compile Include="UserBasicRights.cs" />
     <Compile Include="WebExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

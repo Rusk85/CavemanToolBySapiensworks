@@ -29,6 +29,17 @@ namespace System.Reflection
             return asm.GetTypesDerivedFrom<T>(instantiable);
         }
 
+        /// <summary>
+        /// Searches and instantiate types derived from T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="asm"></param>
+        /// <returns></returns>
+	    public static IEnumerable<T> GetInstancesOfTypesDerivedFrom<T>(this Assembly asm) where T : class, new()
+	    {
+	        return asm.GetTypesDerivedFrom<T>(true).Select(t => (T)Activator.CreateInstance(t));
+	    }
+
 		public static IEnumerable<Type> GetTypesWithAttribute<T>(this Assembly asm) where T:Attribute
 		{
 			if (asm == null) throw new ArgumentNullException("asm");

@@ -3,13 +3,21 @@
   <metadata> 
     <id>CavemanTools.Mvc</id> 
 	<title>CavemanTools.Mvc</title>
-    <version></version> 
+    <version>0.0.1</version> 
     <authors>Mihai Mogosanu</authors>
-    <description>Asp.Net Mvc 3 toolkit for faster web application development with less code. Features SmartController, themed enabled FlexibleViewEngine, Rights Based Authorization, convention based Routing,  convention based Action Filters and easy to use helpers. </description> 
+    <description>Asp.Net Mvc 5 toolkit for faster web application development with less code. Features SmartController, convention based FlexibleViewEngine, convention based Routing,  convention based Action Filters and easy to use helpers. </description> 
     <language>en-US</language>
-	<tags>toolkit mvc asp.net viewengine themes skins dry controller smart authorization razor route filter</tags>
+	<tags>toolkit utility mvc asp.net viewengine skins dry controller smart slim</tags>
     <licenseUrl>http://cavemantoolsmvc.codeplex.com/license</licenseUrl>
     <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/CToolsMvc</projectUrl>
+  <dependencies>
+   <dependency id="Microsoft.AspNet.Mvc" version="5.0.0" />
+  </dependencies>
   </metadata> 
+  <files>
+        <file src="bin\Release\**\CavemanTools.Mvc*" target="lib"></file>
+        <file src="bin\Release\**\CavemanTools.Web*" target="lib"></file>
+        
+    </files>  
 
 </package>

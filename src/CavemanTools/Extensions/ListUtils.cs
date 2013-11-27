@@ -13,7 +13,11 @@ namespace System.Collections.Generic
 		/// <returns></returns>
         public static bool HasTheSameElementsAs<T>(this IEnumerable<T> first,IEnumerable<T> second)
 		{
-		    var cnt1 = first.Count();
+		    first.MustNotBeNull();
+            second.MustNotBeNull();
+
+            var cnt1 = first.Count();
+		    if (cnt1 != second.Count()) return false;
 		    T item1 = default(T);
 		    T item2 = default(T);
             for(int i=0;i<cnt1;i++)
@@ -185,23 +189,37 @@ namespace System.Collections.Generic
             return defValue;
         }
 
-        public static void AddIfNotPresent<T>(this IList<T> list, T item)
+        public static bool AddIfNotPresent<T>(this IList<T> list, T item)
         {
-            list.MustNotBeEmpty();
-            if (!list.Contains(item)) list.Add(item);
-            
+            list.MustNotBeNull();
+            if (!list.Contains(item))
+            {
+                list.Add(item);
+                return true;
+            }
+            return false;
         }
-
-        public static void RemoveAll<T>(this IList<T> items, Func<T, bool> predicate)
+        /// <summary>
+        /// Returns number of items removed
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static int RemoveAll<T>(this IList<T> items, Func<T, bool> predicate)
         {
             items.MustNotBeEmpty();
             predicate.MustNotBeNull();
-        
+            var removed = 0;
             for (int i = items.Count - 1; i >= 0; i--)
             {
-                if (predicate(items[i])) items.RemoveAt(i);
+                if (predicate(items[i]))
+                {
+                    items.RemoveAt(i);
+                    removed++;
+                }
             }
-
+            return removed;
         }
 	}
 }

@@ -49,6 +49,15 @@ namespace XTests
             Assert.Equal(result,rez);
         }
 
+        [Fact]
+        public void semantic_from_version()
+        {
+            var version = new Version("1.0.0.23");
+            var sem = new SemanticVersion(version);
+            var sem2 = new SemanticVersion("1.0.0");
+            Assert.Equal(sem2,sem);
+        }
+
         private void Write(string format, params object[] param)
         {
             Console.WriteLine(format, param);
