@@ -40,7 +40,7 @@ namespace System.Reflection
 		/// <returns></returns>
 		public static T GetSingleAttribute<T>(this ICustomAttributeProvider memberInfo) where T : Attribute
 		{
-			if (memberInfo == null) throw new ArgumentNullException("memberInfo");
+            if (memberInfo == null) throw new ArgumentNullException("memberInfo");
 			var list = memberInfo.GetCustomAttributes(typeof(T), false);
 			if (list.Length > 0) return (T)list[0];
 			return null;
