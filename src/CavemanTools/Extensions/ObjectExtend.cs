@@ -282,6 +282,20 @@ namespace System
             }
             return o is T;
         }
+
+	    public static T CreateIfNull<T>(this T instance, Action<T> config = null) where T : new()
+	    {
+	        if (instance != null)
+	        {
+	            return instance;
+	        }
+            instance=new T();
+	        if (config != null)
+	        {
+	            config(instance);
+	        }
+	        return instance;
+	    }
 	}
 
     
