@@ -110,6 +110,7 @@
     <Compile Include="General.cs" />
     <Compile Include="Lists\KeyValueStoreTests.cs" />
     <Compile Include="LoggingHelperTests.cs" />
+    <Compile Include="Model\TagTests.cs" />
     <Compile Include="OverridableOptionsTests.cs" />
     <Compile Include="PaginationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,7 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Debug\" />
-    <Folder Include="Model\" />
     <Folder Include="Validation\" />
   </ItemGroup>
   <ItemGroup>
