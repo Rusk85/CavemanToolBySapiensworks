@@ -72,10 +72,11 @@ namespace CavemanTools
         public static SessionId NewId()
         {
             var bytes = new byte[BytesLength];
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetNonZeroBytes(bytes);
-            }
+            RandomNumberGenerator.Create().GetBytes(bytes);
+            //using (var rng = new RNGCryptoServiceProvider())
+            //{
+            //    rng.GetNonZeroBytes(bytes);
+            //}
             return new SessionId(bytes);
         }
         /// <summary>

@@ -8,7 +8,6 @@ namespace CavemanTools.Model.ValueObjects
     public class Tag : AbstractValueObject<string>,IEquatable<Tag>,IEquatable<string>
     {
        
-
         /// <summary>
         /// Tag validation regex
         /// </summary>
