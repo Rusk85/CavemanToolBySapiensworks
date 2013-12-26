@@ -3,13 +3,18 @@
 
 namespace CavemanTools
 {
-    public class EnumerableCache<T>
+    /// <summary>
+    /// Used to maintain a fixed sized list for history purposes.
+    /// Intended to support idempotency (by storing last n message ids)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class LimitedList<T>
     {
         private readonly int _size;
         private T[] _data;
         private int _i;
 
-        public EnumerableCache(int size=5)
+        public LimitedList(int size=5)
         {
             _size = size;
             _data = new T[size];

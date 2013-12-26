@@ -9,11 +9,11 @@ namespace XTests.Model
     public class EnumerableCacheTests
     {
         private Stopwatch _t = new Stopwatch();
-        private EnumerableCache<int> _sut;
+        private LimitedList<int> _sut;
 
         public EnumerableCacheTests()
         {
-            _sut = new EnumerableCache<int>(2);
+            _sut = new LimitedList<int>(2);
         }
 
         [Fact]
