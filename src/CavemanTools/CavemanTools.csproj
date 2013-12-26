@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumerableCache.cs" />
     <Compile Include="Data\JsonStatus.cs" />
     <Compile Include="Data\JsonStruct.cs" />
     <Compile Include="DisposableList.cs" />
@@ -105,9 +106,11 @@
     <Compile Include="Extensions\LinqExt.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\AttributeUtils.cs" />
+    <Compile Include="PasswordHash.cs" />
     <Compile Include="Percentage.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
     <Compile Include="Reflection\PrivateReflectionDynamicObject.cs" />
+    <Compile Include="Salt.cs" />
     <Compile Include="SessionId.cs" />
     <Compile Include="SingletonsRegistry.cs" />
     <Compile Include="Subscriptions.cs" />
