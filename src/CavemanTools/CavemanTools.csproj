@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumerableCache.cs" />
+    <Compile Include="LimitedList.cs" />
     <Compile Include="Data\JsonStatus.cs" />
     <Compile Include="Data\JsonStruct.cs" />
     <Compile Include="DisposableList.cs" />
@@ -70,6 +70,7 @@
     <Compile Include="Infrastructure\LocalMemoryCache.cs" />
     <Compile Include="Infrastructure\ServiceLocator.cs" />
     <Compile Include="ISupportMemento.cs" />
+    <Compile Include="Model\ValueObjects\DomainString.cs" />
     <Compile Include="Model\ValueObjects\Tag.cs" />
     <Compile Include="Pagination.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
