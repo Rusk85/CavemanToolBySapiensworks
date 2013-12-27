@@ -72,6 +72,7 @@
     <Compile Include="ISupportMemento.cs" />
     <Compile Include="LimitedList.cs" />
     <Compile Include="Model\ValueObjects\DomainString.cs" />
+    <Compile Include="Model\ValueObjects\Extensions.cs" />
     <Compile Include="Model\ValueObjects\Tag.cs" />
     <Compile Include="Pagination.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />

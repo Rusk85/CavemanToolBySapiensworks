@@ -36,6 +36,11 @@ namespace CavemanTools.Model.ValueObjects
         {
             return other != null && other == _value;
         }
+
+        public override string ToString()
+        {
+            return _value;
+        }
     }
 
    
