@@ -129,7 +129,16 @@ namespace System.Reflection
             return (o.GetType() == typeof(T));
         }
 
-       
+        public static Type GetMemberType(this MemberInfo memberInfo)
+        {
+            if (memberInfo is MethodInfo)
+                return ((MethodInfo)memberInfo).ReturnType;
+            if (memberInfo is PropertyInfo)
+                return ((PropertyInfo)memberInfo).PropertyType;
+            if (memberInfo is FieldInfo)
+                return ((FieldInfo)memberInfo).FieldType;
+            return null;
+        }
 
         /// <summary>
         /// Gets the value of a property
@@ -141,7 +150,6 @@ namespace System.Reflection
         public static T GetPropertyValue<T>(this object @object, string propertyName)
         {
             return GetPropertyValue(@object, propertyName).ConvertTo<T>();
-
         }
 
 
