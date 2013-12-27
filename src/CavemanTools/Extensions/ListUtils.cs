@@ -28,6 +28,13 @@ namespace System.Collections.Generic
             }
 		    return true;
 		}
+
+        [Obsolete("Use Diff method")]
+	    public static IModifiedSet<T> Compare<T>(this IEnumerable<T> fresh, IEnumerable<T> old) where T : IEquatable<T>
+        {
+            return fresh.Diff(old);
+        }
+        
         /// <summary>
 		/// Compares two sequences and returns the added or removed items.
 		/// </summary>
@@ -35,7 +42,7 @@ namespace System.Collections.Generic
 		/// <param name="fresh">Recent sequence</param>
 		/// <param name="old">Older sequence used as base of comparison</param>
 		/// <returns></returns>
-		public static IModifiedSet<T> Compare<T>(this IEnumerable<T> fresh, IEnumerable<T> old)	where T:IEquatable<T>
+		public static IModifiedSet<T> Diff<T>(this IEnumerable<T> fresh, IEnumerable<T> old)	where T:IEquatable<T>
 		{
 			if (fresh == null) throw new ArgumentNullException("fresh");
 			if (old == null) throw new ArgumentNullException("old");

@@ -35,7 +35,7 @@ namespace CavemanTools.Model.ValueObjects
         /// <returns></returns>
         public static IEnumerable<Tag> CreateFrom(string value)
         {
-            if (string.IsNullOrEmpty(value)) return null;
+            if (string.IsNullOrEmpty(value)) return new Tag[0];
             return value.Split(',')
                 .Select(v => v.Trim())
                 .Where(IsValid)
