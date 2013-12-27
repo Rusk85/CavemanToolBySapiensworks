@@ -107,6 +107,25 @@ namespace System
                 });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="genericInterfaceType"></param>
+        /// <param name="genericArgTypes">Leave empty to check for open generics</param>
+        /// <returns></returns>
+        public static bool ImplementsGeneric(this Type type, Type genericInterfaceType, params Type[] genericArgTypes)
+        {
+            var interf = type.GetInterfaces().FirstOrDefault(t => t.Name == genericInterfaceType.Name);
+            if (interf == null) return false;
+
+            if (genericArgTypes.Length > 0)
+            {
+                return genericInterfaceType.MakeGenericType(genericArgTypes) == interf;              
+            }
+            return true;
+        }
+
         public static bool ExtendsGenericType(this Type tp, string typeName, params Type[] genericArgs)
         {
             tp.MustNotBeNull();
