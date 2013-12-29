@@ -124,5 +124,10 @@ namespace System
                 }
             }            
         }
+
+        public static void MustBeGeneric(this Type type)
+        {
+            type.MustComplyWith(t => t.IsGenericType, "Type must be a generic type");
+        }
     }
 }

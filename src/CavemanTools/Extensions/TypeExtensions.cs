@@ -119,9 +119,9 @@ namespace System
             var interf = type.GetInterfaces().FirstOrDefault(t => t.Name == genericInterfaceType.Name);
             if (interf == null) return false;           
 
-            if (genericInterfaceType.GenericTypeArguments.Length > 0)
+            if (genericInterfaceType.GenericTypeArguments().Length > 0)
             {
-                return genericInterfaceType.GenericTypeArguments.HasTheSameElementsAs(interf.GenericTypeArguments);
+                return genericInterfaceType.GenericTypeArguments().HasTheSameElementsAs(interf.GenericTypeArguments());
             }
             return true;
         }
@@ -138,9 +138,9 @@ namespace System
             {
                 if (baseType.Name == genericType.Name)
                 {
-                    if (genericType.GenericTypeArguments.Any())
+                    if (genericType.GenericTypeArguments().Any())
                     {
-                        found = baseType.GenericTypeArguments.HasTheSameElementsAs(genericType.GenericTypeArguments);
+                        found = baseType.GenericTypeArguments().HasTheSameElementsAs(genericType.GenericTypeArguments());
                     }
                     else
                     {
@@ -166,7 +166,18 @@ namespace System
         {
             tp.MustNotBeNull(); 
             if (!tp.IsGenericType) throw new InvalidOperationException("Provided type is not generic");
-            return tp.GenericTypeArguments[index];            
+            return tp.GenericTypeArguments()[index];            
+        }
+
+        static Type[] GenericTypeArguments(this Type type)
+        {
+            type.MustBeGeneric();
+#if Net4
+            return type.GetGenericArguments();
+#else
+            return type.GenericTypeArguments;
+
+#endif
         }
 
         /// <summary>
