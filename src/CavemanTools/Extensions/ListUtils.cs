@@ -182,6 +182,11 @@ namespace System.Collections.Generic
 			return items == null || !items.Any();
 		}
 
+	    public static bool HasItems<T>(this IEnumerable<T> items)
+	    {
+	        return !items.IsNullOrEmpty();
+	    }
+
         /// <summary>
         /// Gets typed value from dictionary or a default value if key is missing
         /// </summary>
