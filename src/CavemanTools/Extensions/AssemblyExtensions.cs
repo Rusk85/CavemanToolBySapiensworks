@@ -30,12 +30,12 @@ namespace System.Reflection
         }
 
         /// <summary>
-        /// Searches and instantiate types derived from T
+        /// Searches and instantiate types derived from T. Must contain a public parameterless constructor
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="asm"></param>
         /// <returns></returns>
-	    public static IEnumerable<T> GetInstancesOfTypesDerivedFrom<T>(this Assembly asm) where T : class, new()
+	    public static IEnumerable<T> GetInstancesOfTypesDerivedFrom<T>(this Assembly asm) where T : class
 	    {
 	        return asm.GetTypesDerivedFrom<T>(true).Select(t => (T)Activator.CreateInstance(t));
 	    }
