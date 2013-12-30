@@ -89,6 +89,18 @@ namespace XTests.Extensions
             typeof(Myimpl).ImplementsGenericInterface(type).Should().Be(result);  
         }
 
+
+        [Fact]
+        public void implements_generic_interface_with_specified_type_argument()
+        {
+            typeof(Myimpl).ImplementsGenericInterface(typeof(MyClass<>.IInternal<>),typeof(string),typeof(int)).Should().BeTrue();   
+        }
+        
+        [Fact]
+        public void extends_generic_type_with_specified_type_argument()
+        {
+            typeof(MyImpl2).InheritsGenericType(typeof(MyClass<>),typeof(string)).Should().BeTrue();
+        }
         protected void Write(string format, params object[] param)
         {
             Console.WriteLine(format, param);
