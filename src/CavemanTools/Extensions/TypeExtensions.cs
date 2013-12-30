@@ -113,20 +113,25 @@ namespace System
         /// <param name="type"></param>
         /// <param name="genericInterfaceType">It can be an open or close generics interface</param>
         /// <returns></returns>
-        public static bool ImplementsGenericInterface(this Type type, Type genericInterfaceType)
+        public static bool ImplementsGenericInterface(this Type type, Type genericInterfaceType,params Type[] genericArgs)
         {
             genericInterfaceType.MustComplyWith(t=>t.IsGenericType,"Type must be of a generic interface");
             var interf = type.GetInterfaces().FirstOrDefault(t => t.Name == genericInterfaceType.Name);
-            if (interf == null) return false;           
+            if (interf == null) return false;
 
-            if (genericInterfaceType.GenericTypeArguments().Length > 0)
+            var comparer = genericInterfaceType.GenericTypeArguments().Any()
+                ? genericInterfaceType.GenericTypeArguments()
+                : genericArgs;
+            
+            if (comparer.Length > 0)
             {
-                return genericInterfaceType.GenericTypeArguments().HasTheSameElementsAs(interf.GenericTypeArguments());
+                return interf.GenericTypeArguments().HasTheSameElementsAs(comparer);
             }
+          
             return true;
         }
 
-        public static bool InheritsGenericType(this Type tp, Type genericType)
+        public static bool InheritsGenericType(this Type tp, Type genericType,params Type[] genericArgs)
         {
             tp.MustNotBeNull();
             genericType.MustComplyWith(t => t.IsGenericType, "Type must be a generic type");
@@ -138,9 +143,12 @@ namespace System
             {
                 if (baseType.Name == genericType.Name)
                 {
-                    if (genericType.GenericTypeArguments().Any())
+                    var comparer = genericType.GenericTypeArguments().Any()
+               ? genericType.GenericTypeArguments()
+               : genericArgs;
+                    if (comparer.Length>0)
                     {
-                        found = baseType.GenericTypeArguments().HasTheSameElementsAs(genericType.GenericTypeArguments());
+                        found = baseType.GenericTypeArguments().HasTheSameElementsAs(comparer);
                     }
                     else
                     {
