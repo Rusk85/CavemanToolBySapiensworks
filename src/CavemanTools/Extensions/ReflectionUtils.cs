@@ -152,6 +152,25 @@ namespace System.Reflection
             return GetPropertyValue(@object, propertyName).ConvertTo<T>();
         }
 
+        /// <summary>
+        /// Facade to set a value to a property or field
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="data"></param>
+        /// <param name="value"></param>
+        public static void SetValue(this MemberInfo member, object data,object value)
+        {
+            switch (member.MemberType)
+            {
+                case MemberTypes.Property:
+                    member.As<PropertyInfo>().SetValue(data,value);
+                    return;
+                case MemberTypes.Field:
+                    member.As<FieldInfo>().SetValue(data,value);
+                    return;
+            }
+            throw new NotSupportedException("Only fields and non indexed properties are supported");
+        }
 
         /// <summary>
         /// Gets the value of a public property

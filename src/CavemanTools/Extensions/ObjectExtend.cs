@@ -282,6 +282,11 @@ namespace System
             }
             return o is T;
         }
+        
+        public static bool IsNot<T>(this object o)
+        {
+            return !Is<T>(o);
+        }
 
 	    public static T CreateIfNull<T>(this T instance, Action<T> config = null) where T : new()
 	    {
