@@ -14,7 +14,7 @@ namespace CavemanTools.Model.ValueObjects
 
         protected static bool IsValid(string value, int minLength=1, int maxLength=75, string format = BaseFormat)
         {
-            var result = !value.IsNullOrEmpty() && value.Length >= minLength && value.Length<=maxLength;
+            var result = !value.IsNullOrEmpty(true) && value.Length >= minLength && value.Length<=maxLength;
             if (result)
             {
                 if (!format.IsNullOrEmpty())

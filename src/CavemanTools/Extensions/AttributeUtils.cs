@@ -37,18 +37,19 @@ namespace System.Reflection
 		/// </summary>
 		/// <typeparam name="T">Attribute</typeparam>
 		/// <param name="memberInfo">Custom Attribute provider</param>
+		/// <param name="inherit">True to lookup the hierarchy chain for the attribute</param>
 		/// <returns></returns>
-		public static T GetSingleAttribute<T>(this ICustomAttributeProvider memberInfo) where T : Attribute
+		public static T GetSingleAttribute<T>(this ICustomAttributeProvider memberInfo,bool inherit=true) where T : Attribute
 		{
             if (memberInfo == null) throw new ArgumentNullException("memberInfo");
-			var list = memberInfo.GetCustomAttributes(typeof(T), false);
+			var list = memberInfo.GetCustomAttributes(typeof(T), inherit);
 			if (list.Length > 0) return (T)list[0];
 			return null;
 		}	
 	
-		public static bool HasCustomAttribute<T>(this ICustomAttributeProvider mi) where T:Attribute
+		public static bool HasCustomAttribute<T>(this ICustomAttributeProvider mi,bool inherit=true) where T:Attribute
 		{
-			return mi.GetSingleAttribute<T>() != null;
+			return mi.GetSingleAttribute<T>(inherit) != null;
 		}
 	}
 }

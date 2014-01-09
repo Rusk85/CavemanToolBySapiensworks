@@ -282,7 +282,18 @@ namespace System
             }
             return o is T;
         }
-        
+
+	    public static bool IsNull<T>(this T inst) where T : class
+	    {
+	        return inst == null;
+	    }
+
+	    public static bool IsNotNull<T>(this T inst) where T : class
+	    {
+	        return inst != null;
+	    }
+
+
         public static bool IsNot<T>(this object o)
         {
             return !Is<T>(o);
