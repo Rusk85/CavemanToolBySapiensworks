@@ -234,6 +234,12 @@ namespace System
             return CanBeCastTo(type, typeof(T));
         }
 
+        public static bool CanBeInstantiated(this Type type)
+        {
+            return !type.IsAbstract && !type.IsInterface;
+        }
+           
+
         public static bool CanBeCastTo(this Type type, Type other)
         {
             if (type == null) return false;
