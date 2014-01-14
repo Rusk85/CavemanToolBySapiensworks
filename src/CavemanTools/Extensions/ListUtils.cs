@@ -211,6 +211,15 @@ namespace System.Collections.Generic
             }
             return false;
         }
+
+	    public static void AddIfNotPresent<T>(this IList<T> list, IEnumerable<T> items)
+	    {
+	        foreach (var item in items)
+	        {
+	            AddIfNotPresent(list,item);
+	        }
+	    }
+
         /// <summary>
         /// Returns number of items removed
         /// </summary>
@@ -233,5 +242,24 @@ namespace System.Collections.Generic
             }
             return removed;
         }
+
+        /// <summary>
+        /// Tries to get value for key and returns a provided value or default if key not found
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+	    public static V GetValueOrDefault<T, V>(this IDictionary<T, V> dict,T key, V other = default(V))
+	    {
+	        V val=other;
+	        if (!dict.TryGetValue(key, out val))
+	        {
+	            return other;
+	        }
+	        return val;
+	    }
 	}
 }
