@@ -26,7 +26,7 @@ namespace XTests.Extensions
         public int Id { get; set; }
         public bool IsActive { get; set; }
         public string Data { get; set; }
-
+        public Guid? Uid { get; set; }
         public Test Child { get; set; }
     }
     
@@ -115,6 +115,14 @@ namespace XTests.Extensions
             Assert.Equal(12,t.Id);            
         }
 
+        [Fact]
+        public void init_nullable_member_of_object()
+        {
+            Expression<Func<Test>> data = () => new Test() { Uid = Guid.NewGuid() };
+            var t = data.Body.GetValue() as Test;
+            Assert.NotNull(t.Uid);
+            Assert.NotEqual(Guid.Empty,t.Uid);
+        }
 
         string Id()
         {

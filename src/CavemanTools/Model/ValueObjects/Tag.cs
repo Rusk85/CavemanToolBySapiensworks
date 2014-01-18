@@ -62,6 +62,10 @@ namespace CavemanTools.Model.ValueObjects
             
         }
 
+        public static string Flatten(IEnumerable<Tag> tags)
+        {
+            return string.Join(",", tags.Select(t => t.Value));
+        }
 
         public bool Equals(Tag other)
         {

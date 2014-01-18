@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -98,6 +99,10 @@ namespace System
             return value.Remove(value.Length - 1, 1);
         }
 
+	    public static string StringJoin<T>(this IEnumerable<T> items, string separator = ",")
+	    {
+	        return string.Join(separator, items.Select(t => t.ToString()));
+	    }
 
         /// <summary>
         /// Returns true if the string is empty 
