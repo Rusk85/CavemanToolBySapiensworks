@@ -185,6 +185,8 @@ namespace System.Linq.Expressions
             node.MustNotBeNull();
             switch (node.NodeType)
             {
+               case ExpressionType.Convert:
+                    return node.As<UnaryExpression>().Operand.GetValue();
                 case ExpressionType.Constant:
                     return node.As<ConstantExpression>().Value;                    
                 case ExpressionType.New:
