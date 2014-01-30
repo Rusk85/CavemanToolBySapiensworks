@@ -29,7 +29,14 @@ namespace CavemanTools.Model
 	           return _count.Value;
 	       }
 
-            set { _count = value; }
+            set
+            {
+                _count = value;
+                if (value <= Int32.MaxValue)
+                {
+                    Count = (int) value;
+                }
+            }
         }
 
 	    public PagedResult()
