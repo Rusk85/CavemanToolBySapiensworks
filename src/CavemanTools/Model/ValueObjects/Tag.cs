@@ -23,7 +23,7 @@ namespace CavemanTools.Model.ValueObjects
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
         /// <param name="value"></param>
-        public Tag(string value) : base(value)
+        public Tag(string value) : base(value.ToLowerInvariant())
         {
         }
 
@@ -54,7 +54,7 @@ namespace CavemanTools.Model.ValueObjects
         /// <returns></returns>
         public static Tag CreateFromValid(string value)
         {
-            return new Tag(){_value = value};
+            return new Tag(){_value = value.ToLowerInvariant()};
         }
 
         private Tag()
@@ -96,7 +96,7 @@ namespace CavemanTools.Model.ValueObjects
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(string other)
         {
-            return other != null && other == _value;
+            return other != null && other.ToLowerInvariant() == _value;
         }
 
         /// <summary>

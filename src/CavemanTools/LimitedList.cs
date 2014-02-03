@@ -11,13 +11,26 @@ namespace CavemanTools
     public class LimitedList<T>
     {
         private readonly int _size;
-        private T[] _data;
         private int _i;
 
-        public LimitedList(int size=5)
+        public LimitedList():this(5)
+        {
+            
+        }
+
+        public LimitedList(T[] data)
+        {
+            Data = data;
+            _size = data.Length;
+            _i = data.Length;
+        }
+
+        public T[] Data { get; private set; }
+
+        public LimitedList(int size)
         {
             _size = size;
-            _data = new T[size];
+            Data = new T[size];
             _i = 0;
         }
 
@@ -27,13 +40,13 @@ namespace CavemanTools
             {
                 _i = 0;
             }
-            _data[_i] = item;
+            Data[_i] = item;
             _i++;
         }
 
         public bool Contains(T item)
         {
-            return _data.Contains(item);
+            return Data.Contains(item);
         }
     }
 }

@@ -2,14 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using CavemanTools.Extensions;
+
 
 
 namespace System
@@ -87,7 +86,31 @@ namespace System
             }
         }
 
-	
+
+	    /// <summary>
+	    /// 
+	    /// If object is not null invokes function else returns default of type
+	    /// </summary>
+	    /// <typeparam name="V"></typeparam>
+	    /// <typeparam name="T"></typeparam>
+	    /// <param name="item"></param>
+	    /// <param name="invoke"></param>
+	    /// <returns></returns>
+        public static T ReturnDefaultOrResult<V, T>(this V item, Func<V, T> invoke,T defaultValue=default(T)) where V : class
+	    {
+	        if (item == null) return defaultValue;
+            return invoke(item);
+        }
+
+        public static void IfNotNullDo<T>(this T item, Action<T> action) where T : class 
+	    {
+	        action.MustNotBeNull();
+            if (item != null)
+	        {
+	            action(item);
+	        }
+	    }
+
         ///// <summary>
         /////  Shallow copies source object into destination, only public properties are copied. Use CopyOptionsAttribute to mark the properties you want ignored.
         ///// Use Automapper for heavy duty mapping
