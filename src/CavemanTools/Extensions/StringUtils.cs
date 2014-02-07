@@ -10,7 +10,20 @@ namespace System
 {
 	public static class StringUtils
 	{
-	    /// <summary>
+	    public static string AddSlashes(this string data,bool singleQuotes=true,bool doubleQuotes=true)
+	    {
+	        if (singleQuotes)
+	        {
+	            data = data.Replace("'", "\\'");
+	        }
+	        if (doubleQuotes)
+	        {
+	            data = data.Replace("\"", @"\""");
+	        }
+            return data;
+	    }
+        
+        /// <summary>
 	    /// Creates url friendly slug of a string
 	    /// </summary>
 	    /// <param name="text"></param>
