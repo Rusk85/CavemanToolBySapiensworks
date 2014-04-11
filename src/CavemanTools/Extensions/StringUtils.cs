@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,20 @@ namespace System
 {
 	public static class StringUtils
 	{
-	    /// <summary>
+	    public static string AddSlashes(this string data,bool singleQuotes=true,bool doubleQuotes=true)
+	    {
+	        if (singleQuotes)
+	        {
+	            data = data.Replace("'", "\\'");
+	        }
+	        if (doubleQuotes)
+	        {
+	            data = data.Replace("\"", @"\""");
+	        }
+            return data;
+	    }
+        
+        /// <summary>
 	    /// Creates url friendly slug of a string
 	    /// </summary>
 	    /// <param name="text"></param>
@@ -98,6 +112,10 @@ namespace System
             return value.Remove(value.Length - 1, 1);
         }
 
+	    public static string StringJoin<T>(this IEnumerable<T> items, string separator = ",")
+	    {
+	        return string.Join(separator, items.Select(t => t.ToString()));
+	    }
 
         /// <summary>
         /// Returns true if the string is empty 

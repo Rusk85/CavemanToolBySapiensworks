@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CavemanTools.Model
 {
@@ -29,7 +30,14 @@ namespace CavemanTools.Model
 	           return _count.Value;
 	       }
 
-            set { _count = value; }
+            set
+            {
+                _count = value;
+                if (value <= Int32.MaxValue)
+                {
+                    Count = (int) value;
+                }
+            }
         }
 
 	    public PagedResult()
@@ -41,6 +49,17 @@ namespace CavemanTools.Model
 		{
 			get; set;
 		}
+
+        public PagedResult<V> Morph<V>(Func<T, V> projector)
+        {
+            var res = new PagedResult<V>();
+            res.LongCount = LongCount;
+            if (LongCount > 0)
+            {
+                res.Items = Items.Select(projector).ToArray();
+            }
+            return res;
+        }
 	}
 
     //[Obsolete("Use PagedResult<T>",true)]

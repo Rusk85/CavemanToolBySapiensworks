@@ -6,12 +6,17 @@ namespace CavemanTools.Model.ValueObjects
     {
         protected T _value;
 
+        protected AbstractValueObject()
+        {
+            
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
         /// <param name="value"></param>
-        public AbstractValueObject(T value)
+        protected AbstractValueObject(T value)
         {
             if (!Validate(value)) throw new ArgumentException();
             _value = value;

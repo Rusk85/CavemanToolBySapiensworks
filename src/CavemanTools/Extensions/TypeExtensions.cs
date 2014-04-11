@@ -79,45 +79,85 @@ namespace System
                 && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
         }
 
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="o"></param>
+        ///// <param name="interfaceName">The intuitive interface name</param>
+        ///// <param name="genericType">Interface's generic arguments types</param>
+        ///// <returns></returns>
+        //public static bool ImplementsGenericInterface(this object o, string interfaceName, params Type[] genericType)
+        //{
+        //    Type tp = o.GetType();
+        //    if (o is Type)
+        //    {
+        //        tp = (Type)o;
+        //    }
+        //    var interfaces = tp.GetInterfaces().Where(i => i.IsGenericType && i.Name.StartsWith(interfaceName));
+        //    if (genericType.Length == 0)
+        //    {
+        //        return interfaces.Any();
+        //    }
+
+        //    return interfaces.Any(
+        //        i =>
+        //        {
+        //            var args = i.GetGenericArguments();
+        //            return args.HasTheSameElementsAs(genericType);
+        //        });
+        //}
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="o"></param>
-        /// <param name="interfaceName">The intuitive interface name</param>
-        /// <param name="genericType">Interface's generic arguments types</param>
+        /// <param name="type"></param>
+        /// <param name="genericInterfaceType">It can be an open or close generics interface</param>
         /// <returns></returns>
-        public static bool ImplementsGenericInterface(this object o, string interfaceName, params Type[] genericType)
+        public static bool ImplementsGenericInterface(this Type type, Type genericInterfaceType,params Type[] genericArgs)
         {
-            Type tp = o.GetType();
-            if (o is Type)
-            {
-                tp = (Type)o;
-            }
-            var interfaces = tp.GetInterfaces().Where(i => i.IsGenericType && i.Name.StartsWith(interfaceName));
-            if (genericType.Length == 0)
-            {
-                return interfaces.Any();
-            }
+            genericInterfaceType.MustComplyWith(t=>t.IsGenericType,"Type must be of a generic interface");
+            var interf = type.GetInterfaces().FirstOrDefault(t => t.Name == genericInterfaceType.Name);
+            if (interf == null) return false;
 
-            return interfaces.Any(
-                i =>
-                {
-                    var args = i.GetGenericArguments();
-                    return args.HasTheSameElementsAs(genericType);
-                });
+            var comparer = genericInterfaceType.GenericTypeArguments().Any()
+                ? genericInterfaceType.GenericTypeArguments()
+                : genericArgs;
+            
+            if (comparer.Length > 0)
+            {
+                return interf.GenericTypeArguments().HasTheSameElementsAs(comparer);
+            }
+          
+            return true;
         }
 
-        public static bool ExtendsGenericType(this Type tp, string typeName, params Type[] genericArgs)
+        public static bool InheritsGenericType(this Type tp, Type genericType,params Type[] genericArgs)
         {
             tp.MustNotBeNull();
-            typeName.MustNotBeEmpty();
+            genericType.MustComplyWith(t => t.IsGenericType, "Type must be a generic type");
             if (tp.BaseType == null) return false;
+            
             var baseType = tp.BaseType;
-            if (!baseType.IsGenericType || !baseType.Name.StartsWith(typeName)) return false;
-            if (genericArgs.Length > 0)
+            bool found = false;
+            if (baseType.IsGenericType)
             {
-                return baseType.GetGenericArguments().HasTheSameElementsAs(genericArgs);
+                if (baseType.Name == genericType.Name)
+                {
+                    var comparer = genericType.GenericTypeArguments().Any()
+               ? genericType.GenericTypeArguments()
+               : genericArgs;
+                    if (comparer.Length>0)
+                    {
+                        found = baseType.GenericTypeArguments().HasTheSameElementsAs(comparer);
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
             }
+            if (!found) return baseType.InheritsGenericType(genericType);
+           
             return true;
         }
 
@@ -134,12 +174,18 @@ namespace System
         {
             tp.MustNotBeNull(); 
             if (!tp.IsGenericType) throw new InvalidOperationException("Provided type is not generic");
-            var all=tp.GetGenericArguments();
-            if (index >= all.Length)
-            {
-                throw new ArgumentException("There is no generic argument at the specified index","index");
-            }
-            return all[index];
+            return tp.GenericTypeArguments()[index];            
+        }
+
+        static Type[] GenericTypeArguments(this Type type)
+        {
+            type.MustBeGeneric();
+#if Net4
+            return type.GetGenericArguments();
+#else
+            return type.GenericTypeArguments;
+
+#endif
         }
 
         /// <summary>
@@ -187,6 +233,12 @@ namespace System
             if (type == null) return false;
             return CanBeCastTo(type, typeof(T));
         }
+
+        public static bool CanBeInstantiated(this Type type)
+        {
+            return !type.IsAbstract && !type.IsInterface;
+        }
+           
 
         public static bool CanBeCastTo(this Type type, Type other)
         {

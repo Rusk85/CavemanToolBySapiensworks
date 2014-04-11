@@ -70,6 +70,10 @@
     <Compile Include="Infrastructure\LocalMemoryCache.cs" />
     <Compile Include="Infrastructure\ServiceLocator.cs" />
     <Compile Include="ISupportMemento.cs" />
+    <Compile Include="LimitedList.cs" />
+    <Compile Include="Model\ValueObjects\DomainString.cs" />
+    <Compile Include="Model\ValueObjects\Extensions.cs" />
+    <Compile Include="Model\ValueObjects\Tag.cs" />
     <Compile Include="Pagination.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
     <Compile Include="Infrastructure\ICacheData.cs" />
@@ -105,9 +109,11 @@
     <Compile Include="Extensions\LinqExt.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\AttributeUtils.cs" />
+    <Compile Include="PasswordHash.cs" />
     <Compile Include="Percentage.cs" />
     <Compile Include="Reflection\ObjectCreator.cs" />
     <Compile Include="Reflection\PrivateReflectionDynamicObject.cs" />
+    <Compile Include="Salt.cs" />
     <Compile Include="SessionId.cs" />
     <Compile Include="SingletonsRegistry.cs" />
     <Compile Include="Subscriptions.cs" />

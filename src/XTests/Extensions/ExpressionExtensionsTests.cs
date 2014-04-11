@@ -26,7 +26,7 @@ namespace XTests.Extensions
         public int Id { get; set; }
         public bool IsActive { get; set; }
         public string Data { get; set; }
-
+        public Guid? Uid { get; set; }
         public Test Child { get; set; }
     }
     
@@ -61,21 +61,21 @@ namespace XTests.Extensions
         public void member_belongs_to_paramater()
         {
             Expression<Func<Test, bool>> data = t => t.Data == "23";
-            Assert.True(data.Body.As<BinaryExpression>().Left.As<MemberExpression>().BelongsToParameter());
+            Assert.True(ObjectExtend.As<MemberExpression>(data.Body.As<BinaryExpression>().Left).BelongsToParameter());
         }
         
         [Fact]
         public void complex_member_belongs_to_paramater()
         {
             Expression<Func<Test, bool>> data = t => t.Child.Child.Child.Data == "23";
-            Assert.True(data.Body.As<BinaryExpression>().Left.As<MemberExpression>().BelongsToParameter());
+            Assert.True(ObjectExtend.As<MemberExpression>(data.Body.As<BinaryExpression>().Left).BelongsToParameter());
         }
         
         [Fact]
         public void member_belongs_to_paramater_of_type()
         {
             Expression<Func<Test, bool>> data = t => t.Data == "23";
-            Assert.True(data.Body.As<BinaryExpression>().Left.As<MemberExpression>().BelongsToParameter(typeof(Test)));
+            Assert.True(ObjectExtend.As<MemberExpression>(data.Body.As<BinaryExpression>().Left).BelongsToParameter(typeof(Test)));
         }
 
         [Fact]
@@ -89,14 +89,14 @@ namespace XTests.Extensions
         public void member_doesnt_belong_to_paramater_of_type()
         {
             Expression<Func<Test, bool>> data = t => t.Data == "23";
-            Assert.False(data.Body.As<BinaryExpression>().Left.As<MemberExpression>().BelongsToParameter(typeof(Process)));
+            Assert.False(ObjectExtend.As<MemberExpression>(data.Body.As<BinaryExpression>().Left).BelongsToParameter(typeof(Process)));
         }
 
         [Fact]
         public void member_is_parameter()
         {
             Expression<Func<int, bool>> data = t => t == 23;
-            Assert.True(data.Body.As<BinaryExpression>().Left.IsParameter(typeof(int)));
+            Assert.True(ObjectExtend.As<BinaryExpression>(data.Body).Left.IsParameter(typeof(int)));
         }
 
         [Fact]
@@ -104,9 +104,25 @@ namespace XTests.Extensions
         {
             var id = "23";
             Expression<Func<Test, bool>> data = t => t.Data == id;
-            Assert.Equal("23",data.Body.As<BinaryExpression>().Right.As<MemberExpression>().GetValue());
+            Assert.Equal("23",ObjectExtend.As<MemberExpression>(data.Body.As<BinaryExpression>().Right).GetValue());
         }
-        
+
+        [Fact]
+        public void get_value_for_member_init()
+        {
+            Expression<Func<Test>> data=()=>new Test(){Id=12};
+            var t = data.Body.GetValue() as Test;
+            Assert.Equal(12,t.Id);            
+        }
+
+        [Fact]
+        public void init_nullable_member_of_object()
+        {
+            Expression<Func<Test>> data = () => new Test() { Uid = Guid.NewGuid() };
+            var t = data.Body.GetValue() as Test;
+            Assert.NotNull(t.Uid);
+            Assert.NotEqual(Guid.Empty,t.Uid);
+        }
 
         string Id()
         {
@@ -128,35 +144,35 @@ namespace XTests.Extensions
         {
             var dt = new {id = "23"};
             Expression<Func<Test, bool>> data = t => t.Data == dt.id;
-            Assert.Equal("23",data.Body.As<BinaryExpression>().Right.As<MemberExpression>().GetValue());
+            Assert.Equal("23",ObjectExtend.As<MemberExpression>(data.Body.As<BinaryExpression>().Right).GetValue());
         }
 
         [Fact]
         public void get_value_for_methoid_call()
         {
             Expression<Func<Test, bool>> data = t => t.Data == this.Id();
-            Assert.Equal("44", data.Body.As<BinaryExpression>().Right.As<MethodCallExpression>().GetValue());
+            Assert.Equal("44", ObjectExtend.As<MethodCallExpression>(data.Body.As<BinaryExpression>().Right).GetValue());
         }
 
         [Fact]
         public void get_value_for_method_call_with_argument()
         {
             Expression<Func<Test, bool>> data = t => t.Data == this.Id(2);
-            Assert.Equal("2", data.Body.As<BinaryExpression>().Right.As<MethodCallExpression>().GetValue());
+            Assert.Equal("2", ObjectExtend.As<MethodCallExpression>(data.Body.As<BinaryExpression>().Right).GetValue());
         }
 
         [Fact]
         public void get_value_for_property_returning_from_method_call()
         {
             Expression<Func<Test, bool>> data = t => t.Data == this.TestId().Bla().ToString();
-            Assert.Equal("0", data.Body.As<BinaryExpression>().Right.As<MethodCallExpression>().GetValue());
+            Assert.Equal("0", ObjectExtend.As<MethodCallExpression>(data.Body.As<BinaryExpression>().Right).GetValue());
         }
 
         [Fact]
         public void get_value_for_property_returned_by_method()
         {
             Expression<Func<Test, bool>> data = t => t.Data == this.TestId().Data;
-            Assert.Equal("29", data.Body.As<BinaryExpression>().Right.GetValue());
+            Assert.Equal("29", ObjectExtend.As<BinaryExpression>(data.Body).Right.GetValue());
         }
 
         //[Fact]
@@ -172,14 +188,14 @@ namespace XTests.Extensions
         {
             var l = new[] { "a", "b" };
             Expression<Func<Test, bool>> data = t => l.Contains(t.Data);
-            Assert.True(data.Body.As<MethodCallExpression>().HasParameterArgument());
+            Assert.True(ObjectExtend.As<MethodCallExpression>(data.Body).HasParameterArgument());
         }
 
         [Fact]
         public void expression_with_initializer()
         {
             Expression<Func<Test, bool>> data = t => DateTime.UtcNow > new DateTime(2,2,2);
-            Assert.Equal(new DateTime(2,2,2), data.Body.As<BinaryExpression>().Right.GetValue());
+            Assert.Equal(new DateTime(2,2,2), ObjectExtend.As<BinaryExpression>(data.Body).Right.GetValue());
         }
 
         
@@ -241,17 +257,17 @@ namespace XTests.Extensions
         public void FactMethodName()
         {
             Expression<Func<Test, bool>> data = t => new[] {1, 2}.Contains(t.Id);
-            var meth = data.Body.As<MethodCallExpression>();
+            var meth = ObjectExtend.As<MethodCallExpression>(data.Body);
             
             Assert.Equal("Contains",meth.Method.Name);
 
-            var param = meth.Arguments[1].As<MemberExpression>();
+            var param = ObjectExtend.As<MemberExpression>(meth.Arguments[1]);
             Assert.True(param.BelongsToParameter());
             var sb = new StringBuilder();
             
             sb.Append(param.Member.Name).Append(" in (");
             
-            var list = meth.Arguments[0].GetValue().As<IEnumerable>();
+            var list = ObjectExtend.As<IEnumerable>(meth.Arguments[0].GetValue());
             var en=list.GetEnumerator();
             while (en.MoveNext())
             {

@@ -148,6 +148,32 @@ namespace System.Linq.Expressions
             return (par.Type == type) ;
         }
 
+
+        public static object GetValue(this MemberInitExpression ex)
+        {
+            var result = ex.NewExpression.GetValue();
+            foreach (var binding in ex.Bindings)
+            {
+                InitMember(result,binding);
+            }
+            return result;
+        }
+
+        static void AssignTo(this MemberAssignment binding, object data)
+        {
+            binding.Member.SetValue(data,binding.Expression.GetValue());
+        }
+
+        static void InitMember(object host, MemberBinding binding)
+        {
+            var ass = binding as MemberAssignment;
+            if (ass == null)
+            {
+                throw new NotSupportedException("Only properties and field initializers are supported");
+            }
+            ass.AssignTo(host);
+        }
+
         /// <summary>
         /// Gets the value of an expresion if it's a property,field,constant or method call
         /// </summary>
@@ -159,10 +185,14 @@ namespace System.Linq.Expressions
             node.MustNotBeNull();
             switch (node.NodeType)
             {
+               case ExpressionType.Convert:
+                    return node.As<UnaryExpression>().Operand.GetValue();
                 case ExpressionType.Constant:
                     return node.As<ConstantExpression>().Value;                    
                 case ExpressionType.New:
-                    return node.As<NewExpression>().CreateObject();                    
+                    return node.As<NewExpression>().CreateObject();  
+                case ExpressionType.MemberInit:
+                    return node.As<MemberInitExpression>().GetValue();                    
                 case ExpressionType.NewArrayInit:
                     return node.As<NewArrayExpression>().CreateArray();
                 case ExpressionType.MemberAccess:

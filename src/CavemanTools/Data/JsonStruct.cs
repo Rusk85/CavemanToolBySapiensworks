@@ -1,19 +1,29 @@
 using System.Collections.Generic;
-using System;
 
 namespace CavemanTools.Data
 {
     public class JsonStruct
     {
         public const string MessageKey = "Message";
-        public string Status { get; set; }
-        public Dictionary<string, object> Data { get; private set; }
+        public string status { get; set; }
+        public Dictionary<string, object> data { get; private set; }
       
 
         public object this[string key]
         {
-            get { return Data[key]; }
-            set { Data[key] = value; }
+            get { return data[key]; }
+            set { data[key] = value; }
+        }
+
+        public bool isOk
+        {
+            get { return status == "Ok"; }
+        }
+
+
+        public bool hasError
+        {
+            get { return status == "Error"; }
         }
 
         /// <summary>
@@ -27,9 +37,15 @@ namespace CavemanTools.Data
         }
         public JsonStruct(JsonStatus status=JsonStatus.Ok)
         {
-            Status = status.ToString();
-            Data= new Dictionary<string, object>();            
+            this.status = status.ToString();
+            data= new Dictionary<string, object>();            
         }
+
+        public static JsonStruct Error(string message)
+        {
+            return new JsonStruct(message,JsonStatus.Error);
+        }
+
     }
 
 }
