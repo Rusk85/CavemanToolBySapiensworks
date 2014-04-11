@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>CavemanTools.Web</id> 
+	<title>CavemanTools.Web</title>
+    <version>0.0.1</version> 
+    <authors>Mihai Mogosanu</authors>
+    <description> Power tools for Asp.Net . Includes Rights based Authorization support and utilities for web development.</description> 
+    <language>en-US</language>
+	<tags>toolkit utility mvc asp.net rights-based-authorization</tags>
+    <licenseUrl>http://cavemantoolsmvc.codeplex.com/license</licenseUrl>
+    <projectUrl>https://bitbucket.org/sapiensworks/caveman-tools/wiki/Web</projectUrl>
+  </metadata> 
+<files>
+        <file src="bin\Release\**\CavemanTools.Web*" target="lib"></file>
+        
+    </files>  
+
+</package>

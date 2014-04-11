@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B1B0A041-B3F8-4977-A74B-1F78DDD88357}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CavemanTools.Web</RootNamespace>
+    <AssemblyName>CavemanTools.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\Net45\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Net45\CavemanTools.Web.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AspNetCache.cs" />
+    <Compile Include="CavemanHashStrategy.cs" />
+    <Compile Include="ContextInstance.cs" />
+    <Compile Include="CookieCache.cs" />
+    <Compile Include="CookieExtensions.cs" />
+    <Compile Include="DefaultCookieEncryption.cs" />
+    <Compile Include="Email\EmailUtils.cs" />
+    <Compile Include="Email\TemplateEmailFormatter.cs" />
+    <Compile Include="EncryptedCookie.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Helpers\PaginationLinks.cs" />
+    <Compile Include="Helpers\Snippets.cs" />
+    <Compile Include="HenriFormatter.cs" />
+    <Compile Include="HttpContextRegistry.cs" />
+    <Compile Include="ICookieCache.cs" />
+    <Compile Include="ICookieEncryption.cs" />
+    <Compile Include="IHashPassword.cs" />
+    <Compile Include="IOnlineUserInfo.cs" />
+    <Compile Include="IOnlineUsersRepository.cs" />
+    <Compile Include="Localization\RequestLocale.cs" />
+    <Compile Include="MemoryOnlineUsersRepository.cs" />
+    <Compile Include="OnlineUserInfo.cs" />
+    <Compile Include="OnlineUsersData.cs" />
+    <Compile Include="Password.cs" />
+    <Compile Include="PasswordHash.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestMetricsModule.cs" />
+    <Compile Include="RequestPersonalizationParameter.cs" />
+    <Compile Include="Sha256Password.cs" />
+    <Compile Include="WebExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CavemanTools\CavemanTools.csproj">
+      <Project>{7dc37b55-c861-4740-a3cd-96c5f52adf32}</Project>
+      <Name>CavemanTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
