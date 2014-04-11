@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
+using Xunit.Extensions;
 
 namespace XTests.Extensions
 {
@@ -61,32 +62,45 @@ namespace XTests.Extensions
             
         }
 
-        [Fact]
-        public void type_implements_generic_interface_no_args()
-        {
-            var t = typeof (SaveSaga);
-            t.ImplementsGenericInterface("ISaveSaga").Should().BeTrue();
-
-            t = typeof (Myimpl);
-            t.ImplementsGenericInterface("IInternal").Should().BeTrue();
-            
-        }
-
-        [Fact]
-        public void type_implements_generic_interface_with_args()
-        {
-            var t = typeof (Myimpl);
-            typeof (SaveSaga).ImplementsGenericInterface("ISaveSaga", typeof (string)).Should().BeTrue();
-            t.ImplementsGenericInterface("IInternal",typeof(string), typeof(int)).Should().BeTrue();            
-        }
-
+     
         [Fact]
         public void type_extends_generic_class_with_args()
         {
             var t = typeof(MyImpl2);
-            t.ExtendsGenericType("MyClass", typeof (string)).Should().BeTrue();
+            t.InheritsGenericType(typeof(MyClass<>)).Should().BeTrue();
+            t.InheritsGenericType(typeof(MyClass<string>)).Should().BeTrue();
         }
 
+        [Theory]
+        [InlineData(typeof(ISaveSaga<>), true)]
+        [InlineData(typeof(ISaveSaga<string>), true)]
+        [InlineData(typeof(ISaveSaga<int>), false)]
+        public void implements_generic_interface(Type type,bool result)
+        {
+            typeof (SaveSaga).ImplementsGenericInterface(type).Should().Be(result);            
+        }
+
+        [Theory]
+        [InlineData(typeof(MyClass<>.IInternal<>), true)]
+        [InlineData(typeof(MyClass<string>.IInternal<int>), true)]
+        [InlineData(typeof(MyClass<string>.IInternal<string>), false)]
+        public void implements_nested_generic_interface(Type type, bool result)
+        {
+            typeof(Myimpl).ImplementsGenericInterface(type).Should().Be(result);  
+        }
+
+
+        [Fact]
+        public void implements_generic_interface_with_specified_type_argument()
+        {
+            typeof(Myimpl).ImplementsGenericInterface(typeof(MyClass<>.IInternal<>),typeof(string),typeof(int)).Should().BeTrue();   
+        }
+        
+        [Fact]
+        public void extends_generic_type_with_specified_type_argument()
+        {
+            typeof(MyImpl2).InheritsGenericType(typeof(MyClass<>),typeof(string)).Should().BeTrue();
+        }
         protected void Write(string format, params object[] param)
         {
             Console.WriteLine(format, param);

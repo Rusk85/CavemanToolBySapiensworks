@@ -129,7 +129,16 @@ namespace System.Reflection
             return (o.GetType() == typeof(T));
         }
 
-       
+        public static Type GetMemberType(this MemberInfo memberInfo)
+        {
+            if (memberInfo is MethodInfo)
+                return ((MethodInfo)memberInfo).ReturnType;
+            if (memberInfo is PropertyInfo)
+                return ((PropertyInfo)memberInfo).PropertyType;
+            if (memberInfo is FieldInfo)
+                return ((FieldInfo)memberInfo).FieldType;
+            return null;
+        }
 
         /// <summary>
         /// Gets the value of a property
@@ -141,9 +150,27 @@ namespace System.Reflection
         public static T GetPropertyValue<T>(this object @object, string propertyName)
         {
             return GetPropertyValue(@object, propertyName).ConvertTo<T>();
-
         }
 
+        /// <summary>
+        /// Facade to set a value to a property or field
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="data"></param>
+        /// <param name="value"></param>
+        public static void SetValue(this MemberInfo member, object data,object value)
+        {
+            switch (member.MemberType)
+            {
+                case MemberTypes.Property:
+                    member.As<PropertyInfo>().SetValue(data,value);
+                    return;
+                case MemberTypes.Field:
+                    member.As<FieldInfo>().SetValue(data,value);
+                    return;
+            }
+            throw new NotSupportedException("Only fields and non indexed properties are supported");
+        }
 
         /// <summary>
         /// Gets the value of a public property

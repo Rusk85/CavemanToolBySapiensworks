@@ -28,6 +28,13 @@ namespace System.Collections.Generic
             }
 		    return true;
 		}
+
+        [Obsolete("Use Diff method")]
+	    public static IModifiedSet<T> Compare<T>(this IEnumerable<T> fresh, IEnumerable<T> old) where T : IEquatable<T>
+        {
+            return fresh.Diff(old);
+        }
+        
         /// <summary>
 		/// Compares two sequences and returns the added or removed items.
 		/// </summary>
@@ -35,7 +42,7 @@ namespace System.Collections.Generic
 		/// <param name="fresh">Recent sequence</param>
 		/// <param name="old">Older sequence used as base of comparison</param>
 		/// <returns></returns>
-		public static IModifiedSet<T> Compare<T>(this IEnumerable<T> fresh, IEnumerable<T> old)	where T:IEquatable<T>
+		public static IModifiedSet<T> Diff<T>(this IEnumerable<T> fresh, IEnumerable<T> old)	where T:IEquatable<T>
 		{
 			if (fresh == null) throw new ArgumentNullException("fresh");
 			if (old == null) throw new ArgumentNullException("old");
@@ -175,6 +182,11 @@ namespace System.Collections.Generic
 			return items == null || !items.Any();
 		}
 
+	    public static bool HasItems<T>(this IEnumerable<T> items)
+	    {
+	        return !items.IsNullOrEmpty();
+	    }
+
         /// <summary>
         /// Gets typed value from dictionary or a default value if key is missing
         /// </summary>
@@ -199,6 +211,15 @@ namespace System.Collections.Generic
             }
             return false;
         }
+
+	    public static void AddIfNotPresent<T>(this IList<T> list, IEnumerable<T> items)
+	    {
+	        foreach (var item in items)
+	        {
+	            AddIfNotPresent(list,item);
+	        }
+	    }
+
         /// <summary>
         /// Returns number of items removed
         /// </summary>
@@ -221,5 +242,24 @@ namespace System.Collections.Generic
             }
             return removed;
         }
+
+        /// <summary>
+        /// Tries to get value for key and returns a provided value or default if key not found
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+	    public static V GetValueOrDefault<T, V>(this IDictionary<T, V> dict,T key, V other = default(V))
+	    {
+	        V val=other;
+	        if (!dict.TryGetValue(key, out val))
+	        {
+	            return other;
+	        }
+	        return val;
+	    }
 	}
 }
