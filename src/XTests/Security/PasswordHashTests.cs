@@ -12,7 +12,7 @@ namespace XTests.Security
         [Fact]
         public void valid_password()
         {
-            var sut = new PasswordHash(Password);
+            var sut = new PasswordHash(Password,Salt.Generate());
             sut.IsValidPassword(Password).Should().BeTrue();
             sut.IsValidPassword(Password + "f").Should().BeFalse();
             Console.WriteLine(sut.ToString());
@@ -22,7 +22,7 @@ namespace XTests.Security
         [Fact]
         public void valid_pwd_existing_hash()
         {
-            var hash = new PasswordHash(Password).ToString();
+            var hash = new PasswordHash(Password,Salt.Generate()).ToString();
             var sut = PasswordHash.FromHash(hash);
             sut.IsValidPassword(Password).Should().BeTrue();
             sut.IsValidPassword("-" + Password).Should().BeFalse();
@@ -31,8 +31,8 @@ namespace XTests.Security
         [Fact]
         public void different_salts_generate_different_hashes()
         {
-            var hash1 = new PasswordHash(Password);
-            var hash2 = new PasswordHash(Password);
+            var hash1 = new PasswordHash(Password,Salt.Generate());
+            var hash2 = new PasswordHash(Password,Salt.Generate());
             hash1.ToString().Should().NotBe(hash2.ToString());
         }
     }
