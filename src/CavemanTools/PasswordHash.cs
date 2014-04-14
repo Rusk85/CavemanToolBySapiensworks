@@ -5,13 +5,18 @@ namespace CavemanTools
 {
     public class PasswordHash
     {
-        private byte[] _salt;
+        private Salt _salt;
         private int _iterations;
         private byte[] _finalHash;
         private byte[] _pwdHash;
         private const int KeySize=32;
 
-        
+        public Salt Salt
+        {
+            get { return _salt; }
+        }
+
+
         public static PasswordHash FromHash(string hash)
         {
             hash.MustNotBeEmpty();
@@ -30,13 +35,14 @@ namespace CavemanTools
            _iterations = BitConverter.ToInt32(_finalHash,0);
             _pwdHash=new byte[KeySize];
             Array.Copy(_finalHash,4,_pwdHash,0,KeySize);
-            _salt=new byte[_finalHash.Length-4-KeySize];
-            Array.Copy(_finalHash,KeySize+4,_salt,0,_salt.Length);            
+            var saltBytes=  new byte[_finalHash.Length-4-KeySize];
+            Array.Copy(_finalHash,KeySize+4,saltBytes,0,saltBytes.Length);
+            _salt = new Salt(saltBytes);
         }
 
         public bool IsValidPassword(string pwd)
         {
-            var pwdHash = Pbkdf2Hash(pwd, _salt, _iterations);
+            var pwdHash = Pbkdf2Hash(pwd, Salt.Bytes, _iterations);
             for (int i = 0; i < _pwdHash.Length; i++)
             {
                 if (_pwdHash[i] != pwdHash[i]) return false;
@@ -44,13 +50,12 @@ namespace CavemanTools
             return true;
         }
 
-        public PasswordHash(string password,Salt salt=null,Int32 iterations=50000)
+        public PasswordHash(string password,Salt salt,Int32 iterations=50000)
         {
             _iterations = iterations;
-            if (salt==null) salt = Salt.Generate();
-            _salt = salt.Bytes;
+            _salt = salt;
             
-            _pwdHash = Pbkdf2Hash(password,_salt,iterations);
+            _pwdHash = Pbkdf2Hash(password,Salt.Bytes,iterations);
 
             _finalHash = GetFinalHash(_pwdHash);
             
@@ -64,10 +69,10 @@ namespace CavemanTools
 
         byte[] GetFinalHash(byte[] pwdHash)
         {
-            byte[] final=new byte[pwdHash.Length+_salt.Length+4];
+            byte[] final=new byte[pwdHash.Length+Salt.Length+4];
             BitConverter.GetBytes(_iterations).CopyTo(final,0);
             pwdHash.CopyTo(final,4);
-            _salt.CopyTo(final,KeySize+4);
+            Salt.Bytes.CopyTo(final,KeySize+4);
             return final;
         }
 
