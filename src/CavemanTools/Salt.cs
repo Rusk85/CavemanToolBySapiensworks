@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace CavemanTools
 {
-    public class Salt
+    public class Salt:IEquatable<Salt>
     {
         private readonly byte[] _bytes;
 
@@ -34,6 +34,17 @@ namespace CavemanTools
         public int Length
         {
             get { return _bytes.Length; }
+        }
+
+        public bool Equals(Salt other)
+        {
+            if (other == null) return false;
+            return _bytes.IsEqual(other._bytes);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals((Salt) obj);
         }
 
         /// <summary>

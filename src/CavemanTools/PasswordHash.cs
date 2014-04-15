@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace CavemanTools
 {
-    public class PasswordHash
+    public class PasswordHash:IEquatable<PasswordHash>
     {
         private Salt _salt;
         private int _iterations;
@@ -61,6 +61,21 @@ namespace CavemanTools
             
         }
 
+        public bool Equals(PasswordHash other)
+        {
+            if (other == null) return false;
+            return _finalHash.IsEqual(other._finalHash);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals((PasswordHash) obj);
+        }
+
+        /// <summary>
+        /// Returns the hash as string of 92 chars
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Convert.ToBase64String(_finalHash);
