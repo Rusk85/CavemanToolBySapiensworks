@@ -9,6 +9,18 @@ namespace XTests.Security
     {
         private const string Password = "bla 123";
 
+
+        [Fact]
+        public void equatable_test()
+        {
+            var salt = Salt.Generate();
+            var p1 = new PasswordHash(Password, salt);
+            var p2 = new PasswordHash(Password, salt);
+            var p3 = new PasswordHash(Password, Salt.Generate());
+            p1.Equals(p2).Should().BeTrue();
+            p1.Equals(p3).Should().BeFalse();
+        }
+
         [Fact]
         public void valid_password()
         {

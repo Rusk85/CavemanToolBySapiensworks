@@ -1,10 +1,30 @@
 using System.Linq;
 
+namespace System
+{
+    public static class ListUtils
+    {
+
+        public static bool IsEqual<T>(this T[] source, T[] other) where T : IEquatable<T>
+        {
+            source.MustNotBeNull();
+            if (other == null) return false;
+            if (source.Length != other.Length) return false;
+            for (var i = 0; i < source.Length; i++)
+            {
+                if (!source[i].Equals(other[i])) return false;
+            }
+            return true;
+        }
+    }
+}
+
 namespace System.Collections.Generic
 {
 	public static class ListUtils
 	{
-		/// <summary>
+
+	    /// <summary>
 		/// Checks if 2 enumerables have the same elements in the same order
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
