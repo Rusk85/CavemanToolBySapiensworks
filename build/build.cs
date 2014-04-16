@@ -40,8 +40,8 @@ public static void CleanUp()
 [SkipIf("Built",true)]
 public static void Build()
 {
-    SlnFile.MsBuildRelease();
-    SlnFile_Net4.MsBuildRelease();
+    //SlnFile_Net4.MsBuildRelease();
+	SlnFile.MsBuildRelease();    
     Built=true;
 }
 
