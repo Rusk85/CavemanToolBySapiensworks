@@ -19,10 +19,11 @@ const string SlnDir=@"../src";
 const string TempDir=@"temp";
 
 //for nuget
-const string PackageDir = @"temp/package";
+static string PackageDir = Path.GetFullPath("temp/package");
 
 static string CurrentDir=Path.GetFullPath("./");
 
+static string NugetExe=Path.Combine(CurrentDir,"libs","nuget.exe");
 static string[] Projects=new[]{"CavemanTools","CavemanTools.Web","CavemanTools.Mvc"};
 
 static bool Built=false;
@@ -69,6 +70,15 @@ public static void Pack()
    // Pack("CavemanTools.Web",new[]{"CavemanTools"});
 // }
 
+[Depends("Pack")]
+public static void Push()
+{
+ var project="CavemanTools";
+ var nupkg=Path.Combine(PackageDir,project+"."+GetVersion(project)+".nupkg");
+ NugetExe.Exec("push",nupkg);
+}
+
+static string PackedNugetName;
 
 static void Pack(string project,string[] deps=null)
 {
