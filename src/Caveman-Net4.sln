@@ -48,7 +48,6 @@ Global
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Debug|x86.Build.0 = Debug|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Any CPU.ActiveCfg = Release|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|Mixed Platforms.Build.0 = Release|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.ActiveCfg = Release|x86
 		{FCAD6B51-6573-4E28-949D-FBF0631A0613}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
