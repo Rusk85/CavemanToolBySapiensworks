@@ -130,7 +130,12 @@ namespace CavemanTools
         /// </returns>
         public override int GetHashCode()
         {
-            return Bytes.GetHashCode();
+            int hc = Bytes.Length;
+            for (int i = 0; i < Bytes.Length; i++)
+            {
+                hc = unchecked(hc * 17 + Bytes[i]);
+            }
+            return hc;            
         }
     }
 }
