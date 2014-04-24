@@ -46,7 +46,7 @@ namespace CavemanTools
 
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
+            if (obj == null || obj.GetType()!=typeof(Percentage)) return false;
             return Equals((Percentage)obj);
         }
 

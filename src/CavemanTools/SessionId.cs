@@ -118,7 +118,7 @@ namespace CavemanTools
         /// <param name="obj">Another object to compare to. </param>
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
+            if (obj == null || obj.GetType()!=typeof(SessionId)) return false;
             return Equals((SessionId)obj);
         }
 

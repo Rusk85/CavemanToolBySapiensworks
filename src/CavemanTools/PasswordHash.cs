@@ -69,7 +69,9 @@ namespace CavemanTools
 
         public override bool Equals(object obj)
         {
+            if (obj is PasswordHash)
             return Equals((PasswordHash) obj);
+            return false;
         }
 
         /// <summary>

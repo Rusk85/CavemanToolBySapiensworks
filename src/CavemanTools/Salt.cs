@@ -44,7 +44,8 @@ namespace CavemanTools
 
         public override bool Equals(object obj)
         {
-            return Equals((Salt) obj);
+            if (obj is Salt) return Equals((Salt) obj);
+            return false;
         }
 
         /// <summary>
