@@ -70,6 +70,10 @@
     <Compile Include="Infrastructure\LocalMemoryCache.cs" />
     <Compile Include="Infrastructure\ServiceLocator.cs" />
     <Compile Include="ISupportMemento.cs" />
+    <Compile Include="Model\Extensions.cs" />
+    <Compile Include="Model\IPagedInput.cs" />
+    <Compile Include="Model\PagedInput.cs" />
+    <Compile Include="Model\PagedModel.cs" />
     <Compile Include="Model\ValueObjects\DomainString.cs" />
     <Compile Include="Model\ValueObjects\Extensions.cs" />
     <Compile Include="Model\ValueObjects\Tag.cs" />
