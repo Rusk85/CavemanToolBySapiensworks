@@ -40,8 +40,7 @@ namespace System.Linq
                 res = item as T;
                 if (res == null) continue;
                 yield return res;
-            }
-            
+            }            
         }
 	}
 }

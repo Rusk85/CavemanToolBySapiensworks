@@ -1,13 +1,56 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using CavemanTools;
 
 namespace System
 {
     using Reflection;
     public static class TypeExtensions
 	{
-		/// <summary>
+        
+        /// <summary>
+        /// Orders an enumerable using [Order] or specified ordering function.
+        /// </summary>
+        /// <param name="types"></param>
+        /// <param name="other">Optional ascending ordering function</param>
+        /// <returns></returns>
+        public static IEnumerable<Type> OrderByAttribute(this IEnumerable<Type> types,Func<Type,int> other=null)
+        {
+            return types.OrderBy(t =>
+            {
+                var attrib = t.GetCustomAttribute<OrderAttribute>();
+                if (attrib != null)
+                {
+                    return attrib.Value;
+                }
+                if (other != null)
+                {
+                    return other(t);
+                }
+                return Int32.MaxValue;
+            });
+        }
+
+        /// <summary>
+        /// Orders an enumerable using [Order] 
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<T> OrderByAttribute<T>(this IEnumerable<T> objects)
+        {
+            return objects.OrderBy(t =>
+            {
+                var attrib = t.GetType().GetCustomAttribute<OrderAttribute>();
+                if (attrib != null)
+                {
+                    return attrib.Value;
+                }               
+                return Int32.MaxValue;
+            });
+        }
+
+
+        /// <summary>
 		/// Used for checking if a class implements an interface
 		/// </summary>
 		/// <typeparam name="T">Interface</typeparam>
@@ -282,7 +325,6 @@ namespace System
             var asmName = type.Assembly.GetName().Name;
             return type.Namespace.Substring(asmName.Length + 1);
         }
-           
 	}
 }
 
