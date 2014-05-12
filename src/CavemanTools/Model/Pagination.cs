@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CavemanTools
+﻿namespace CavemanTools
 {
     public class Pagination
     {

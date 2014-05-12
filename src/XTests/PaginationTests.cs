@@ -1,4 +1,5 @@
 ﻿using CavemanTools;
+using CavemanTools.Model;
 using Xunit;
 using System;
 using System.Diagnostics;
