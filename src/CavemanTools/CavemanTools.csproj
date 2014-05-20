@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManualContainerConfigAttribute.cs" />
     <Compile Include="LimitedList.cs" />
     <Compile Include="Data\JsonStatus.cs" />
     <Compile Include="Data\JsonStruct.cs" />
