@@ -1,4 +1,6 @@
-﻿using CavemanTools;
+﻿using System.Data;
+using CavemanTools;
+using FluentAssertions;
 using Xunit;
 using System;
 using System.Diagnostics;
@@ -35,6 +37,7 @@ namespace XTests
         [InlineData("1.0.0-alpha", "1.0.0-alpha.1",-1)]
         [InlineData("0.0.0-alpha", "0.0.0",-1)]
         [InlineData("1.0.0", "1.0.0",0)]
+        [InlineData("1.1.0", "1.1.0",0)]
         [InlineData("1.0.0-beta.11", "1.0.0-rc.1", -1)]
         [InlineData("1.0.0-rc.1+build.1", "1.0.0 ", -1)]
         [InlineData("1.0.0", "1.0.0+0.3.7", -1)]
@@ -47,6 +50,13 @@ namespace XTests
             var rez = v1.CompareTo(v2);
             Write(rez.ToString());
             Assert.Equal(result,rez);
+        }
+
+        [Fact]
+        public void parsing_1_1_0_is_correct()
+        {
+            var version = new SemanticVersion("1.1.0");
+            version.ToString().Should().Be("1.1.0");
         }
 
         [Fact]

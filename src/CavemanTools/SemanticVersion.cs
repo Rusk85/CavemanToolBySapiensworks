@@ -157,7 +157,7 @@ namespace CavemanTools
             {
                 patch = remain[2];
             }
-            if (remain.Length==2)
+            if (remain.Length>=2)
             {
                 minor = remain[1];
             }
