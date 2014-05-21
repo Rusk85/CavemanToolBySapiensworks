@@ -19,7 +19,7 @@ namespace System
         {
             return types.OrderBy(t =>
             {
-                var attrib = t.GetCustomAttribute<OrderAttribute>();
+                var attrib = t.GetSingleAttribute<OrderAttribute>();
                 if (attrib != null)
                 {
                     return attrib.Value;
@@ -40,7 +40,7 @@ namespace System
         {
             return objects.OrderBy(t =>
             {
-                var attrib = t.GetType().GetCustomAttribute<OrderAttribute>();
+                var attrib = t.GetType().GetSingleAttribute<OrderAttribute>();
                 if (attrib != null)
                 {
                     return attrib.Value;

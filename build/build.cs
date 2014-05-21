@@ -12,7 +12,8 @@ using NuGet;   //comment it out if you don't create nuget packs or manipulate nu
 
 const string SlnFile=@"../src/Caveman.sln";
 
-const string SlnFile_Net4=@"../src/Caveman-Net4.sln";
+//const string SlnFile_Net4=@"../src/Caveman-Net4.sln";
+const string SlnFile_Net4=@"../src/CavemanTools/CavemanTools-Net4.csproj";
 
 const string SlnDir=@"../src";
 
@@ -41,7 +42,7 @@ public static void CleanUp()
 [SkipIf("Built",true)]
 public static void Build()
 {
-    //SlnFile_Net4.MsBuildRelease();
+    SlnFile_Net4.MsBuildRelease();
 	SlnFile.MsBuildRelease();    
     Built=true;
 }
