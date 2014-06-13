@@ -25,6 +25,21 @@ namespace System.Linq
 				action(b);
 			}
 		}
+        [DebuggerStepThrough]
+         public static void ForEach<TSource>(this IEnumerable<TSource> source, Action<int,TSource> action
+             )
+         {
+             if (source == null) throw new ArgumentNullException("source");
+             if (action == null) throw new ArgumentNullException("action");
+             var i = 0;
+             foreach (var b in source)
+             {
+                 action(i,b);
+                 i++;
+             }
+         }
+
+
 
         /// <summary>
         /// Tries to cast each item to the specified type. If it fails,  it just ignores the item

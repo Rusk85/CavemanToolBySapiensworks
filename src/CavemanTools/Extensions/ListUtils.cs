@@ -281,5 +281,16 @@ namespace System.Collections.Generic
 	        }
 	        return val;
 	    }
+
+	    public static void AddRange<T>(this IDictionary<int, T> dic, IEnumerable<T> items,int startPos=0)
+	    {
+	        var i = startPos;
+            foreach (var item in items)
+            {
+                dic[i] = item;
+                i++;
+            }
+	    }
+
 	}
 }
