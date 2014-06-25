@@ -111,6 +111,12 @@ namespace System
 	        }
 	    }
 
+	    public static void DoIf<T>(this T item, Func<T, bool> condition, Action<T> action)
+	    {
+	        if (condition(item)) action(item);
+	    }
+            
+
         ///// <summary>
         /////  Shallow copies source object into destination, only public properties are copied. Use CopyOptionsAttribute to mark the properties you want ignored.
         ///// Use Automapper for heavy duty mapping
