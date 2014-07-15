@@ -11,6 +11,7 @@ glob:*.suo
 syntax: glob
 temp
 nugets
+packages/
 _ReSharper*
 MvcApplication*
 *DotSett*
