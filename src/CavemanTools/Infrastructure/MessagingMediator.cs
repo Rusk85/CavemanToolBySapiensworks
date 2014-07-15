@@ -67,8 +67,8 @@ namespace CavemanTools.Infrastructure
             input.MustNotBeNull();
             var handlerType = typeof(IHandleCommandAsync<,>).MakeGenericType(input.GetType(), typeof(TResult));
             var handler = (dynamic)Resolver(handlerType);
-            if (handler == null) throw new InvalidOperationException("There's no handler implementing 'IHandleCommand<{0},{1}>' registered with the DI Container".ToFormat(input.GetType().Name, typeof(TResult).Name));
-            return (Task<TResult>)handler.Handle((dynamic)input);
+            if (handler == null) throw new InvalidOperationException("There's no handler implementing 'IHandleCommandAsync<{0},{1}>' registered with the DI Container".ToFormat(input.GetType().Name, typeof(TResult).Name));
+            return (Task<TResult>)handler.HandleAsync((dynamic)input);
         }
 #endif
     }

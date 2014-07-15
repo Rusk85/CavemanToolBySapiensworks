@@ -4,6 +4,6 @@ namespace CavemanTools.Infrastructure
 {
     public interface IHandleActionAsync<TInput, TOutput> where TInput : class where TOutput : class
     {
-        Task<TOutput> Handle(TInput input);
+        Task<TOutput> HandleAsync(TInput input);
     }
 }
