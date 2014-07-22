@@ -78,12 +78,17 @@
     <Compile Include="Infrastructure\ServiceLocator.cs" />
     <Compile Include="ISupportMemento.cs" />
     <Compile Include="LimitedList.cs" />
+    <Compile Include="Logging\IWriteToLog.cs" />
+    <Compile Include="Logging\LogManager.cs" />
     <Compile Include="ManualContainerConfigAttribute.cs" />
     <Compile Include="Model\Extensions.cs" />
     <Compile Include="Model\IPagedInput.cs" />
     <Compile Include="Model\PagedInput.cs" />
     <Compile Include="Model\PagedModel.cs" />
     <Compile Include="Model\Pagination.cs" />
+    <Compile Include="Model\Persistence\IdempotencyHistoryItem.cs" />
+    <Compile Include="Model\Persistence\NewerVersionExistsException.cs" />
+    <Compile Include="Model\Persistence\SerializedEntity.cs" />
     <Compile Include="Model\ValueObjects\DomainString.cs" />
     <Compile Include="Model\ValueObjects\Extensions.cs" />
     <Compile Include="Model\ValueObjects\Tag.cs" />

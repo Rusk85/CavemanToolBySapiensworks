@@ -87,9 +87,12 @@
     <Compile Include="Model\IPagedInput.cs" />
     <Compile Include="Model\PagedInput.cs" />
     <Compile Include="Model\PagedModel.cs" />
+    <Compile Include="Model\Persistence\IdempotencyHistoryItem.cs" />
+    <Compile Include="Model\Persistence\NewerVersionExistsException.cs" />
     <Compile Include="Model\ValueObjects\DomainString.cs" />
     <Compile Include="Model\ValueObjects\Extensions.cs" />
     <Compile Include="Model\ValueObjects\Tag.cs" />
+    <Compile Include="Model\Persistence\SerializedEntity.cs" />
     <Compile Include="OrderAttribute.cs" />
     <Compile Include="Model\Pagination.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />
