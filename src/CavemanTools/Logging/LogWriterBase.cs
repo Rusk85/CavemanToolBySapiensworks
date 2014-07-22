@@ -1,12 +1,11 @@
+using System;
+
 namespace CavemanTools.Logging
 {
-    public abstract class LogWriterBase:IWriteToLog
+    public abstract class LogWriterBase:ILogWriter,IWriteToLog
     {
         public abstract T GetLogger<T>() where T:class ;
-        public abstract void Log(LogLevel level, string text);
-
-
-        public abstract void Log(LogLevel level, string message, params object[] args);
+        
 
         public void Info(string text)
         {
@@ -18,8 +17,17 @@ namespace CavemanTools.Logging
             Log(LogLevel.Info, format,args);
         }
 
-       
-        
+        public void Log(LogLevel level, string text)
+        {
+            Log("none",level,text);
+        }
+
+        public void Log(LogLevel level, string message, params object[] args)
+        {
+            Log("none", level, message,args);
+        }
+
+
         public void Trace(string message)
         {
             Log(LogLevel.Trace, message);
@@ -59,5 +67,28 @@ namespace CavemanTools.Logging
         {
             Log(LogLevel.Debug, format, args);
         }
+
+        protected virtual string FormatSource(object src)
+        {
+            return "[" + src + "]";
+        }
+
+        public virtual void LogException(string source,LogLevel level, Exception ex)
+        {
+            Log(source,level,ex.ToString());
+        }
+
+        public virtual void LogException(object source, LogLevel level, Exception ex)
+        {
+            Log(source,level,ex.ToString());
+        }
+
+        public virtual void Log(object source, LogLevel level, string message, params object[] args)
+        {
+            Log(FormatSource(source),level,message,args);
+        }
+
+        public abstract void Log(string source, LogLevel level, string message, params object[] args);
+
     }
 }

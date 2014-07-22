@@ -1,5 +1,6 @@
 ﻿
 using CavemanTools;
+using CavemanTools.Logging;
 using FluentAssertions;
 using Xunit;
 using System;
@@ -31,6 +32,12 @@ namespace XTests
             //  @"acesta e un 'test'".AddSlashes().Should().Be("acesta e un \'test\'");
         }
 
+        [Fact]
+        public void exception_log()
+        {
+            LogManager.OutputToConsole();
+            this.LogError(new InvalidOperationException("something"));
+        }
 
         private void Write(object format, params object[] param)
         {

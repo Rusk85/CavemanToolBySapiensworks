@@ -16,15 +16,10 @@ namespace CavemanTools.Logging
             _writer = writer;
         }
 
-        public override void Log(LogLevel level, string text)
+       
+        public override void Log(string source, LogLevel level, string message, params object[] args)
         {
-            _writer(DateTime.Now.ToString() + " - " + level.ToString() + ": " + text);
-
-        }
-
-        public override void Log(LogLevel level, string message, params object[] args)
-        {
-            _writer(DateTime.Now.ToString() + " - " + level.ToString() + ": " + string.Format(message,args));            
+            _writer(level + " | " + DateTime.Now.ToString() + " | " + string.Format(message, args));
         }
     }
 }
