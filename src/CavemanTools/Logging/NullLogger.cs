@@ -15,14 +15,11 @@ namespace CavemanTools.Logging
             throw new NotImplementedException();
         }
 
-        public override void Log(LogLevel level, string text)
+     
+
+        public override void Log(string source, LogLevel level, string message, params object[] args)
         {
-
-        }
-
-        public override void Log(LogLevel level, string message, params object[] args)
-        {
-
+            
         }
     }
 }

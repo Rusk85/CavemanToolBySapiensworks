@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CavemanTools.Logging
 {
      /// <summary>
-        /// Not thread safe
-        /// </summary>
+    /// Not thread safe
+    /// </summary>
+    [Obsolete("Use LogManager")]
 	public static class LogHelper
     {
         /// <summary>
@@ -82,7 +84,7 @@ namespace CavemanTools.Logging
         /// <param name="writer"></param>
         public static void OutputTo(Action<string> writer)
         {
-            Register(new DeveloperLogger(writer),"devel");
+            Register(new DeveloperLogger(writer),"devel"); 
         }
     }
 }

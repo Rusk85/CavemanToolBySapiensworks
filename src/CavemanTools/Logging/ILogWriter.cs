@@ -6,7 +6,8 @@ namespace CavemanTools.Logging
 	/// Use to abstract the usage of an explicit logger (log4net, nlog etc)
 	/// Implement it or extend the LogWriteBase.
 	/// </summary>
-	public interface ILogWriter
+	[Obsolete("Use IWriteToLog")]
+    public interface ILogWriter
 	{
 	    /// <summary>
 	    /// Should return the real logger implementation
@@ -42,15 +43,7 @@ namespace CavemanTools.Logging
 
 	    void Debug(string mesage);
 	    void Debug(string format, params object[] args);
+
+	    
 	}
-
-    /// <summary>
-    /// New name for an old interface
-    /// </summary>
-    public interface IWriteToLog:ILogWriter
-    {
-        
-    }
-
- 
 }
