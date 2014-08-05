@@ -11,6 +11,10 @@ namespace System
          {
              if (param == null) throw new ArgumentNullException(paramName??string.Empty);
          }
+         public static void MustNotBeNull<T>(this T param, string msg, string paramName = null) where T : class
+         {
+             if (param == null) throw new ArgumentNullException(paramName??string.Empty,msg);
+         }
 
         public static void MustNotBeEmpty(this string arg,string paramName=null)
         {
@@ -25,6 +29,11 @@ namespace System
         public static void MustMatch(this string source,string regex,RegexOptions options=RegexOptions.None)
         {
             if (source.IsNullOrEmpty() || !Regex.IsMatch(source,regex,options)) throw new FormatException(string.Format("Argument doesn't match expression '{0}'",regex));
+        }
+
+        public static void ThrowIfNull<TException>(this object source, TException ex) where TException:Exception
+        {
+            if (source == null) throw ex;
         }
 
         /// <summary>

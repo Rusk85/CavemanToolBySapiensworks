@@ -33,6 +33,25 @@ namespace System
         }
 
         /// <summary>
+        /// Usually get properties returns first the properties declared on the type, then properties declared on the base types.
+        /// This method will return properties as you expect it 
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static IEnumerable<PropertyInfo> GetPropertiesInOrder(this Type tp)
+        {
+            var props = new List<PropertyInfo>();
+            var baseTP = tp;
+            while (baseTP != null)
+            {
+                props.AddRange(baseTP.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).Reverse());
+                baseTP = baseTP.BaseType;
+            }
+            props.Reverse();
+            return props;
+        }
+
+        /// <summary>
         /// Orders an enumerable using [Order] 
         /// </summary>
         /// <returns></returns>
