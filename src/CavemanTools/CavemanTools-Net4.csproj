@@ -88,6 +88,7 @@
     <Compile Include="Model\PagedModel.cs" />
     <Compile Include="Model\Pagination.cs" />
     <Compile Include="Model\Persistence\AbstractMemoryRepository.cs" />
+    <Compile Include="Model\Persistence\EntityUpdateFailException.cs" />
     <Compile Include="Model\Persistence\IdempotencyHistoryItem.cs" />
     <Compile Include="Model\Persistence\IStore.cs" />
     <Compile Include="Model\Persistence\MemoryCollection.cs" />
