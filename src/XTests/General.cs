@@ -8,8 +8,14 @@ using System.Diagnostics;
 
 namespace XTests
 {
-   
-   
+
+    class Test
+    {
+        public void Do(string t)
+        {
+           Console.Write(t);
+        } 
+    }
     public class General
     {
         private Stopwatch _t = new Stopwatch();
@@ -22,15 +28,12 @@ namespace XTests
         [Fact]
         public void FactMethodName()
         {
-            var sessionId = SessionId.NewId();
-            Write(sessionId.GetHashCode());
-          Write(SessionId.NewId().GetHashCode());
-
-            var s2 = SessionId.Parse(sessionId.ToString());
-            Write(s2.GetHashCode());
-            Assert.Equal(sessionId.GetHashCode(),s2.GetHashCode());
-            //  @"acesta e un 'test'".AddSlashes().Should().Be("acesta e un \'test\'");
+            string i = "4";
+            dynamic t = new Test();
+            t.Do((object)i);
         }
+
+        
 
         [Fact]
         public void exception_log()

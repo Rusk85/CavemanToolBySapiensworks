@@ -70,7 +70,9 @@ namespace CavemanTools.Logging
 
         protected virtual string FormatSource(object src)
         {
-            return "[" + src + "]";
+            src.MustNotBeNull();
+            var name = src is string? src.ToString():src.GetType().Name;
+            return "[" + name + "]";
         }
 
         public virtual void LogException(string source,LogLevel level, Exception ex)

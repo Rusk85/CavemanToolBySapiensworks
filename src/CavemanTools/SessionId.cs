@@ -73,10 +73,6 @@ namespace CavemanTools
         {
             var bytes = new byte[BytesLength];
             RandomNumberGenerator.Create().GetBytes(bytes);
-            //using (var rng = new RNGCryptoServiceProvider())
-            //{
-            //    rng.GetNonZeroBytes(bytes);
-            //}
             return new SessionId(bytes);
         }
         /// <summary>

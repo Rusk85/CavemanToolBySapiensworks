@@ -63,7 +63,11 @@ namespace CavemanTools.Logging
            Writer.LogException(source,LogLevel.Error, ex);
         }
 
-
+        //public static void LogError<T>(this T source, Exception ex,string msg,params object[] args)
+        //{
+        //    LogError(source,"Exception thrown: "+ex.GetType().Name+"\n"+msg, args);
+        //    Writer.LogException(source,LogLevel.Error, ex);
+        //}
 
         #endregion
     }

@@ -46,6 +46,10 @@ namespace System.Reflection
 			return asm.GetExportedTypes().Where(a => a.HasCustomAttribute<T>());
 		}
 
+	    public static IEnumerable<Type> GetPublicTypes(this Assembly asm, Func<Type, bool> filter)
+	    {
+	        return asm.GetTypes().Where(t => t.IsPublic && filter(t));
+	    }
 
 	}
 }

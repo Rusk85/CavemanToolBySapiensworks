@@ -31,6 +31,11 @@ namespace CavemanTools
         {
             return _value.ToString("P");
         }
+        
+        public string ToString(int digits)
+        {
+            return _value.ToString("P"+digits);
+        }
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
