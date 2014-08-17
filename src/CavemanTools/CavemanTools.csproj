@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Threading.cs" />
     <Compile Include="Infrastructure\IHandleAction.cs" />
     <Compile Include="Infrastructure\IHandleActionAsync.cs" />
     <Compile Include="Infrastructure\IHandleCommand.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Infrastructure\MessagingMediator.cs" />
     <Compile Include="Infrastructure\NoInput.cs" />
     <Compile Include="Infrastructure\NoResult.cs" />
+    <Compile Include="Logging\ILoggingSource.cs" />
     <Compile Include="Logging\IWriteToLog.cs" />
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="ManualContainerConfigAttribute.cs" />

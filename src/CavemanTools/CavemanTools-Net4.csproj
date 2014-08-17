@@ -78,6 +78,7 @@
     <Compile Include="Infrastructure\ServiceLocator.cs" />
     <Compile Include="ISupportMemento.cs" />
     <Compile Include="LimitedList.cs" />
+    <Compile Include="Logging\ILoggingSource.cs" />
     <Compile Include="Logging\IWriteToLog.cs" />
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="ManualContainerConfigAttribute.cs" />

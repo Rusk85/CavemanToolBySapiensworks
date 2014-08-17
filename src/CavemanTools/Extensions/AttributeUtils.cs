@@ -51,5 +51,15 @@ namespace System.Reflection
 		{
 			return mi.GetSingleAttribute<T>(inherit) != null;
 		}
+        
+        public static bool HasCustomAttribute<T>(this ICustomAttributeProvider mi,Func<T,bool> condition,bool inherit=true) where T:Attribute
+        {
+            var a = mi.GetSingleAttribute<T>(inherit);
+            if (a != null)
+            {
+                return condition(a);
+            }
+            return false;
+        }
 	}
 }
