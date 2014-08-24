@@ -31,6 +31,7 @@ namespace CavemanTools.Testing
             if (name != null) ContainerName = name;
         }
 
+        
         public void Add(BenchmarkAction action,string name)
         {
             _actions.Add(new BItem(action,name));     
@@ -39,19 +40,24 @@ namespace CavemanTools.Testing
         public void Execute(params object[] args)
         {
             var t = new Stopwatch();
-            _actions.ForEach(act=>act.Result.Reset());
-        
+           
+            ResetAll();
+
+           
             _actions.ForEach(act =>
                 {
                     try
-                    {for (int i = 0; i < Iterations; i++)
                     {
-                        t.Restart();
-                        act.Action(args);
-                        t.Stop();
-                        act.Result.AddIteration(t.Elapsed);                                             
-                    }}
-                    catch(NotSupportedException ex)
+                        for (int i = 0; i < Iterations; i++)
+                        {
+                            t.Reset();
+                            t.Start();
+                            act.Action(args);
+                            t.Stop();
+                            act.Result.AddIteration(t.Elapsed);
+                        }
+                    }
+                    catch (NotSupportedException ex)
                     {
                         act.Result.SetNoSupported(ex.Message);
                     }
@@ -60,26 +66,38 @@ namespace CavemanTools.Testing
             
         }
 
+        private void ResetAll()
+        {
+            _actions.ForEach(act1 => act1.Result.Reset());
+        }
+
         public void ExecuteWarmup(params object[] args)
         {
-            _actions.ForEach(act =>
-                {
-                    try
-                    {
-                        for (int i = 0; i < WarmUpIterations; i++)
-                        {
-                            act.Action(args);                                 
-                        }}
-                    catch(NotSupportedException)
-                    {
+            Execute(args);
+            //ResetAll();
+            //_actions.ForEach(act =>
+            //    {
+            //        try
+            //        {
+            //            for (int i = 0; i < WarmUpIterations; i++)
+            //            {
+            //                act.Action(args);                                 
+            //            }}
+            //        catch(NotSupportedException)
+            //        {
                     
-                    }
-                });
+            //        }
+            //    });
         }
 
         public IEnumerable<BenchmarkResult> GetResults
         {
             get { return _actions.Select(a => a.Result); }
+        }
+
+        public void ResultsToConsole()
+        {
+            GetResults.ForEach(Console.WriteLine);
         }
     }
 }

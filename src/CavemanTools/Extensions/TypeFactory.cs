@@ -26,8 +26,7 @@ namespace System.Reflection
         /// <returns></returns>
         public static Func<object> GetFactory(Type t)
         {
-            Func<object> inv;
-            var key = t;
+            Func<object> inv;      
             lock (actLock)
             {
                 if (_actCache == null) _actCache = new Dictionary<Type, Func<object>>();
