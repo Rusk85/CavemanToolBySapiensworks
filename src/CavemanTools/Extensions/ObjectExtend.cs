@@ -84,8 +84,7 @@ namespace System
                 (_del as Action<IDictionary<string,object>,object>)(d, o);
                 return d;
             }
-        }
-
+        }        
 
 	    /// <summary>
 	    /// 

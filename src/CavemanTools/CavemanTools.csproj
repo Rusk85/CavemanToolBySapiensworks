@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Threading.cs" />
+    <Compile Include="Hashing\IntHelpers.cs" />
+    <Compile Include="Hashing\Murmur3.cs" />
     <Compile Include="Infrastructure\IHandleAction.cs" />
     <Compile Include="Infrastructure\IHandleActionAsync.cs" />
     <Compile Include="Infrastructure\IHandleCommand.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Model\ValueObjects\Extensions.cs" />
     <Compile Include="Model\ValueObjects\Tag.cs" />
     <Compile Include="Model\Persistence\SerializedEntity.cs" />
+    <Compile Include="MultilingualTexts.cs" />
     <Compile Include="OrderAttribute.cs" />
     <Compile Include="Model\Pagination.cs" />
     <Compile Include="Infrastructure\DependencyContainerWrapper.cs" />

@@ -12,6 +12,10 @@ namespace System
 		/// <returns></returns>
 		public static TimeSpan Multiply(this TimeSpan duration, float modifier)
 		{
+		    return duration.Multiply((double)modifier);
+		}
+        public static TimeSpan Multiply(this TimeSpan duration, double modifier)
+		{
 			if (modifier == 1) return duration;
 			try
 			{

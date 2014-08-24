@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assertions\AssertionsTests.cs" />
+    <Compile Include="BenchmarkTests.cs" />
     <Compile Include="Cookies\EncryptedCookieTests.cs" />
     <Compile Include="Cookies\ExtensionTests.cs" />
     <Compile Include="Extensions\ExpressionExtensionsTests.cs" />

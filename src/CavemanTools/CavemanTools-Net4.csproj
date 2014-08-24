@@ -66,6 +66,8 @@
     <Compile Include="Extensions\LCGUtils.cs" />
     <Compile Include="Extensions\ReflectionUtils.cs" />
     <Compile Include="Extensions\TypeFactory.cs" />
+    <Compile Include="Hashing\IntHelpers.cs" />
+    <Compile Include="Hashing\Murmur3.cs" />
     <Compile Include="Infrastructure\ActivatorContainer.cs" />
     <Compile Include="Infrastructure\IHandleAction.cs" />
     <Compile Include="Infrastructure\IHandleCommand.cs" />

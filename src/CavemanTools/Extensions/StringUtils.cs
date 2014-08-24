@@ -5,12 +5,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using CavemanTools.Hashing;
 
 namespace System
 {
 	public static class StringUtils
 	{
-	    public static string AddSlashes(this string data,bool singleQuotes=true,bool doubleQuotes=true)
+	    public static byte[] MurmurHash(this string data)
+	    {
+	        var hasher = new Murmur3();
+	        return hasher.ComputeHash(Encoding.Unicode.GetBytes(data));            
+	    }
+        
+        public static string AddSlashes(this string data,bool singleQuotes=true,bool doubleQuotes=true)
 	    {
 	        if (singleQuotes)
 	        {
