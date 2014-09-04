@@ -24,14 +24,4 @@ namespace CavemanTools
             return _translations.Find(t => t.Language == language);
         }
     }
-
-    public class Translations:Dictionary<string,string>
-    {
-        public string Language { get; private set; }
-
-        public Translations(string language)
-        {
-            Language = language;
-        }
-    }
 }

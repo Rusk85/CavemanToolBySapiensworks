@@ -135,6 +135,7 @@
     <Compile Include="Extensions\LinqExt.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\AttributeUtils.cs" />
+    <Compile Include="MultilingualTexts.cs" />
     <Compile Include="OrderAttribute.cs" />
     <Compile Include="PasswordHash.cs" />
     <Compile Include="Percentage.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Special\OverridableOption.cs" />
     <Compile Include="Extensions\Serializers.cs" />
     <Compile Include="Extensions\StringParsers.cs" />
+    <Compile Include="Translations.cs" />
     <Compile Include="Xml\XmlToObject.cs" />
     <Compile Include="Model\IPagedResult.cs" />
     <Compile Include="Model\Validation\IValidationDictionary.cs" />

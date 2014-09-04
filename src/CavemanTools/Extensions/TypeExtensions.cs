@@ -40,15 +40,26 @@ namespace System
         /// <returns></returns>
         public static IEnumerable<PropertyInfo> GetPropertiesInOrder(this Type tp)
         {
+            return GetPropertiesInOrder(tp, BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+        }
+        
+        /// <summary>
+        /// Usually get properties returns first the properties declared on the type, then properties declared on the base types.
+        /// This method will return properties as you expect it 
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static IEnumerable<PropertyInfo> GetPropertiesInOrder(this Type tp,BindingFlags flags)
+        {
             var props = new List<PropertyInfo>();
             var baseTP = tp;
             while (baseTP != null)
             {
-                props.AddRange(baseTP.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).Select(d => tp.GetProperties().First(f => f.Name == d.Name)).Reverse());
+                props.AddRange(baseTP.GetProperties(flags).Select(d => tp.GetProperties().First(f => f.Name == d.Name)).Reverse());
                 baseTP = baseTP.BaseType;
             }
             props.Reverse();
-            return props;
+            return props.Distinct();
         }
 
         /// <summary>
