@@ -23,17 +23,20 @@ namespace System
 		/// <returns></returns>
 		public static IDictionary<string,object> ToDictionary(this object value)
 		{
-			if (_typeDicts==null)
+            value.MustNotBeNull();
+            if (value is IDictionary<string, object>)
+            {
+                return (IDictionary<string, object>)value;
+            }
+
+            if (_typeDicts==null)
 			{
 			    _typeDicts= new ConcurrentDictionary<Type, TypeInfo>();
 			}
 
 		    TypeInfo info;
 		    var tp = value.GetType();
-            if (tp==typeof(ExpandoObject))
-            {
-                return (IDictionary<string, object>) value;
-            }
+           
             
             if(!_typeDicts.TryGetValue(tp,out info))
             {
