@@ -1,4 +1,5 @@
 ﻿
+using System.Globalization;
 using CavemanTools;
 using CavemanTools.Logging;
 using FluentAssertions;
@@ -28,12 +29,14 @@ namespace XTests
         [Fact]
         public void FactMethodName()
         {
-            string i = "4";
-            dynamic t = new Test();
-            t.Do((object)i);
+            var text = "MONTRÉAL ÉLITE SÉCURITÉ";
+            Write(ConvertAccentedString(text));
         }
 
-        
+        public string ConvertAccentedString(string accentedString,int codepage=1251)
+        {
+            return System.Text.Encoding.ASCII.GetString(System.Text.Encoding.GetEncoding(codepage).GetBytes(accentedString));
+        }
 
         [Fact]
         public void exception_log()
