@@ -79,7 +79,10 @@ namespace System.Linq.Expressions
             {
                 return node.As<NewExpression>().HasParameterArgument(type);
             }
-
+            if (node.NodeType == ExpressionType.NewArrayInit)
+            {
+                return node.As<NewArrayExpression>().Expressions.Any(e => e.BelongsToParameter(type));
+            }
             return false;
         }
 
@@ -107,6 +110,10 @@ namespace System.Linq.Expressions
                         return true;
                     }
                     break;
+                case ExpressionType.NewArrayInit:
+                    var n = node as NewArrayExpression;
+                    return n.Expressions.Any(e => e.BelongsToParameter(type));
+                    
                 case ExpressionType.Not:
                 case ExpressionType.Convert:
                     var u = node as UnaryExpression;
