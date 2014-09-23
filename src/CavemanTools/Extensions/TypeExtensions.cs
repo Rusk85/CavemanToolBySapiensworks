@@ -70,7 +70,8 @@ namespace System
         {
             return objects.OrderBy(t =>
             {
-                var attrib = t.GetType().GetSingleAttribute<OrderAttribute>();
+                var tp=(t is Type)?t as Type:t.GetType();
+                var attrib = tp.GetSingleAttribute<OrderAttribute>();
                 if (attrib != null)
                 {
                     return attrib.Value;
