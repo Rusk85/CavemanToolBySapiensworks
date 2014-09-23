@@ -19,7 +19,7 @@ namespace CavemanTools.Logging
        
         public override void Log(string source, LogLevel level, string message, params object[] args)
         {
-            _writer(level + " | " + DateTime.Now.ToString() + " | " +source+" " +string.Format(message, args));
+            _writer(level + " | " + DateTime.Now.ToString() + " | " +source+" " +(args.Length==0?message:string.Format(message, args)));
         }
     }
 }
