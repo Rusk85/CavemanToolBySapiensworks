@@ -190,19 +190,24 @@ namespace System
         public static bool ImplementsGenericInterface(this Type type, Type genericInterfaceType,params Type[] genericArgs)
         {
             genericInterfaceType.MustComplyWith(t=>t.IsGenericType,"Type must be of a generic interface");
-            var interf = type.GetInterfaces().FirstOrDefault(t => t.Name == genericInterfaceType.Name);
-            if (interf == null) return false;
+            var interf = type.GetInterfaces().Where(t => t.Name == genericInterfaceType.Name).ToArray();
+            if (interf.IsNullOrEmpty()) return false;
 
-            var comparer = genericInterfaceType.GenericTypeArguments().Any()
-                ? genericInterfaceType.GenericTypeArguments()
-                : genericArgs;
-            
-            if (comparer.Length > 0)
+            return interf.Any(i =>
             {
-                return interf.GenericTypeArguments().HasTheSameElementsAs(comparer);
-            }
+            var comparer = genericInterfaceType.GenericTypeArguments().Any()
+                            ? genericInterfaceType.GenericTypeArguments()
+                            : genericArgs;
+            
+                        if (comparer.Length > 0)
+                        {
+                            return i.GenericTypeArguments().HasTheSameElementsAs(comparer);
+                        }
           
-            return true;
+                        return true;
+            });
+
+            
         }
 
         public static bool InheritsGenericType(this Type tp, Type genericType,params Type[] genericArgs)
