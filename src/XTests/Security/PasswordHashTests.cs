@@ -47,5 +47,18 @@ namespace XTests.Security
             var hash2 = new PasswordHash(Password,Salt.Generate());
             hash1.ToString().Should().NotBe(hash2.ToString());
         }
+
+        [Fact]
+        public void hash_from_array()
+        {
+            var hash = new PasswordHash(Password, Salt.Generate());
+            var bytes = hash.Hash;
+            
+            var hash2 = new PasswordHash(bytes);
+            hash2.Should().Be(hash);
+            hash.ToString().ToConsole();
+            hash2.ToString().ToConsole();
+
+        }
     }
 }

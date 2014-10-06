@@ -245,6 +245,11 @@ namespace System
             return String.Format(pattern, args);
         }
 
+	    public static void ToConsole(this string text)
+	    {
+	        Console.WriteLine(text);
+	    }
+            
 
         public static T ToEnum<T>(this string value)
         {

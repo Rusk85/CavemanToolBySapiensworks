@@ -16,6 +16,14 @@ namespace CavemanTools
             get { return _salt; }
         }
 
+        /// <summary>
+        /// For developing/testing purposes only
+        /// </summary>
+        /// <returns></returns>
+        public static PasswordHash GenerateRandom()
+        {
+            return new PasswordHash(Guid.NewGuid().ToString(),Salt.Generate());
+        }
 
         public static PasswordHash FromHash(string hash)
         {
@@ -30,6 +38,18 @@ namespace CavemanTools
         {
             
         }
+
+        public PasswordHash(byte[] hash)
+        {
+            _finalHash = hash;
+            ExtractParts();
+        }
+
+        public byte[] Hash
+        {
+            get { return _finalHash; }
+        }
+
         void ExtractParts()
         {
            _iterations = BitConverter.ToInt32(_finalHash,0);
