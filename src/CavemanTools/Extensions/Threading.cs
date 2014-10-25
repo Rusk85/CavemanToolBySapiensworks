@@ -12,5 +12,16 @@ namespace System.Threading.Tasks
             }
             task.ContinueWith(errorHandler, TaskContinuationOptions.OnlyOnFaulted);
         }
+
+        /// <summary>
+        /// Thread.Sleep alternative, using Task.Delay
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="duration"></param>
+        public static void Sleep(this object item, TimeSpan duration)
+        {
+            Task.Delay(duration).Wait();
+        }
+            
     }
 }
