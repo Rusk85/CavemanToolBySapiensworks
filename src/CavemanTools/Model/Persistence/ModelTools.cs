@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CavemanTools.Model.Persistence
 {
@@ -12,8 +13,9 @@ namespace CavemanTools.Model.Persistence
         /// </summary>
         /// <param name="update"></param>
         /// <param name="triesCount"></param>
+        /// <param name="wait">How many ms to wait before retrying</param>
         /// <returns></returns>
-        public static bool TryUpdateEntity(Action update, int triesCount=10)
+        public static bool TryUpdateEntity(Action update, int triesCount=10,int wait=100)
         {
             var i = 0;
             do
@@ -26,6 +28,7 @@ namespace CavemanTools.Model.Persistence
                 catch (NewerVersionExistsException)
                 {
                     i++;
+                    Task.Delay(wait).Wait();
                 }
                 
             } while (i < triesCount);
