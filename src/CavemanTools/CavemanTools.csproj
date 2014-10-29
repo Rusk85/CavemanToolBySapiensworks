@@ -160,6 +160,7 @@
     <Compile Include="Special\OverridableOption.cs" />
     <Compile Include="Extensions\Serializers.cs" />
     <Compile Include="Extensions\StringParsers.cs" />
+    <Compile Include="TimeInterval.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="Xml\XmlToObject.cs" />
     <Compile Include="Model\IPagedResult.cs" />
