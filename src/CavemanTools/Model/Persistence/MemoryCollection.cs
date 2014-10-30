@@ -31,10 +31,10 @@ namespace CavemanTools.Model.Persistence
         {
             this.RemoveAll(o =>
             {
-                 var c = d as T;
+                var c = o as T;
                 if (c == null) return false;
                 return match(c);
-            })
+            });
         }
     }
 }

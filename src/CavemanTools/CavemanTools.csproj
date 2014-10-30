@@ -64,9 +64,11 @@
     <Compile Include="Infrastructure\IHandleQuery.cs" />
     <Compile Include="Infrastructure\IHandleQueryAsync.cs" />
     <Compile Include="Infrastructure\IIGetCacheItem.cs" />
+    <Compile Include="Infrastructure\IValidateInput.cs" />
     <Compile Include="Infrastructure\MessagingMediator.cs" />
     <Compile Include="Infrastructure\NoInput.cs" />
     <Compile Include="Infrastructure\NoResult.cs" />
+    <Compile Include="Infrastructure\ValidatorResult.cs" />
     <Compile Include="Logging\ILoggingSource.cs" />
     <Compile Include="Logging\IWriteToLog.cs" />
     <Compile Include="Logging\LogManager.cs" />
