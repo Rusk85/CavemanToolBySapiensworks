@@ -10,6 +10,15 @@ namespace CavemanTools.Infrastructure
         /// </summary>
         public static Func<Type, object> Resolver = t => { throw new InvalidOperationException("There is no resolver set for the MessagingMediator. Use 'MessageMediator.Resolver=type=>{/* call container to return instance */}'");};
 
+
+        public static ValidatorResult Validate<TInput>(this TInput input) where TInput : class
+        {
+            input.MustNotBeNull();
+            var handlerType = typeof (IValidateInput<>).MakeGenericType(typeof (TInput));
+            var handler = (IValidateInput<TInput>) Resolver(handlerType);
+            if (handler == null) throw new InvalidOperationException("There's no handler implementing 'IValidateInputy<{0}>' registered with the DI Container".ToFormat(typeof(TInput).GetType().Name));
+            return handler.Validate(input);
+        }
        
         /// <summary>
         /// Invokes the query handler which will take the specified argument as the input model
