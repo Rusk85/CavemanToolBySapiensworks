@@ -6,6 +6,7 @@ namespace CavemanTools.Model.Persistence
 {
     public class ModelTools
     {
+#if!Net4
         /// <summary>
         /// Executes the action which should update and store an entity.
         /// If action throws <see cref="NewerVersionExistsException"/> it's retried for the specified number of times.
@@ -34,7 +35,7 @@ namespace CavemanTools.Model.Persistence
             } while (i < triesCount);
             return i < triesCount;
         }
-
+#endif
         public static T GetBlocking<T>(Func<T> factory,int retries=10,int sleep=100) where T:class 
         {
             T data;
