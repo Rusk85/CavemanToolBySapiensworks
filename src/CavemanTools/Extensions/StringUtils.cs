@@ -124,6 +124,12 @@ namespace System
 	        return string.Join(separator, items.Select(t => t.ToString()));
 	    }
 
+	    public static bool IsNotEmpty(this string value)
+	    {
+	        return !string.IsNullOrWhiteSpace(value);
+	    }
+            
+
         /// <summary>
         /// Returns true if the string is empty 
         /// </summary>
