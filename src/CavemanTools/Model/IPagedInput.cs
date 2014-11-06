@@ -6,5 +6,6 @@ namespace CavemanTools.Model
         /// Current page
         /// </summary>
         int Page { get; }
+        int PageSize { get; }
     }
 }
