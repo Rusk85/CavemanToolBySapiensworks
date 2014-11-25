@@ -282,6 +282,28 @@ namespace System.Collections.Generic
 	        return val;
 	    }
 
+
+        /// <summary>
+        /// If there is no value for the key, it creates one, adds it to the dictionary, then returns it
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="factory"></param>
+        /// <returns></returns>
+	    public static V GetValueOrCreate<T, V>(this IDictionary<T, V> dict, T key, Func<V> factory)
+	    {
+            V val = default(V);
+            if (!dict.TryGetValue(key, out val))
+            {
+                val = factory();
+                dict[key] = val;
+            }
+            return val;
+	    }
+           
+
 	    public static void AddRange<T>(this IDictionary<int, T> dic, IEnumerable<T> items,int startPos=0)
 	    {
 	        var i = startPos;
