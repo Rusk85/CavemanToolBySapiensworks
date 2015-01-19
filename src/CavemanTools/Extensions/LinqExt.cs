@@ -57,5 +57,10 @@ namespace System.Linq
                 yield return res;
             }            
         }
+
+	    public static IEnumerable<T> FilterNulls<T>(this IEnumerable<T> src) where T : class
+	    {
+	        return src.Where(d => d != null);
+	    }
 	}
 }
