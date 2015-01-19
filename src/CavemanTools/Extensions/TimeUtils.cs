@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace System
 {
@@ -80,5 +81,18 @@ namespace System
             }
             return "few seconds ago";
         }
+
+	    public static IEnumerable<DateTime> EnumerateTo(this DateTime start, DateTime end)
+	    {
+	        var inverse = end < start;
+            var interval = end.Subtract(start);
+	        if (inverse) interval = start.Subtract(end);
+	        var days = (int) Math.Ceiling(interval.TotalDays);
+	        for (var i = 0; i <= days; i++)
+	        {
+	            yield return start.AddDays(inverse?-i:i);
+	        }
+            
+	    }
 	}
 }
