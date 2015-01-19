@@ -92,7 +92,7 @@
     <Compile Include="Model\Extensions.cs" />
     <Compile Include="Model\IEntity.cs" />
     <Compile Include="Model\IPagedInput.cs" />
-    <Compile Include="Model\OutputValue.cs" />
+    <Compile Include="Infrastructure\OutputValue.cs" />
     <Compile Include="Model\PagedInput.cs" />
     <Compile Include="Model\PagedModel.cs" />
     <Compile Include="Model\Persistence\AbstractMemoryRepository.cs" />

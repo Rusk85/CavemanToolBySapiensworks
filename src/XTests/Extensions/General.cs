@@ -2,6 +2,7 @@
 using Xunit;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using FluentAssertions;
 
 namespace XTests.Extensions
@@ -22,6 +23,21 @@ namespace XTests.Extensions
         {
             typeof(BlaController).ToWebsiteRelativePath(GetType().Assembly).Should().Be("~/Extensions/Bla");
             typeof(BlaController).ToWebsiteRelativePath(GetType().Assembly,false).Should().Be("~/Extensions/BlaController");
+        }
+
+        [Fact]
+        public void date_enumeration()
+        {
+            var dt1 = new DateTime(2015, 2, 1);
+            var dt2 = new DateTime(2015, 3, 1);
+            var all = dt1.EnumerateTo(dt2).ToArray();
+            all[0].Should().Be(dt1);
+            all[all.Length - 1].Should().Be(dt2);
+            all.ForEach(d=>Console.WriteLine(d));
+            var inverted = dt2.EnumerateTo(dt1).ToArray();
+            inverted[0].Should().Be(dt2);
+            inverted[all.Length - 1].Should().Be(dt1);
+
         }
 
         protected void Write(object format, params object[] param)
