@@ -94,5 +94,21 @@ namespace System
 	        }
             
 	    }
+
+        public static DateTime ToFirstDay(this DateTime date)
+	    {
+	        return date.AddDays(-date.Day + 1);
+	    }
+
+        /// <summary>
+        /// Checks if both dates are days of the same month and year
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="otherDate"></param>
+        /// <returns></returns>
+	    public static bool IsSameMonthAs(this DateTime date, DateTime otherDate)
+	    {
+	        return date.Year == otherDate.Year && date.Month == otherDate.Month;
+	    }
 	}
 }

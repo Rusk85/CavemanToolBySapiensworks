@@ -40,6 +40,13 @@ namespace XTests.Extensions
 
         }
 
+        [Fact]
+        public void date_to_first_day()
+        {
+            var rez = new DateTime(2014, 12, 28).ToFirstDay();
+            rez.Should().Be(new DateTime(2014, 12, 1));
+        }
+
         protected void Write(object format, params object[] param)
         {
             Console.WriteLine(format.ToString(), param);
