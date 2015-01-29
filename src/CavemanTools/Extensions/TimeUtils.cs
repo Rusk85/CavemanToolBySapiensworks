@@ -110,5 +110,11 @@ namespace System
 	    {
 	        return date.Year == otherDate.Year && date.Month == otherDate.Month;
 	    }
+
+	    public static DateTime ToLastDayOfMonth(this DateTime dt)
+	    {
+	        return new DateTime(dt.Year,dt.Month,DateTime.DaysInMonth(dt.Year,dt.Month));
+	    }
+
 	}
 }

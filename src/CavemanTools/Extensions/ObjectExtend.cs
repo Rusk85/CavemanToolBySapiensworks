@@ -350,65 +350,65 @@ namespace System
 
 namespace CavemanTools.Testing
 {
-public static class ObjectExtensions
-{
-    /// <summary>
-    /// Generates a string containing the properties and values of the object
-    /// </summary>
-    /// <param name="val"></param>
-    /// <returns></returns>
-    public static string ToDebugString(this object val, StringBuilder sb = null)
-    {
-        if (val == null) return string.Empty;
-        if (sb == null)
-        {
-            sb = new StringBuilder();
-        }
-        var dict = val.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .Where(p => p.GetIndexParameters().Length == 0)
-            .ToDictionary(p => string.Format("({1}) {0}", p.Name, p.PropertyType.Name), p => p.GetValue(val, null));
-        sb.AppendFormat("({0})\n", val.GetType());
-        foreach (var kv in dict)
-        {
-            sb.AppendFormat("{0} =", kv.Key);
-            if (kv.Value != null)
-            {
-                var tp = kv.Value.GetType();
-                if (tp.Implements<IEnumerable>())
-                {
-                    var en = kv.Value as IEnumerable;
-                    var i = 0;
-                    sb.AppendFormat("\n\t");
-                    foreach (var item in en)
-                    {
-                        sb.AppendFormat("[{0}]={1}\n", i, item.ToDebugString());
-                        i++;
-                    }
+//public static class ObjectExtensions
+//{
+//    /// <summary>
+//    /// Generates a string containing the properties and values of the object
+//    /// </summary>
+//    /// <param name="val"></param>
+//    /// <returns></returns>
+//    public static string ToDebugString(this object val, StringBuilder sb = null)
+//    {
+//        if (val == null) return string.Empty;
+//        if (sb == null)
+//        {
+//            sb = new StringBuilder();
+//        }
+//        var dict = val.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+//            .Where(p => p.GetIndexParameters().Length == 0)
+//            .ToDictionary(p => string.Format("({1}) {0}", p.Name, p.PropertyType.Name), p => p.GetValue(val, null));
+//        sb.AppendFormat("({0})\n", val.GetType());
+//        foreach (var kv in dict)
+//        {
+//            sb.AppendFormat("{0} =", kv.Key);
+//            if (kv.Value != null)
+//            {
+//                var tp = kv.Value.GetType();
+//                if (tp.Implements<IEnumerable>())
+//                {
+//                    var en = kv.Value as IEnumerable;
+//                    var i = 0;
+//                    sb.AppendFormat("\n\t");
+//                    foreach (var item in en)
+//                    {
+//                        sb.AppendFormat("[{0}]={1}\n", i, item.ToDebugString());
+//                        i++;
+//                    }
 
-                }
-                else
-                {
-                    if (!tp.IsPrimitive)
-                    {
-                        sb.Append("\n\t");
-                        sb.Append(kv.Value.ToDebugString());
-                    }
-                    else
-                    {
-                        sb.Append(kv.Value);
-                    }
-                }
-            }
-            else
-            {
-                sb.Append("null");
-            }
-            sb.AppendLine();
-        }
+//                }
+//                else
+//                {
+//                    if (!tp.IsPrimitive)
+//                    {
+//                        sb.Append("\n\t");
+//                        sb.Append(kv.Value.ToDebugString());
+//                    }
+//                    else
+//                    {
+//                        sb.Append(kv.Value);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                sb.Append("null");
+//            }
+//            sb.AppendLine();
+//        }
 
-        return sb.ToString();
-    }
+//        return sb.ToString();
+//    }
 
-}
+//}
 
 }							 
