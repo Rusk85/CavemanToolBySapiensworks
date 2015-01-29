@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Numbers.cs" />
     <Compile Include="Extensions\Threading.cs" />
     <Compile Include="Hashing\IntHelpers.cs" />
     <Compile Include="Hashing\Murmur3.cs" />
