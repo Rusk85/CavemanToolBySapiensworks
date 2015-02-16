@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace System
 {
@@ -15,6 +16,16 @@ namespace System
 		{
 		    return duration.Multiply((double)modifier);
 		}
+
+	    public static TimeSpan MeasureTime(Action action)
+	    {
+	        var s = new Stopwatch();
+            s.Start();
+	        action();
+            s.Stop();
+	        return s.Elapsed;
+	    }
+
         public static TimeSpan Multiply(this TimeSpan duration, double modifier)
 		{
 			if (modifier == 1) return duration;
