@@ -294,7 +294,11 @@ namespace System
             return String.Format(pattern, args);
         }
 
-	    public static void ToConsole(this string text)
+	    public static void ToConsole(this object text)
+	    {
+	        Console.WriteLine(text.ToString());
+	    }
+        public static void ToConsole(this string text)
 	    {
 	        Console.WriteLine(text);
 	    }
