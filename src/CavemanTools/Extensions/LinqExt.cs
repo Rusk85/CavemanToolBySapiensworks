@@ -47,6 +47,7 @@ namespace System.Linq
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
+        [DebuggerStepThrough]
         public static IEnumerable<T> CastSilentlyTo<T>(this IEnumerable source) where T:class
         {
             T res = null;
@@ -57,7 +58,7 @@ namespace System.Linq
                 yield return res;
             }            
         }
-
+        [DebuggerStepThrough]
 	    public static IEnumerable<T> FilterNulls<T>(this IEnumerable<T> src) where T : class
 	    {
 	        return src.Where(d => d != null);

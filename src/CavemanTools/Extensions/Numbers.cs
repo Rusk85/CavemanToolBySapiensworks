@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CavemanTools.Extensions
+﻿namespace System
 {
     public static class Numbers
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,7 +17,49 @@ namespace System
 	        var hasher = new Murmur3();
 	        return hasher.ComputeHash(Encoding.Unicode.GetBytes(data));            
 	    }
-        
+
+        /// <summary>
+        /// Compress using GZip
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static byte[] Zip(this string str)
+        {
+         if (str.IsNullOrEmpty()) return new byte[0];
+            var bytes = Encoding.UTF8.GetBytes(str);
+
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(mso, CompressionMode.Compress))
+                {
+                   msi.CopyTo(gs);                   
+                }
+
+                return mso.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Unzip a compressed string using GZip
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string Unzip(this byte[] bytes)
+        {
+            if (bytes.IsNullOrEmpty()) return "";
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                {
+                    gs.CopyTo(mso);                    
+                }
+
+                return Encoding.UTF8.GetString(mso.ToArray());
+            }
+        }
+
         public static string AddSlashes(this string data,bool singleQuotes=true,bool doubleQuotes=true)
 	    {
 	        if (singleQuotes)

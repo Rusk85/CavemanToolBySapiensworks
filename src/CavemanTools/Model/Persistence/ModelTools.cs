@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace CavemanTools.Model.Persistence
         /// <param name="triesCount"></param>
         /// <param name="wait">How many ms to wait before retrying</param>
         /// <returns></returns>
+        [DebuggerStepThrough]
         public static bool TryUpdateEntity(Action update, int triesCount=10,int wait=100)
         {
             var i = 0;
