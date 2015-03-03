@@ -31,7 +31,12 @@ namespace System
             using (var msi = new MemoryStream(bytes))
             using (var mso = new MemoryStream())
             {
+#if!Net4
                 using (var gs = new GZipStream(mso, CompressionLevel.Optimal))
+#else
+                using (var gs = new GZipStream(mso, CompressionMode.Compress))
+#endif
+     
                 {
                    msi.CopyTo(gs);                   
                 }
