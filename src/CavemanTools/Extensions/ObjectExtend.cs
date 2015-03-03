@@ -89,6 +89,7 @@ namespace System
             }
         }
 
+        /* http://stackoverflow.com/questions/1616144/how-can-a-large-array-be-split-into-smaller-arrays */
        public static T[][] Split<T>(this T[] arrayIn, int length)
         {
             bool even = arrayIn.Length % length == 0;
