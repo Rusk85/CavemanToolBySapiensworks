@@ -4,6 +4,8 @@ namespace CavemanTools
 {
     public struct Percentage:IEquatable<Percentage>
     {
+        public static readonly Percentage Empty=new Percentage();
+        
         private decimal _value;
 
         /// <summary>
@@ -70,6 +72,11 @@ namespace CavemanTools
                 return true;
             }
             return false;
+        }
+
+        public static Percentage From(decimal value)
+        {
+            return new Percentage(value);
         }
 
         #region operator overload
