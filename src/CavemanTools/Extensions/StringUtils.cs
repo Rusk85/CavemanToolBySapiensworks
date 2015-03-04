@@ -162,9 +162,14 @@ namespace System
 
         public static string RemoveLastChar(this string value)
         {
+            return value.RemoveLastChars(1);
+        }
+        public static string RemoveLastChars(this string value,int length)
+        {
             value.MustNotBeNull();
             if (value.Length == 0) return value;
-            return value.Remove(value.Length - 1, 1);
+            length.MustComplyWith(l=> value.Length>length,"Can't remove more chars than the string's length");
+           return value.Remove(value.Length - length, length);
         }
 
 	    public static string StringJoin<T>(this IEnumerable<T> items, string separator = ",")
