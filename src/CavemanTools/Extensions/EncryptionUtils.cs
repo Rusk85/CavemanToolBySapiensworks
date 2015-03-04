@@ -8,6 +8,20 @@ namespace System
 	public static class EncryptionUtils
 	{
 		#region Hashes
+
+	    public static string Hmac256(this string data, string key)
+	    {
+	        key.MustNotBeEmpty();
+
+	        var bytes = Encoding.UTF8.GetBytes(key);
+	        using (var hasher = new HMACSHA256(bytes))
+	        {
+	            var hash = hasher.ComputeHash(Encoding.UTF8.GetBytes(data));
+	            return hash.ToHexString();
+	        }
+	    }
+
+
 		/// <summary>
 		/// Hash a string using the SHA256 algorithm. 32 bytes (hex): 64 unicode chars, 128 bytes
 		/// </summary>

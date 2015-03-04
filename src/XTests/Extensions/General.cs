@@ -47,6 +47,24 @@ namespace XTests.Extensions
             rez.Should().Be(new DateTime(2014, 12, 1));
         }
 
+        [Fact]
+        public void hmac()
+        {
+            var key = "key";
+            var data = "{bla}";
+
+            var h1 = data.Hmac256(key);
+            h1.ToConsole();
+
+            var h2 = "{bla".Hmac256(key);
+            h2.Should().NotBe(h1);
+
+            data.Hmac256("keY").Should().NotBe(h1);
+
+            data.Hmac256(key).Should().Be(h1);
+
+        }
+
         protected void Write(object format, params object[] param)
         {
             Console.WriteLine(format.ToString(), param);
